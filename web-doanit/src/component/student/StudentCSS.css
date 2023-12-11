@@ -1,0 +1,52 @@
+
+.customCSS.student-name {
+    text-align: center;
+}
+
+.customCSS.pagination-container {
+    display: flex;
+    justify-content: center;
+}
+
+.customCSS h2 {
+    text-align: center;
+    background-color: #87AA74;
+    border-radius: 4px;
+    height: 50px;
+    align-items: center;
+    color: white;
+    padding-top: 6px;
+}
+
+.customCSS a.no-click {
+    pointer-events: none;
+}
+
+.customCSS .card-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/*.customCSS.card-title {*/
+/*    color: #87AA74;*/
+/*    white-space: nowrap;*/
+/*    overflow: hidden;*/
+/*    text-overflow: ellipsis;*/
+/*}*/
+
+/*.customCSS.card {*/
+/*    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);*/
+/*    transition: 0.3s;*/
+/*}*/
+
+/*.customCSS.card-img-top {*/
+/*    object-fit: cover;*/
+/*    height: auto;*/
+/*    text-align: center;*/
+/*}*/
+
+/*.customCSS.card-title:hover {*/
+/*    overflow: visible;*/
+/*}*/
+
