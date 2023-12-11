@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import '../assets/js/PageEffect'
 import {
-    initMenuEffects,
-    initScrollActiveEffect,
-    initScrollHeaderEffect,
-    initScrollUpEffect
+    initMenuEffects
+
 } from "../assets/js/PageEffect"
 import {Link, useNavigate} from "react-router-dom";
 
@@ -16,10 +14,6 @@ const Header = () => {
         setRoles(localStorage.getItem("roles"));
         // Gọi các hàm khởi tạo hiệu ứng từ PageEffects
         initMenuEffects();
-        initScrollHeaderEffect();
-        initScrollUpEffect();
-        initScrollActiveEffect();
-
     }, []); // useEffect chỉ chạy một lần khi component được tạo
 
 

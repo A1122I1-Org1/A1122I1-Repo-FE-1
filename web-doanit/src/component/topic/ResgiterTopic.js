@@ -1,4 +1,3 @@
-
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {useEffect, useState} from "react";
 import "../topic/InforTopicRegister.css";
@@ -6,9 +5,10 @@ import * as Yup from "yup"
 import {toast} from "react-toastify";
 import {save} from "../../service/InforTopicResgiterService";
 import {storage} from "../../config/firebaseConfig";
-
+import {useNavigate} from "react-router-dom";
 
 export function ResgiterTopic() {
+    const navigate = useNavigate();
     const [avatar, setAvatar] = useState(null);
     const [avatarUrl, setAvatarUrl] = useState('')
     const [moTa, setMoTa] = useState(null);
@@ -51,14 +51,12 @@ export function ResgiterTopic() {
         }
     };
     // const nagivate = useNavigate();
-    return (
-        <>
+    return (<>
             <Formik
 
                 initialValues=
                     {{
-                        inforTopicRegisterId: 1,
-                        topic: {
+                        inforTopicRegisterId: 1, topic: {
                             topicId: null,
                             name: "",
                             introduce: "",
@@ -69,12 +67,25 @@ export function ResgiterTopic() {
                         },
                     }}
                 onSubmit={async values => {
-                    await handleMotaUpload();
-                    await handleAvatarUpload();
-                    values.topic.image= avatar.name;
-                    values.topic.content = moTa.name;
-                    save(values);
-                    toast('🦄 Resgiter topic successfully!!!!');
+                    try {
+
+                        if (check != null) {
+                            toast.error('❌ Failed to register topic. Please try again later.');
+                        } else {
+                            await handleMotaUpload();
+                            await handleAvatarUpload();
+                            values.topic.image = avatar.name;
+                            values.topic.content = moTa.name;
+                            const check = save(values);
+                            navigate("/");
+                            toast.success('🦄 Resgiter topic successfully!!!!');
+                        }
+                    } catch (error) {
+                        console.log(error);
+
+
+                    }
+
                 }}
                 validationSchema={Yup.object({
 
@@ -85,8 +96,7 @@ export function ResgiterTopic() {
                             .max(255, "Tên không vượt quá 255 ký tự")
                             .matches(/^[a-zA-Z\s]+$/, "Tên đề tài không được chứa ký tự đặc biệt"),
                         introduce: Yup.string()
-                            .required("Nội dung không được để trống"),
-                        // image: Yup.string()
+                            .required("Nội dung không được để trống"), // image: Yup.string()
                         //     .required("Hình ảnh không được để trống"),
                         // content: Yup.string()
                         //     .required("Mô tả không được để trống"),
@@ -245,6 +255,5 @@ export function ResgiterTopic() {
                 </>
             </Formik>
 
-        </>
-    )
+        </>)
 }
