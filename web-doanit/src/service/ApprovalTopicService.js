@@ -27,8 +27,17 @@ export const cancelTopic = async (item) => {
 export const createProcess = async (item) => {
     try {
         await axios.post('http://localhost:8080/api/public/topic-manager/create-process', item);
+        return null;
     }
     catch (e) {
-        console.log(e);
+        return e.response.data;
+    }
+}
+export const findByIdTopic = async (id) => {
+    try {
+        const result = await axios.get('http://localhost:8080/findByIdInfoTopic/' + id);
+        return result.data;
+    } catch (e) {
+        throw e;
     }
 }
