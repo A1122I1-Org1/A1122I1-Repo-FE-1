@@ -5,7 +5,7 @@ const DeleteConfirmation = ({ showModal, hideModal, confirmModal, id, message })
     console.log(showModal)
     return (
 
-        <Modal show={showModal} onHide={hideModal}>
+        <Modal show={showModal} onHide={hideModal} >
             <Modal.Header closeButton>
                 <Modal.Title>Xác nhận xóa</Modal.Title>
             </Modal.Header>

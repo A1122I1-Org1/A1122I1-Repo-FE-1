@@ -3,7 +3,7 @@ import React, {useState} from "react";
 export const PaginationNav = ({pageNumber, totalPages, setPageNumber}) => {
     const [targetPage, setTargetPage] = useState(0);
     const pageCount = totalPages;
-    return (<div className="row justify-content-center">
+    return (<div className="row justify-content-center" style={{marginTop:"60px"}}>
         <div className="col-7 justify-content-center">
             <nav aria-label="Page navigation example">
                 <ul className="pagination justify-content-center">

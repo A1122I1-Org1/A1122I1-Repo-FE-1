@@ -19,7 +19,7 @@ const NotificationList = () => {
 
 
     return (
-        <section className="container projects section" id="projects">
+        <section className="container projects section" id="projects" style={{marginTop:"60px"}}>
             <h2 className="section__title section__title-gradient projects__line">
                 THÔNG TIN HƯỚNG DẪN
             </h2>

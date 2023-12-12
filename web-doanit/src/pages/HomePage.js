@@ -24,17 +24,13 @@ const HomePage = () => {
 
     return (
         <div>
-            <Header/>
             <main className="main">
                 <Home/>
                 <News/>
                 <Projects/>
                 <Contact/>
             </main>
-            <a href="#" className="scrollup" id="scroll-up">
-                <i className="ri-arrow-up-s-line scrollup__icon"></i>
-            </a>
-            <Footer/>
+
 
         </div>
     );
