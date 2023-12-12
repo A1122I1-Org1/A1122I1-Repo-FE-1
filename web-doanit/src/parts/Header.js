@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import '../assets/js/PageEffect'
 import {
     initMenuEffects
+
 } from "../assets/js/PageEffect"
 import {Link, useNavigate} from "react-router-dom";
 import {storage} from "../config/firebaseConfig";
