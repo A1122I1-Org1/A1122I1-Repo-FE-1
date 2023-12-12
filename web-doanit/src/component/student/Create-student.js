@@ -112,7 +112,7 @@ export function Create() {
                         .required('Tên sinh viên không được để trống')
                         .min(5, 'Tên sinh viên không được bé hơn 5')
                         .max(50, 'Tên sinh viên không được lớn hơn 50')
-                        .matches(/^[a-zA-Z\s]+$/, "Tên sinh viên không được chứa ký tự đặc biệt"),
+                        .matches(/^[\p{L}\s]+$/u, "Tên sinh viên không được chứa ký tự đặc biệt"),
                     email: Yup.string()
                         .required('Email không được để trống')
                         .max(50, "Email không được lớn hơn 50")
@@ -146,7 +146,7 @@ export function Create() {
                 })}
             >
                 <Form>
-                    <div className="khoahnd-container" style={{marginTop:"60px"}}>
+                    <div className="khoahnd-container" style={{marginTop:"80px"}}>
 
                         <div className="khoahnd-header">
                             <h2 className="khoahnd-title">THÊM MỚI SINH VIÊN</h2>
