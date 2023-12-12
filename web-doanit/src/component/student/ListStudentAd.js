@@ -58,7 +58,7 @@ export const ListStudentAd = () => {
         setSearchKey(searchKeyTmp);
     };
     return (
-        <div className="protect">
+        <div className="protect" style={{marginTop:"60px"}}>
         <div className="container">
         <h2 className="mt-4 mb-4">Danh sách sinh viên</h2>
         <div className="container-fluid">
