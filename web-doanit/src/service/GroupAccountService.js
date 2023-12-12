@@ -1,17 +1,11 @@
 import  axios from "axios"
 const URL="http://localhost:8080/api/Group";
-const GROUP_LIST_API = "/list-group";
-const ACCEPT_GROUP_API="/accept-group";
-const token = "$2a$12$DpcU.O9Viz2nj2UkNd5IquL2ulQgoZ.REv2y9QAwsTMW2J42ser5u";
-const DELETE_GROUP_API="/delete-group";
-const CREATE_DEADLINE_API="/create-deadline";
-const axiosInstance = axios.create({
-    baseURL: URL,
-    headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-    },
-});
+const BASE_URL="/api/Group/";
+const GROUP_LIST_API = "list-group";
+const ACCEPT_GROUP_API="accept-group";
+const DELETE_GROUP_API="delete-group";
+const CREATE_DEADLINE_API="create-deadline";
+
 export const save= async (groupAccount)=>{
     try{
         await axios.post(URL+"/createGroup",groupAccount)
@@ -22,7 +16,7 @@ export const save= async (groupAccount)=>{
 export const findAll = async (pageNumber,searchKey) => {
 
     try{
-        const result=await  axiosInstance.get(`${GROUP_LIST_API}/?page=${pageNumber}&find=${searchKey}`)
+        const result=await  axios.get(`${BASE_URL}${GROUP_LIST_API}/?page=${pageNumber}&find=${searchKey}`)
         console.log(result.data);
         return result.data;
     } catch (e){
@@ -31,7 +25,7 @@ export const findAll = async (pageNumber,searchKey) => {
 };
 export const acceptGroup=async (id)=>{
     try {
-        const result=await axiosInstance.patch(`${ACCEPT_GROUP_API}/${id}`)
+        const result=await axios.patch(`${BASE_URL}${ACCEPT_GROUP_API}/${id}`)
         console.log(result.data);
         return result.data
     } catch (e) {
@@ -40,7 +34,7 @@ export const acceptGroup=async (id)=>{
 }
 export const deleteGroup=async (id,listStudentId)=>{
     try {
-        const result=await axiosInstance.patch(`${DELETE_GROUP_API}/${id}`, listStudentId)
+        const result=await axios.patch(`${BASE_URL}${DELETE_GROUP_API}/${id}`, listStudentId)
         console.log(result.data);
         return result.data
     } catch (e) {
@@ -51,7 +45,7 @@ export const deleteGroup=async (id,listStudentId)=>{
 }
 export const createDeadLine=async (id,deadline)=>{
     try {
-        const result=await axiosInstance.patch(`${CREATE_DEADLINE_API}/${id}/${deadline}`)
+        const result=await axios.patch(`${BASE_URL}${CREATE_DEADLINE_API}/${id}/${deadline}`)
         console.log(result.data);
         return result.data
     } catch (e) {

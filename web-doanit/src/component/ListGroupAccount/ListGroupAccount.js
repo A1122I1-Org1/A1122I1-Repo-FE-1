@@ -104,10 +104,10 @@ const ListGroupAccount = () => {
         }
     }
     return (
-        < >
-            <div>
-                <Modal show={showAccept} onHide={handleCloseAccept} animation={false}>
-                    <Modal.Header closeButton>
+        <>
+            <div className="modal fade" id="mymodal">
+                <Modal show={showAccept} onHide={handleCloseAccept}  className='modalAcceptNghia'>
+                    <Modal.Header closeButton className='ModalAcceptHeaderNghia'>
                         <Modal.Title>Xác nhận duyệt nhóm</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>Bạn có thực sự muốn duyệt nhóm {nameGroup} không?</Modal.Body>
@@ -121,8 +121,8 @@ const ListGroupAccount = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <div>
-                <Modal show={showDelete} onHide={handleCloseDelete} animation={false}>
+            <div className="modal fade" id="mymodal2">
+                <Modal show={showDelete} onHide={handleCloseDelete}  className='ModalDeleteNghia'>
                     <Modal.Header closeButton>
                         <Modal.Title>Xác nhận xóa nhóm</Modal.Title>
                     </Modal.Header>
@@ -137,8 +137,8 @@ const ListGroupAccount = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <div>
-                <Modal show={showCreateDeadline} onHide={handleCloseCreateDeadline}>
+            <div className='modal3'>
+                <Modal show={showCreateDeadline} onHide={handleCloseCreateDeadline} className='ModalCreateDeadlineNghia'>
                     <Modal.Header closeButton>
                         <Modal.Title>Tạo hạn chót nộp dự án</Modal.Title>
                     </Modal.Header>
@@ -172,6 +172,7 @@ const ListGroupAccount = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
+            <div className="customCSS" style={{marginTop:"80px"}}>
             <head>
                 <title>Quản lý đồ án</title>
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -182,7 +183,7 @@ const ListGroupAccount = () => {
             </head>
             <body>
             <div className="header">
-                <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                {/* <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false"
                             aria-label="Toggle navigation">
@@ -203,12 +204,12 @@ const ListGroupAccount = () => {
                             </li>
                         </ul>
                     </div>
-                </nav>
+                </nav>*/}
             </div>
-            <div className="container">
+            <div className="container containerNghia">
                 <div className="col-12">
-                    <div className="title1"><h2>Quản lý nhóm sinh viên</h2></div>
-                    <div className="d-flex justify-content-end">
+                    <div className="title1 title1Nghia"><h2>Quản lý nhóm sinh viên</h2></div>
+                    <div className="d-flex justify-content-end justify-content-endNghia">
                         <div className="col-4">
                             <div className="input-group mb-3 rounded-pill border p-2">
                                 <input type="text" className="form-control border-0"
@@ -218,8 +219,8 @@ const ListGroupAccount = () => {
                                        onChange={(e) => setSearchKeyTmp(e.target.value)}
                                        maxLength={30}
                                 />
-                                <button className="btn btn-outline-secondary border-0  btn-hover-none rounded-circle"
-                                        type="button" id="button-addon2"
+                                <button className="btn btn-outline-secondary border-0  btn-hover-none rounded-circle btnSearchNghiaNV"
+                                        type="button" id="button-addon2 btnSearchNghia"
                                         onClick={handleSearch}
                                 ><i className="bi bi-search"></i></button>
                             </div>
@@ -227,16 +228,16 @@ const ListGroupAccount = () => {
                     </div>
                     <div className="tabledata">
 
-                        <table>
-                            <thead>
+                        <table className='tableNghia'>
+                            <thead className='theadNghia'>
                             <tr>
-                                <th scope="col">STT</th>
-                                <th scope="col">Tên nhóm</th>
-                                <th scope="col">Số sinh viên</th>
-                                <th scope="col">Thời hạn chót nộp đề tài</th>
-                                <th scope="col">Kiểm duyệt</th>
-                                <th scope="col" colSpan="2">Chức năng</th>
-                                <th scope="col">Gửi yêu cầu</th>
+                                <th scope="col" className='thNghia'>STT</th>
+                                <th scope="col" className='thNghia'>Tên nhóm</th>
+                                <th scope="col" className='thNghia'>Số sinh viên</th>
+                                <th scope="col" className='thNghia'>Thời hạn chót nộp đề tài</th>
+                                <th scope="col" className='thNghia'>Kiểm duyệt</th>
+                                <th scope="col" colSpan="2" className='thNghia'>Chức năng</th>
+                                <th scope="col" className='thNghia'>Gửi yêu cầu</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -248,24 +249,24 @@ const ListGroupAccount = () => {
                                 <>
                                     {groups.map((s,index)=>(
                                         <tr key={index}>
-                                            <th scope="row">{index+1}</th>
-                                            <td>{s.name}</td>
-                                            <td>{s.studentList.length}</td>
-                                            <td>{s.date}</td>
-                                            <td>
+                                            <th scope="row" className='thNghia'>{index+1}</th>
+                                            <td className='tdNghia'>{s.name}</td>
+                                            <td className='tdNghia'>{s.studentList.length}</td>
+                                            <td className='tdNghia'>{s.date}</td>
+                                            <td className='tdNghia'>
                                                 <button type="button" className="btn btn-outline-success" data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal-1" disabled={s.status===true} onClick={event =>  handleShowAccept(s.groupAccountId,s.name)} >Duyệt
                                                 </button>
                                             </td>
-                                            <td className="btndelete no-border">
+                                            <td className="btndelete no-border btndeleteNghia">
                                                 <button type="button" className="btn btn-outline-danger" data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal-2" onClick={event =>  handleShowDelete(s.groupAccountId,s.studentList.map(student => student.studentId),s.name)}>Xóa
                                                 </button>
                                             </td>
-                                            <td className="btnmember no-border">
+                                            <td className="btnmember no-border btnmemberNghia">
                                                 <button type="button" className="btn btn-outline-info">Thành viên</button>
                                             </td>
-                                            <td>
+                                            <td className='tdNghia'>
                                                 <button type="button" className="btn btn-outline-secondary" onClick={event =>  handleShowCreateDeadline(s.groupAccountId,s.name)}>Hạn
                                                     chót nộp dự án
                                                 </button>
@@ -285,6 +286,7 @@ const ListGroupAccount = () => {
                                totalPages={totalPages}
                                setPageNumber={setPageNumber}
                 />
+            </div>
             </div>
 
         </>
