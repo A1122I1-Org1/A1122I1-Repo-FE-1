@@ -22,6 +22,8 @@ export const CreateTeacher = () => {
     const [isEmailTouched, setIsEmailTouched] = useState(true);
     const [isAgeTouched, setIsAgeTouched] = useState(true);
     const [isNameTouched, setIsNameTouched] = useState(true);
+    const [isFileTouched, setIsFileTouched] = useState(true);
+
 
     const handlePhoneTouched = () => {
         setIsPhoneTouched(false);
@@ -37,6 +39,10 @@ export const CreateTeacher = () => {
 
     const handleNameTouched = () => {
         setIsNameTouched(false);
+    };
+
+    const handleFileTouched = () => {
+        setIsFileTouched(false);
     };
 
     useEffect(() => {
@@ -125,7 +131,8 @@ export const CreateTeacher = () => {
             setIsPhoneTouched(true);
             setIsNameTouched(true);
             setIsEmailTouched(true);
-            setIsAgeTouched(true)
+            setIsAgeTouched(true);
+            setIsFileTouched(true);
             values.avatar = avatar.name;
             const response = await TeacherService.createTeacher(values);
             if (response !== null) {
@@ -147,7 +154,7 @@ export const CreateTeacher = () => {
         <div className="container mx-auto" style={{marginTop:"60px"}}>
             <div className="row">
                 <div className="col">
-                    <h2 className="mt-3 mb-3 the-h2">Thêm Mới Giáo Viên</h2>
+                    <h2 className="mt-3 mb-3 the-h2" style={{textAlign:"center"}}>Thêm Mới Giáo Viên</h2>
                 </div>
 
             </div>
@@ -166,6 +173,7 @@ export const CreateTeacher = () => {
                                     className="form-control"
                                     placeholder="Name"
                                     onChange={onAvatarChange}
+                                    onFocus={handleFileTouched}
                                 />
                                 <img
                                     className="w-100"
@@ -173,7 +181,7 @@ export const CreateTeacher = () => {
                                     alt="avatar"
                                     src={avatarUrl || (avatar ? URL.createObjectURL(avatar) : 'default-avatar.png')}
                                 />
-                                {errorData.errorFileFormat && (
+                                {errorData.errorFileFormat && isFileTouched && (
                                     <div>
                                         <span className="span-custom" style={{color: "#dc3545"}}>{errorData.errorFileFormat}</span>
                                     </div>
@@ -196,7 +204,7 @@ export const CreateTeacher = () => {
                                         {({field, form, meta}) => (
                                             <div>
                                                 <input className="form-control" onFocus={handleNameTouched}
-                                                       type="text" {...field} placeholder="Name"/>
+                                                       type="text" {...field} placeholder="Vd : Nguyễn Văn A"/>
 
                                             </div>
                                         )}
@@ -253,7 +261,7 @@ export const CreateTeacher = () => {
                                         {({field, form, meta}) => (
                                             <div>
                                                 <textarea className="form-control" style={{height: "125px"}}
-                                                          type="text" {...field} placeholder="Dia chi"/>
+                                                          type="text" {...field} placeholder="Vd : 123 Trần Cao Vân, Thanh Khê, Đà Nẵng"/>
 
                                             </div>
                                         )}
@@ -267,7 +275,7 @@ export const CreateTeacher = () => {
                                         {({field, form, meta}) => (
                                             <div>
                                                 <input className="form-control" onFocus={handlePhoneTouched}
-                                                       type="text" {...field} placeholder="Phone"/>
+                                                       type="text" {...field} placeholder="Vd: 0912832391"/>
 
                                             </div>
                                         )}
@@ -288,7 +296,7 @@ export const CreateTeacher = () => {
                                         {({field, form, meta}) => (
                                             <div>
                                                 <input className="form-control" onFocus={handleEmailTouched}
-                                                       type="text" {...field} placeholder="Phone"/>
+                                                       type="text" {...field} placeholder="Vd : NguyenVanA@gmail.com"/>
 
                                             </div>
                                         )}
