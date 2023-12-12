@@ -9,7 +9,7 @@ import {PaginationNav} from "./PaginationNav";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import anh from "../image/default-avatar.png";
 
-export const ViewSvA = () => {
+export const ListStudentTeacher = () => {
     const [students, setStudents] = useState([]);
     const [grades, setGrades] = useState([]);
     const [faculties, setFaculties] = useState([]);

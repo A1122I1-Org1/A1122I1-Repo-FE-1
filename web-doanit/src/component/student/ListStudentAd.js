@@ -9,7 +9,7 @@ import {storage} from "../../config/firebaseConfig";
 import {PaginationNav} from "./PaginationNav";
 import anh from "../image/default-avatar.png";
 
-export const ViewSv = () => {
+export const ListStudentAd = () => {
     const [students, setStudents] = useState([]);
     const [grades, setGrades] = useState([]);
     const [faculties, setFaculties] = useState([]);
