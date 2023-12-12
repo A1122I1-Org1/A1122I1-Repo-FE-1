@@ -5,7 +5,7 @@ import Home from "../parts/Home";
 import News from "../parts/News";
 import Projects from "../parts/Projects";
 import Contact from "../parts/Contact";
-import './css/style.css'
+import './homepage.css'
 
 const HomePage = () => {
     const [counter, setCounter] = useState(1);
@@ -23,16 +23,14 @@ const HomePage = () => {
     };
 
     return (
-        <div>
+        <>
             <main className="main">
                 <Home/>
                 <News/>
                 <Projects/>
                 <Contact/>
             </main>
-
-
-        </div>
+        </>
     );
 };
 

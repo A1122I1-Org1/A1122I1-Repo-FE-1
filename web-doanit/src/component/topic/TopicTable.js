@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import TopicManagerService from '../../service/TopicManagerService';
+import * as TopicManagerService from '../../service/TopicManagerService';
 import {storage} from "../../config/firebaseConfig";
 import {LazyLoadImage} from 'react-lazy-load-image-component';
-// import '../../assets/css/style.css'
+import Header from "../../parts/Header";
+import Footer from "../../parts/Footer";
 const TopicTable = () => {
     const [topics, setTopics] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
@@ -16,7 +17,7 @@ const TopicTable = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await TopicManagerService.fetchTopics(currentPage, topicsPerPage, searchKeyword);
+                const data = await TopicManagerService.getAllTopics(currentPage, topicsPerPage, searchKeyword);
                 setTopics(data.content);
                 setInitialTopics(data.content);
                 setTotalPages(data.totalPages);
@@ -72,7 +73,7 @@ const TopicTable = () => {
 
     const displayTopics = topics.map((topic, index) => {
         return (
-            <div key={topic.topicId} className="col-md-3 custom-card" style={{marginTop:"60px"}}>
+            <div key={topic.topicId} className="col-md-3 custom-card">
                 <div className="card">
                     <LazyLoadImage
                         effect="blur"
@@ -110,61 +111,62 @@ const TopicTable = () => {
     };
 
     return (
-        <section className="container projects section" id="projects">
-            <h2 className="section__title section__title-gradient projects__line">
-                DANH SÁCH ĐỀ TÀI
-            </h2>
-            <div className="row">
-                <div className="col-md-12 search-bar ml-auto">
-                    <div className="input-group">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Tên đề tài"
-                            value={searchKeyword}
-                            onChange={handleSearchChange}
-                        />
-                        <div className="input-group-append">
-                            <button
-                                className="btn btn-outline-success"
-                                type="button"
-                                onClick={handleSearch}
-                            >
-                                Tìm kiếm
-                            </button>
-                            <button
-                                className="btn btn-outline-success"
-                                type="button"
-                                onClick={handleReset}
-                            >
-                                Quay lại
-                            </button>
+        <>
+            <section className="container projects section" id="projects">
+                <h2 className="section__title section__title-gradient projects__line">
+                    DANH SÁCH ĐỀ TÀI
+                </h2>
+                <div className="row">
+                    <div className="col-md-12 search-bar ml-auto">
+                        <div className="input-group">
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Tên đề tài"
+                                value={searchKeyword}
+                                onChange={handleSearchChange}
+                            />
+                            <div className="input-group-append">
+                                <button
+                                    className="btn btn-outline-success"
+                                    type="button"
+                                    onClick={handleSearch}
+                                >
+                                    Tìm kiếm
+                                </button>
+                                <button
+                                    className="btn btn-outline-success"
+                                    type="button"
+                                    onClick={handleReset}
+                                >
+                                    Quay lại
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            {topics.length === 0 ? (
-                // Display this message when there are no topics
-                <h3 className="text-center">Dữ liệu không tồn tại</h3>
-            ) : (
-                <div>
-                    <div className="row">{displayTopics}</div>
-                    <div className="row justify-content-center">
-                        <div className="col-7 justify-content-center">
-                            <nav aria-label="Page navigation example">
-                                <ul className="pagination justify-content-center">
-                                    <li className="page-item">
-                                        <a
-                                            className="page-link"
-                                            href="#"
-                                            aria-label="Previous"
-                                            onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 0))}
-                                        >
-                                            <span aria-hidden="true">&laquo;</span>
-                                            <span className="sr-only"></span>
-                                        </a>
-                                    </li>
-                                    <li className="page-item">
+                {topics.length === 0 ? (
+                    // Display this message when there are no topics
+                    <h3 className="text-center">Dữ liệu không tồn tại</h3>
+                ) : (
+                    <div>
+                        <div className="row">{displayTopics}</div>
+                        <div className="row justify-content-center">
+                            <div className="col-7 justify-content-center">
+                                <nav aria-label="Page navigation example">
+                                    <ul className="pagination justify-content-center">
+                                        <li className="page-item">
+                                            <a
+                                                className="page-link"
+                                                href="#"
+                                                aria-label="Previous"
+                                                onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 0))}
+                                            >
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span className="sr-only"></span>
+                                            </a>
+                                        </li>
+                                        <li className="page-item">
                                 <span className="input-group">
                                     <input
                                         type="number"
@@ -184,25 +186,26 @@ const TopicTable = () => {
                                         Go
                                     </button>
                                 </span>
-                                    </li>
-                                    <li className="page-item">
-                                        <a
-                                            className="page-link"
-                                            href="#"
-                                            aria-label="Next"
-                                            onClick={() => setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1))}
-                                        >
-                                            <span aria-hidden="true">&raquo;</span>
-                                            <span className="sr-only"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
+                                        </li>
+                                        <li className="page-item">
+                                            <a
+                                                className="page-link"
+                                                href="#"
+                                                aria-label="Next"
+                                                onClick={() => setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1))}
+                                            >
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span className="sr-only"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
-        </section>
+                )}
+            </section>
+        </>
     );
 };
 export default TopicTable;

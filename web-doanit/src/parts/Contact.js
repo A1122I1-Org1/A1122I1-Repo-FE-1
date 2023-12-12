@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ScrollReveal from "scrollreveal";
+import '../pages/homepage.css'
 
 const Contact = () => {
     const [formData, setFormData] = useState({
@@ -63,64 +64,66 @@ const Contact = () => {
     };
 
     return (
-        <section className="contact section grid" id="contact">
-            <h2 className="section__title section__title-gradient">LIÊN HỆ</h2>
+        <>
+            <section className="contact section grid" id="contact">
+                <h2 className="section__title section__title-gradient">LIÊN HỆ</h2>
 
-            <div className="contact__container container grid">
-                <div className="contact__info">
-                    <div className="contact__address">
-                        <h4>Địa chỉ</h4>
-                        <p><i className="bi bi-geo-alt"></i> 123 Nguyễn Tri Phương,<br />quận Hải Châu, thành phố Đà Nẵng</p>
+                <div className="contact__container container grid">
+                    <div className="contact__info">
+                        <div className="contact__address">
+                            <h4>Địa chỉ</h4>
+                            <p><i className="bi bi-geo-alt"></i> 123 Nguyễn Tri Phương,<br />quận Hải Châu, thành phố Đà Nẵng</p>
+                        </div>
+                        <div className="contact__phone">
+                            <h4>Điện thoại</h4>
+                            <p><i className="bi bi-telephone"></i> (123) 456-7890</p>
+                        </div>
+                        <div className="contact__email">
+                            <h4>Email</h4>
+                            <p><i className="bi bi-envelope"></i> khangvan@example.com</p>
+                        </div>
                     </div>
-                    <div className="contact__phone">
-                        <h4>Điện thoại</h4>
-                        <p><i className="bi bi-telephone"></i> (123) 456-7890</p>
-                    </div>
-                    <div className="contact__email">
-                        <h4>Email</h4>
-                        <p><i className="bi bi-envelope"></i> khangvan@example.com</p>
+
+                    <div className="contact__form">
+                        <form onSubmit={handleSubmit}>
+                            <div className="form-group">
+                                <label htmlFor="name">Tên:</label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="email">Địa chỉ email:</label>
+                                <input
+                                    type="text"
+                                    id="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="message">Nội dung:</label>
+                                <textarea
+                                    id="message"
+                                    name="message"
+                                    rows="4"
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                ></textarea>
+                            </div>
+                            <button type="submit" className="button-send-email button--flex">
+                                <i className="ri-mail-send-line button__icon"></i> Gửi
+                            </button>
+                        </form>
                     </div>
                 </div>
-
-                <div className="contact__form">
-                    <form onSubmit={handleSubmit}>
-                        <div className="form-group">
-                            <label htmlFor="name">Tên:</label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                value={formData.name}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="email">Địa chỉ email:</label>
-                            <input
-                                type="text"
-                                id="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="message">Nội dung:</label>
-                            <textarea
-                                id="message"
-                                name="message"
-                                rows="4"
-                                value={formData.message}
-                                onChange={handleChange}
-                            ></textarea>
-                        </div>
-                        <button type="submit" className="button-send-email button--flex">
-                            <i className="ri-mail-send-line button__icon"></i> Gửi
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </section>
+            </section>
+        </>
     );
 };
 
