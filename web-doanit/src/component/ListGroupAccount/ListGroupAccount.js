@@ -104,7 +104,7 @@ const ListGroupAccount = () => {
         }
     }
     return (
-        <>
+        < >
             <div>
                 <Modal show={showAccept} onHide={handleCloseAccept} animation={false}>
                     <Modal.Header closeButton>

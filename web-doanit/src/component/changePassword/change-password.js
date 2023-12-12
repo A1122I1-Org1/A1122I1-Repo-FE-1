@@ -4,6 +4,18 @@ import * as LoginService from "../../service/UserService";
 import {toast} from "react-toastify";
 
 export const ChangePasswordModal = ({showModal, setShowModal}) => {
+
+    // useEffect(() => {
+    //     if (!showModal) {
+    //         // Reset form values when the modal is closed
+    //         setValues({
+    //             oldPassword: '',
+    //             newPassword: '',
+    //             confirmPassword: ''
+    //         });
+    //     }
+    // }, [showModal]);
+
     return (
         <div className="mt-3 save-exit-buttons">
             <button type="button" className="btn btn-outline-success" data-bs-toggle="modal"
@@ -15,8 +27,8 @@ export const ChangePasswordModal = ({showModal, setShowModal}) => {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="exampleModalLabel">ĐỔI MẬT KHẨU</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                            {/*<button type="reset" className="btn-close" data-bs-dismiss="modal"*/}
+                            {/*        aria-label="Close"></button>*/}
                         </div>
                         <div className="modal-body">
                             <Formik
@@ -30,17 +42,26 @@ export const ChangePasswordModal = ({showModal, setShowModal}) => {
                                     newPassword: Yup.string().required("Vui lòng nhập mật khẩu mới"),
                                     confirmPassword: Yup.string().required("Vui lòng nhập xác nhận mật khẩu ")
                                 })}
-                                onSubmit={async (values) => {
+                                onSubmit={async (values,{resetForm}) => {
                                     try {
                                         const res = await LoginService.changePassword(values);
                                         toast(res);
+                                        resetForm({values:''});
                                     } catch (error) {
                                         const errorMessage = error.response && error.response.status === 400
                                             ? error.response.data
                                             : "Có lỗi xảy ra khi đổi mật khẩu";
                                         toast(errorMessage);
                                     }
-                                }}>
+                                }}
+                                // onReset={(values, formikBag) => {
+                                //     // if (window.confirm("Bạn có chắc chắn muốn hủy đổi mật khẩu?")) {
+                                //         formikBag.resetForm();
+                                //         setShowModal(false);
+                                //     // }
+                                // }}
+
+                            >
                                 <div>
                                     <Form>
                                         <div className="form-group row">
@@ -82,7 +103,7 @@ export const ChangePasswordModal = ({showModal, setShowModal}) => {
                                             </div>
                                         </div>
                                         <div className="modal-footer">
-                                            <button type="button" className="btn btn-outline-secondary"
+                                            <button type="reset" className="btn btn-outline-secondary"
                                                     data-bs-dismiss="modal" onClick={() => setShowModal(false)}>Thoát
                                             </button>
                                             <button type="submit" className="btn btn-outline-success">Lưu</button>

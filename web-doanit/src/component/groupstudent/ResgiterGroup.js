@@ -82,7 +82,7 @@ export function ResgiterGroupStudent() {
     return (
         <>
             {/*===================Danh Sach Sinh Vien=============*/}
-            <div className="container containerTan">
+            <div className="container containerTan" style={{marginTop:"60px"}}>
                 <h2 className="mt-4 mb-4">Đăng ký nhóm sinh viên</h2>
                 {/*====================search==============*/}
                 <div className="container-fluid">
