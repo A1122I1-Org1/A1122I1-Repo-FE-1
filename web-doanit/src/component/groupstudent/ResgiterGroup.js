@@ -9,6 +9,8 @@ import React, {useEffect, useState} from "react";
 import {Field, Form, Formik, ErrorMessage, useFormikContext} from "formik";
 import {useNavigate} from "react-router-dom";
 import {ca} from "date-fns/locale";
+import Header from "../../parts/Header";
+import Footer from "../../parts/Footer";
 
 export function ResgiterGroupStudent() {
     const navigate = useNavigate();
@@ -84,6 +86,10 @@ export function ResgiterGroupStudent() {
 
     return (
         <>
+            <div>
+                <Header/>
+                <br/>
+            </div>
             <div className="resgiterGroup">
                 {/*===================Danh Sach Sinh Vien=============*/}
                 <div className="container containerTan">
@@ -300,7 +306,8 @@ export function ResgiterGroupStudent() {
                 <script
                     src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
             </div>
-
+            <br/>
+            <Footer/>
         </>
     )
 

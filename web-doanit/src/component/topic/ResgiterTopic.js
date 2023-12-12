@@ -6,6 +6,8 @@ import {toast} from "react-toastify";
 import {save} from "../../service/InforTopicResgiterService";
 import {storage} from "../../config/firebaseConfig";
 import {useNavigate} from "react-router-dom";
+import Header from "../../parts/Header";
+import Footer from "../../parts/Footer";
 
 export function ResgiterTopic() {
     const navigate = useNavigate();
@@ -52,61 +54,60 @@ export function ResgiterTopic() {
     };
     // const nagivate = useNavigate();
     return (<>
-            <Formik
+        <div>
+            <Header/>
+        </div>
+        <Formik
 
-                initialValues=
-                    {{
-                        inforTopicRegisterId: 1, topic: {
-                            topicId: null,
-                            name: "",
-                            introduce: "",
-                            image: "",
-                            content: "",
-                            deleteFlag: null,
-                            faculty: null
-                        },
-                    }}
-                onSubmit={async values => {
-                    try {
-
-                        if (check != null) {
-                            toast.error('❌ Failed to register topic. Please try again later.');
-                        } else {
-                            await handleMotaUpload();
-                            await handleAvatarUpload();
-                            values.topic.image = avatar.name;
-                            values.topic.content = moTa.name;
-                            const check = save(values);
-                            navigate("/");
-                            toast.success('🦄 Resgiter topic successfully!!!!');
-                        }
-                    } catch (error) {
-                        console.log(error);
-
-
-                    }
-
+            initialValues=
+                {{
+                    inforTopicRegisterId: 1, topic: {
+                        topicId: null,
+                        name: "",
+                        introduce: "",
+                        image: "",
+                        content: "",
+                        deleteFlag: null,
+                        faculty: null
+                    },
                 }}
-                validationSchema={Yup.object({
+            onSubmit={async values => {
+                try {
+                    await handleMotaUpload();
+                    await handleAvatarUpload();
+                    values.topic.image = avatar.name;
+                    values.topic.content = moTa.name;
+                    save(values);
+                    navigate("/");
+                    toast.success('🦄 Resgiter topic successfully!!!!');
 
-                    topic: Yup.object({
-                        name: Yup.string()
-                            .required("Tên topic không đươc để trống")
-                            .min(5, "Tên phải nhiều hơn 5 ký tự")
-                            .max(255, "Tên không vượt quá 255 ký tự")
-                            .matches(/^[a-zA-Z\s]+$/, "Tên đề tài không được chứa ký tự đặc biệt"),
-                        introduce: Yup.string()
-                            .required("Nội dung không được để trống"), // image: Yup.string()
-                        //     .required("Hình ảnh không được để trống"),
-                        // content: Yup.string()
-                        //     .required("Mô tả không được để trống"),
-                    })
+                } catch (error) {
+                    console.log(error);
 
 
-                })}>
-                <>
-                    {/*Giao dien*/}
+                }
 
+            }}
+            validationSchema={Yup.object({
+
+                topic: Yup.object({
+                    name: Yup.string()
+                        .required("Tên topic không đươc để trống")
+                        .min(5, "Tên phải nhiều hơn 5 ký tự")
+                        .max(255, "Tên không vượt quá 255 ký tự")
+                        .matches(/^[a-zA-Z\s]+$/, "Tên đề tài không được chứa ký tự đặc biệt"),
+                    introduce: Yup.string()
+                        .required("Nội dung không được để trống"), // image: Yup.string()
+                    //     .required("Hình ảnh không được để trống"),
+                    // content: Yup.string()
+                    //     .required("Mô tả không được để trống"),
+                })
+
+
+            })}>
+            <>
+                {/*Giao dien*/}
+                <div className="RegisterTopic">
                     <div className="container ">
                         <h2 className="h2Tan">ĐĂNG KÝ ĐỀ TÀI</h2>
                         <div className="container-fluid">
@@ -251,9 +252,12 @@ export function ResgiterTopic() {
                                 integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
                                 crossOrigin="anonymous"></script>
                     </div>
+                </div>
 
-                </>
-            </Formik>
 
-        </>)
+            </>
+        </Formik>
+        <br/>
+        <Footer/>
+    </>)
 }

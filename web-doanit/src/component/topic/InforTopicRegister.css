@@ -1,51 +1,51 @@
-body {
+.RegisterTopic body {
     font-family: 'Helvetica', sans-serif;
 }
 
-.h2Tan {
+.RegisterTopic .h2Tan {
     text-align: center;
     color: #87AA74;
 }
 
-.container-search {
+.RegisterTopic .container-search {
     height: 50px;
 }
 
-.form-search {
+.RegisterTopic .form-search {
     float: right;
 }
 
-.form-search input[type="search"] {
+.RegisterTopic .form-search input[type="search"] {
     border-radius: 5px;
     border: 1px solid #ccc;
     padding: 5px 10px;
     width: 200px;
 }
 
-.form-search button {
+.RegisterTopic .form-search button {
     border: none;
     background: none;
     cursor: pointer;
     padding: 6px;
 }
 
-.col-leftTan {
+.RegisterTopic .col-leftTan {
     padding: 10px;
 }
 
-.form-registerTan {
+.RegisterTopic .form-registerTan {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 5px;
     border: 2px solid #87AA74;
 }
 
-.form-label {
+.RegisterTopic .form-label {
     font-weight: bold;
     margin-bottom: 5px;
 }
 
-.form-registerTan.form-control {
+.RegisterTopic .form-registerTan.form-control {
     width: 100%;
     padding: 8px;
     margin-bottom: 10px;
@@ -53,7 +53,7 @@ body {
     border: 1px solid #ccc;
 }
 
-.btn-registerTan {
+.RegisterTopic .btn-registerTan {
     background-color: #87AA74;
     color: #fff;
     border: none;
@@ -62,17 +62,17 @@ body {
     cursor: pointer;
 }
 
-.col-rightTan {
+.RegisterTopic .col-rightTan {
     padding: 10px;
 }
 
-.table-headingTan {
+.RegisterTopic .table-headingTan {
     background-color: #87AA74;
 
     color: white;
 }
 
-.table-button {
+.RegisterTopic .table-button {
     padding: 5px 10px;
     border-radius: 5px;
     background-color: #87AA74;
@@ -81,23 +81,23 @@ body {
     cursor: pointer;
 }
 
-.pagination-containerTan {
+.RegisterTopic .pagination-containerTan {
     text-align: center;
     margin-top: 20px;
 }
 
-.pagination ul {
+.RegisterTopic .pagination ul {
     list-style: none;
     display: inline-flex;
     padding: 0;
     margin: 0;
 }
 
-.pagination ul li {
+.RegisterTopic .pagination ul li {
     margin: 0 5px;
 }
 
-.pagination ul li a {
+.RegisterTopic .pagination ul li a {
     text-decoration: none;
     color: #87AA74;
     padding: 5px 10px;
@@ -106,16 +106,16 @@ body {
     transition: all 0.3s ease;
 }
 
-.pagination ul li a:hover {
+.RegisterTopic .pagination ul li a:hover {
     background-color: #87AA74;
     color: white;
 }
-.h5Tan{
+.RegisterTopic .h5Tan{
     color: #87AA74;
     text-align: center;
     font-weight: bold;
 }
 
-.form-register label{
+.RegisterTopic .form-register label{
     float: left;
 }
