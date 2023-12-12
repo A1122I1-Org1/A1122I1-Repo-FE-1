@@ -86,14 +86,10 @@ export function ResgiterGroupStudent() {
 
     return (
         <>
-            <div>
-                <Header/>
-                <br/>
-            </div>
             <div className="resgiterGroup">
                 {/*===================Danh Sach Sinh Vien=============*/}
                 <div className="container containerTan">
-                    <h2 className="mt-4 mb-4">Đăng ký nhóm sinh viên</h2>
+                    <h2 className="mt-4 mb-4" style={{marginTop:"80px"}}>Đăng ký nhóm sinh viên</h2>
                     {/*====================search==============*/}
                     <div className="container-fluid">
                         <div className="row">
@@ -294,7 +290,9 @@ export function ResgiterGroupStudent() {
 
                             </div>
                             <br/>
-                            <button type="submit" className="btn btn-outline-success">Đăng ký nhóm</button>
+                            <div style={{textAlign:"center"}}>
+                                <button type="submit" className="btn btn-outline-success">Đăng ký nhóm</button>
+                            </div>
                         </Form>
                     </Formik>
 
@@ -307,7 +305,6 @@ export function ResgiterGroupStudent() {
                     src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
             </div>
             <br/>
-            <Footer/>
         </>
     )
 

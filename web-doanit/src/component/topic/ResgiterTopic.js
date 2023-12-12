@@ -109,7 +109,7 @@ export function ResgiterTopic() {
                 {/*Giao dien*/}
                 <div className="RegisterTopic">
                     <div className="container ">
-                        <h2 className="h2Tan">ĐĂNG KÝ ĐỀ TÀI</h2>
+                        <h2 className="h2Tan" style={{marginTop:"80px"}}>ĐĂNG KÝ ĐỀ TÀI</h2>
                         <div className="container-fluid">
                             <div className="row">
                                 <div className="col-8">
