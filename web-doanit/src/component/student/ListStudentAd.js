@@ -7,8 +7,9 @@ import {NavLink} from "react-router-dom";
 import {LazyLoadImage} from 'react-lazy-load-image-component';
 import {storage} from "../../config/firebaseConfig";
 import {PaginationNav} from "./PaginationNav";
+import anh from "../image/default-avatar.png";
 
-export const ListStudentAd = () => {
+export const ViewSv = () => {
     const [students, setStudents] = useState([]);
     const [grades, setGrades] = useState([]);
     const [faculties, setFaculties] = useState([]);
@@ -17,6 +18,7 @@ export const ListStudentAd = () => {
     const [searchKey, setSearchKey] = useState("");
     const [searchKeyTmp, setSearchKeyTmp] = useState("");
     const [avatarUrls, setAvatarUrls] = useState([]);
+    const [avatar, setAvatar] = useState(null)
     const fetchApi = async () => {
         try {
             const result = await StudentService.findAll(pageNumber, searchKey)
@@ -63,7 +65,7 @@ export const ListStudentAd = () => {
         <h2 className="mt-4 mb-4">Danh sách sinh viên</h2>
         <div className="container-fluid">
             <div className="row">
-                <div className="col-8">
+                <div className="col-8 text-left">
                     <NavLink to={"/create-student"} className="btn btn-outline-success rounded-pill ">
                         Thêm sinh viên
                     </NavLink>
@@ -90,7 +92,7 @@ export const ListStudentAd = () => {
                 {students.map((s, index) => (<div className="col-md-3 mb-4" key={index}>
                     <div className="card">
                         <LazyLoadImage
-                            effect="blur" src={avatarUrls[index]} className="card-img-top img-fluid"
+                            effect="blur" src={avatarUrls[index]|| (avatar ? URL.createObjectURL(avatar) : anh) } className="card-img-top img-fluid"
                             alt={`Sinh viên ${s.index}`} width="100%"
                         />
                         <div className="card-body">
@@ -114,7 +116,7 @@ export const ListStudentAd = () => {
                                 <button className="btn btn-danger rounded-circle"><i
                                     className="bi bi-trash"></i>
                                 </button>
-                                <NavLink to={`/edit/${s.studentId}`}
+                                <NavLink to={`/edit-student/${s.studentId}`}
                                          className="btn btn-success rounded-circle"><i
                                     className="bi bi-pencil"></i>
                                 </NavLink>
