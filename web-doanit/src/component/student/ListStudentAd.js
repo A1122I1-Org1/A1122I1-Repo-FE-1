@@ -7,7 +7,7 @@ import {NavLink} from "react-router-dom";
 import {LazyLoadImage} from 'react-lazy-load-image-component';
 import {storage} from "../../config/firebaseConfig";
 import {PaginationNav} from "./PaginationNav";
-import anh from "../image/default-avatar.png";
+import anh from "../image/default-avatar1.png";
 
 export const ListStudentAd = () => {
     const [students, setStudents] = useState([]);
