@@ -146,7 +146,7 @@ export function Create() {
                 })}
             >
                 <Form>
-                    <div className="khoahnd-container">
+                    <div className="khoahnd-container" style={{marginTop:"60px"}}>
 
                         <div className="khoahnd-header">
                             <h2 className="khoahnd-title">THÊM MỚI SINH VIÊN</h2>

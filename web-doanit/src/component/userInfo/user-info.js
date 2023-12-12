@@ -1,5 +1,5 @@
 import "./user-info.css";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import * as UserService from "../../service/UserService";
 import {useNavigate} from "react-router-dom";
 import {ChangePasswordModal} from "../changePassword/change-password";
@@ -33,6 +33,7 @@ export const UserInfo = () => {
             setUser(roles.includes("ROLE_TEACHER") ? res.teacher : res.student);
             if (roles.includes("ROLE_TEACHER")){
                 if (res.teacher.avatar) {
+
                     const imageUrl = await getAvatarFromFirebase(res.teacher.avatar);
                     setAvatarUrl(imageUrl);
                 }
@@ -49,7 +50,9 @@ export const UserInfo = () => {
             } else if (error.response && error.response.status === 400) {
                 toast(error.response.data);
             } else {
-                toast("Có lỗi xảy ra khi xem chi tiết thông tin người dùng");
+                setIsLoading(false);
+                // throw error;
+                // toast("Có lỗi xảy ra khi xem chi tiết thông tin người dùng");
             }
         }
     };
@@ -63,17 +66,17 @@ export const UserInfo = () => {
     };
 
     return (
-        <div className="user-info">
+        <div className="user-info" style={{marginTop:"60px"}}>
             <div className="container">
                 <h2 className="title">THÔNG TIN CHI TIẾT</h2>
                 {isLoading ? (
                     <div>Đang tải dữ liệu người dùng...</div>
                 ) : (
                     <>
-                        <div className="row layout">
+                        <div className="row layout" style={{marginBottom:"60px"}} >
                             <div className="col-md-3 mr-2">
                                 <div className="avatar-container">
-                                    <img className="avatar" alt="avatar" src={avatarUrl}/>
+                                    <img className="avatar" alt="avatar" src={avatarUrl ||"default-avatar.png" }/>
                                 </div>
                             </div>
                             <div className="col-md-4 mr-5">

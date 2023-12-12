@@ -75,7 +75,7 @@ export const ListStudentTeacher = () => {
         setSearchKey(searchKeyTmp);
     };
     return (
-        <div className="customCSS">
+        <div className="customCSS" style={{marginTop:"60px"}}>
             <div className="container">
                 <h2 className="mt-4 mb-4" style={{
                     textAlign: 'center',
