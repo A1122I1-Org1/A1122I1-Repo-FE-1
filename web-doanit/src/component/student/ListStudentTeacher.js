@@ -105,7 +105,10 @@ export const ListStudentTeacher = () => {
             </div>
         </div>
         <div className="row">
-            {students.length === 0 ? <h1 className="text-center">Dữ liệu không tồn tại</h1> : <>
+            {students.length === 0 ?
+                <div className="text-center" style={{ minHeight: "400px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <h1>Dữ liệu không tồn tại</h1>
+            </div> : <>
                 {students.map((s, index) => (<div className="col-md-3 mb-4" key={index}>
                     <div className="card">
                         <LazyLoadImage
