@@ -22,6 +22,8 @@ import ListTopicNotApproval from "./component/approvalTopic/ListTopicNotApproval
 import {PrivateRouter} from "./routers/PrivateRouter";
 import NotFoundPage from "./component/error/NotFoundPage";
 import {UserInfo} from "./component/userInfo/user-info";
+import Header from "./parts/Header";
+import Footer from "./parts/Footer";
 
 function App() {
     const navigate = useNavigate();
@@ -33,12 +35,13 @@ function App() {
             // Redirect người dùng đến trang chính sau 3 giây
             setTimeout(() => {
                 navigate('/');
-            }, 3000);
+            }, 2000);
         }
     }, [roles]);
 
     return (
         <>
+            {!window.location.pathname.includes("/login") && <Header />}
             <Routes>
                 <Route path="/login" element={<Login/>}></Route>
                 <Route path="/" element={<HomePage/>}></Route>
@@ -107,6 +110,8 @@ function App() {
                 }
                 <Route path="*" element={<NotFoundPage/>}/>
             </Routes>
+            {!window.location.pathname.includes("/login") && <Footer />}
+
             <ToastContainer/>
         </>
     );

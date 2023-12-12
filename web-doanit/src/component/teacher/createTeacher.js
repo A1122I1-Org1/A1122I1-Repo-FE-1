@@ -144,7 +144,7 @@ export const CreateTeacher = () => {
 
 
     return (
-        <div className="container mx-auto">
+        <div className="container mx-auto" style={{marginTop:"60px"}}>
             <div className="row">
                 <div className="col">
                     <h2 className="mt-3 mb-3 the-h2">Thêm Mới Giáo Viên</h2>

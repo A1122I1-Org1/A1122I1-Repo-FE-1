@@ -72,7 +72,7 @@ const TopicTable = () => {
 
     const displayTopics = topics.map((topic, index) => {
         return (
-            <div key={topic.topicId} className="col-md-3 custom-card">
+            <div key={topic.topicId} className="col-md-3 custom-card" style={{marginTop:"60px"}}>
                 <div className="card">
                     <LazyLoadImage
                         effect="blur"

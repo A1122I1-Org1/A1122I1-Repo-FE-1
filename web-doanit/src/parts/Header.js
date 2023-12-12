@@ -5,13 +5,39 @@ import {
 
 } from "../assets/js/PageEffect"
 import {Link, useNavigate} from "react-router-dom";
-
+import {storage} from "../config/firebaseConfig";
+// import "default-avatar.png" from "../component/image/default-avatar.png";
 const Header = () => {
     const navigate = useNavigate();
     const [roles, setRoles] = useState([]);
+    const [avatarUrl, setAvatarUrl] = useState('');
 
+    const getAvatarFromFirebase = async (avatarName) => {
+        if (!avatarName) return null;
+        try {
+            const downloadUrl = await storage.ref(avatarName).getDownloadURL();
+            return downloadUrl;
+        } catch (error) {
+            console.error("Error fetching avatar from Firebase:", error);
+            throw error;
+        }
+    };
+
+    const getAvatar = async () => {
+        const avatar = localStorage.getItem("avatar");
+        try {
+            if (avatar) {
+                const imageUrl = await getAvatarFromFirebase(avatar);
+                setAvatarUrl(imageUrl);
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
     useEffect(() => {
         setRoles(localStorage.getItem("roles"));
+        getAvatar();
+
         // Gọi các hàm khởi tạo hiệu ứng từ PageEffects
         initMenuEffects();
     }, []); // useEffect chỉ chạy một lần khi component được tạo
@@ -27,21 +53,18 @@ const Header = () => {
                 <div className="nav__menu" id="nav-menu">
                     <ul className="nav__list">
                         <li className="nav__item">
-                            <a href="#home" className="nav__link active-link">Trang chủ</a>
+                            <Link to="/" className="nav__link active-link">Trang chủ</Link>
                         </li>
-                        <li className="nav__item">
-                            <a href="#news" className="nav__link">Tin tức</a>
-                        </li>
-                        <li className="nav__item">
-                            <a href="#projects" className="nav__link">Đề tài nổi bật</a>
-                        </li>
-                        <li className="nav__item">
-                            <a href="#contact" className="nav__link">Liên hệ</a>
-                        </li>
+
                         {
-                            !roles ? (
-                                    ""
-                                ) :
+                            window.location.pathname === "/" &&
+                            <li className="nav__item">
+                                <a href="#news" className="nav__link">Tin tức</a>
+                            </li>
+                        }
+
+                        {
+                            !roles ? ("") :
                                 roles.includes('ROLE_ADMIN') ? (
                                     <li>
                                         <a href="#" className="nav__link">Chức năng <i
@@ -72,13 +95,14 @@ const Header = () => {
                                             className="fas fa-caret-down"></i></a>
                                         <div className="dropdown-menu">
                                             <ul>
-                                                <li><Link to="/register-group-student">Đăng ký nhóm sinh viên</Link></li>
+                                                <li><Link to="/register-group-student">Đăng ký nhóm sinh viên</Link>
+                                                </li>
                                                 {
-
                                                     roles.includes("ROLE_GROUP_LEADER") &&
                                                     <li><Link to="/register-topic">Đăng ký đề tài</Link></li>
                                                 }
-                                                <li><Link to="/register-teacher">Danh sách giáo viên hướng dẫn</Link></li>
+                                                <li><Link to="/register-teacher">Danh sách giáo viên hướng dẫn</Link>
+                                                </li>
                                                 <li><Link to="/notification">Thông tin hướng dẫn</Link></li>
                                             </ul>
                                         </div>
@@ -88,8 +112,8 @@ const Header = () => {
                         {
                             roles ?
                                 <li className="nav__item">
-                                    {/*<img src="assets/img/gv.jpg" alt="User Avatar" className="user-avatar"/>*/}
-                                    <Link to="/" className="nav__link">Tài khoản <i
+                                    <img className="user-avatar" alt="avatar" src={avatarUrl ||"default-avatar.png" }/>
+                                    <Link to="/" className="nav__link">{localStorage.getItem("username")} <i
                                         className="fas fa-caret-down"></i></Link>
                                     <div className="dropdown-menu">
                                         <ul>
