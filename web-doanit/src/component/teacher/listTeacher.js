@@ -71,89 +71,92 @@ export const ListTeacher = () => {
     const submitDelete = async (delId) => {
         await TeacherService.deleteTeacher(delId);
         toast.success(`Xóa giảng viên '${teachers.find((x) => x.teacherId === delId).teacherName}' thành công.`)
-        await fetchApi();
         setDisplayConfirmationModal(false);
+        window.location.reload();
     };
     const handleSearch = () => {
         setFind(searchValue);
     };
 
 
-    return (<>
+    return (
 
-            <div className="huy title">
-                <h1>Quản lý giáo viên</h1>
-            </div>
-            <div className="huy d-flex justify-content-around" style={{marginTop: '25px', marginBottom: '12px'}}>
-                <NavLink to={"/create-teacher"} type="button" className="huy get-started-btn" style={{border: '0'}}>
-                    Thêm mới giáo viên
-                </NavLink>
-                <div className="d-flex">
-                    <input
-                        className="form-control"
-                        type="text"
-                        value={searchValue}
-                        onChange={(e) => setSearchValue(e.target.value)}
-                        placeholder="Tìm kiếm giáo viên"
-                        style={{borderRadius: '30px', border: '1px solid #d6c9bb', height: '37px', width: '300px'}}
-                    />
-                    <button type="button" className="huy get-started-btn" style={{border: '0'}} onClick={handleSearch}>
-                        Tìm kiếm
-                    </button>
+
+        <div className='container' style={{width: '100%', paddingRight: 'var(--bs-gutter-x,.75rem)', paddingLeft: 'var(--bs-gutter-x,.75rem)', marginRight: 'auto', marginLeft: 'auto', marginTop:"80px"
+        }}>
+
+
+            <div className='row'>
+                <div className="huy d-flex justify-content-around" style={{marginTop: '25px', marginBottom: '12px'}}>
+                    <NavLink to={"/create-teacher"} type="button" className="huy get-started-btn" style={{border: '0',marginLeft: '-45px'}}>
+                        Thêm mới giáo viên
+                    </NavLink>
+                    <div className="d-flex">
+                        <input
+                            className="form-control"
+                            type="text"
+                            value={searchValue}
+                            onChange={(e) => setSearchValue(e.target.value)}
+                            placeholder="Tìm kiếm giáo viên"
+                            style={{borderRadius: '30px', border: '1px solid #d6c9bb', height: '37px', width: '350px'}}
+                        />
+                        <button type="button" className="huy get-started-btn" style={{border: '0', marginLeft: '15px', marginRight: '-5px'}} onClick={handleSearch}>
+                            Tìm kiếm
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div className='container'>
-                <div className="row" style={{marginTop: '20px'}}>
-                    {teachers.length === 0 ? <h1 className='huy text-center'>Không có dữ liệu</h1> : <>
-                        {teachers.map((t, index) => (
-                            <div className="huy card col-m-3" key={t}>
+
+            <div className="row" style={{marginTop: '20px'}}>
+                {teachers.length === 0 ? <h1 className='huy text-center'>Không có dữ liệu</h1> : <>
+                    {teachers.map((t, index) => (
+                        <div className="col-3" key={t}>
+                            <div className="huy card card-huy">
                                 <LazyLoadImage
                                     effect="blur" src={avatarUrls[index]} className="huy img"
                                     alt={`Giảng viên ${t.avatar}`}
                                 />
                                 <hr/>
-                                <div className='huy card-body'>
+                                <div className='huy card-body-huy' >
                                     <h5 className="huy card-title">{t.teacherName}</h5>
-                                    <p className="huy card-text"><i className="bi bi-code-square"></i> Mã giảng viên
-                                        : {"MGV-".concat(t.teacherId.toString())}</p>
-                                    <p className="huy card-text"><i className="bi bi-envelope-at"></i> Email
-                                        : {t.email.length > 22 ? `${t.email.substring(0, 22)}...` : t.email}</p>
-                                    <p className="huy card-text"><i className="bi bi-telephone"></i> Sdt : {t.phone}</p>
-                                    <p className="huy card-text"><i className="bi bi-signpost-2"></i> Khoa: {t.facultyName}
+                                    <p className="huy card-text"><b><i className="bi bi-code-square" style={{ marginLeft: '10px', color: 'black'}}></i> Mã giảng viên
+                                    </b>: {"MGV-".concat(t.teacherId.toString())}</p>
+                                    <p className="huy card-text"><b><i className="bi bi-envelope-at" style={{ marginLeft: '10px', color: 'black'}}></i> Email
+                                    </b>: {t?.email ?? ''}</p>
+                                    <p className="huy card-text"><b><i className="bi bi-telephone" style={{ marginLeft: '10px', color: 'black'}}></i> Sdt </b>: {t.phone}</p>
+                                    <p className="huy card-text"><b><i className="bi bi-signpost-2" style={{ marginLeft: '10px', color: 'black'}}></i> Khoa </b>: {t.facultyName}
                                     </p>
                                 </div>
                                 <hr/>
                                 <div className="huy action" style={{float: 'right'}}>
                                     <NavLink to={`/update-teacher/${t.teacherId}`}>
-                                        <button className="huy btn btn-success rounded-circle">
-                                            <i className="bi bi-pencil-square"></i>
-                                        </button>
+                                        <button  className="huy btn btn-lh btn-success bi bi-pencil-square" ></button>
                                     </NavLink>
-                                    {/*<button className="huy btn btn-success rounded-circle"><i className="bi bi-pencil-square"></i></button>*/}
-                                    <button className="huy btn btn-danger rounded-circle"
-                                            onClick={() => showDeleteModal(t.teacherId)}><i className="bi bi-trash"></i>
-                                    </button>
+
+                                    <button className="huy btn btn-lh btn-danger bi bi-trash" onClick={() => showDeleteModal(t.teacherId)}></button>
                                 </div>
                             </div>
-                        ))
-                        }
-
-                    </>
+                        </div>
+                    ))
                     }
-                </div>
 
-                <div className="row" style={{marginTop: '20px'}}>
-                    <div>
-                        <PaginationNav pageNumber={pageNumber}
-                                       totalPages={totalPages}
-                                       setPageNumber={setPageNumber}/>
-                    </div>
+                </>
+                }
+            </div>
+
+            <div className="row" style={{marginTop: '20px'}}>
+                <div>
+                    <PaginationNav pageNumber={pageNumber}
+                                   totalPages={totalPages}
+                                   setPageNumber={setPageNumber}/>
                 </div>
             </div>
 
+
             <DeleteConfirmation showModal={displayConfirmationModal} confirmModal={submitDelete}
                                 hideModal={hideConfirmationModal} id={delId} message={deleteMessage}/>
-        </>
+        </div>
+
     )
 }
 
