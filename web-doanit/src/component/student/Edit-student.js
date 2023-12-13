@@ -156,10 +156,12 @@ export function Edit() {
                             }
                         }
 
-                        update()
+                        await update()
 
                         toast('🦄 Edit book successfully!!!!');
-                        navigate("/list-student")
+                        setTimeout(() => {
+                            navigate("/list-student")
+                        }, 1000)
 
                     } catch (error) {
                         console.error('Error uploading file or saving student:', error);
@@ -213,7 +215,7 @@ export function Edit() {
                             <h2 className="khoahnd-title">CHỈNH SỬA SINH VIÊN</h2>
                         </div>
 
-                        <div className="edit_form" style={{ display: "flex", gap: "100px" }}>
+                        <div className="khoahnd_form" style={{ display: "flex", gap: "100px" }}>
 
                             <div className="group">
                                 <div className="khoahnd-avatar-container">
