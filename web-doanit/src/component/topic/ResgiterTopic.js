@@ -54,9 +54,6 @@ export function ResgiterTopic() {
     };
     // const nagivate = useNavigate();
     return (<>
-        <div>
-            <Header/>
-        </div>
         <Formik
 
             initialValues=
@@ -257,7 +254,6 @@ export function ResgiterTopic() {
 
             </>
         </Formik>
-        <br/>
-        <Footer/>
+
     </>)
 }
