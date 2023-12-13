@@ -24,6 +24,7 @@ import NotFoundPage from "./component/error/NotFoundPage";
 import {UserInfo} from "./component/userInfo/user-info";
 import Header from "./parts/Header";
 import Footer from "./parts/Footer";
+import ScrollReveal from "scrollreveal";
 
 function App() {
     const navigate = useNavigate();
@@ -38,7 +39,18 @@ function App() {
             }, 2000);
         }
     }, [roles]);
+    useEffect(() => {
+        const sr = ScrollReveal({
+            distance: '60px',
+            duration: 2500,
+            delay: 400,
+        });
 
+        sr.reveal(`.footer .row`, {
+            origin: 'left',
+            interval: 100,
+        });
+    }, []);
     return (
         <>
             {!window.location.pathname.includes("/login") && <Header />}
