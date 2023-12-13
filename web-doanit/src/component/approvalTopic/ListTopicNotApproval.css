@@ -2,21 +2,21 @@ body {
     font-family: "Helvetica", serif;
 }
 
-.header-approval .title-approval {
+.TuanHA .header-approval .title-approval {
     color: #87AA74;
     margin: 100px 35px 35px 0;
     text-align: center;
 }
 
-.btn-document {
+.TuanHA .btn-document {
     border-radius: 50%;
 }
 
-.text-center {
+.TuanHA .text-center {
     text-align: center;
 }
 
-.form-table {
+.TuanHA .form-table {
     width: 100%;
     overflow-x: auto;
     border-collapse: collapse;
@@ -24,43 +24,43 @@ body {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
-.form-table th,
-.form-table td {
+.TuanHA .form-table th,
+.TuanHA .form-table td {
     padding: 10px;
     border: 1px solid #ccc;
 }
 
-.form-table th {
+.TuanHA .form-table th {
     text-align: center;
     background-color: #B9DAA4;
     border: 1px solid rgba(0, 0, 0, 0.108);
     color: black;
 }
 
-.form-table tr {
+.TuanHA .form-table tr {
     color: black;
 }
 
-.form-table tr:hover {
+.TuanHA .form-table tr:hover {
     background-color: #e0e0e0e6;
     transition: 0.3s;
 }
 
-.container .censor-pagination {
+.TuanHA .container .censor-pagination {
     text-align: center;
     margin: 20px 0;
 }
 
-.text-center button:disabled {
+.TuanHA .text-center button:disabled {
     background-color: #E6E4E4;
     color: black;
 }
 
-.modal-body {
+.TuanHA .modal-body {
     color: red;
 }
 
-.modal-accept {
+.TuanHA .modal-accept {
     display: none;
     position: fixed;
     z-index: 1;
@@ -72,13 +72,13 @@ body {
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.title-date-stages {
+.TuanHA .title-date-stages {
     color: #87AA74;
     margin-bottom: 20px;
     text-align: center;
 }
 
-.modal-accept-content {
+.TuanHA .modal-accept-content {
     border-radius: 10px;
     text-align: center;
     background-color: #FEFEFE;
@@ -88,47 +88,47 @@ body {
     width: 60%;
 }
 
-.close {
+.TuanHA .close {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
+.TuanHA .close:hover,
+.TuanHA .close:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
 }
 
-.stages-name {
+.TuanHA .stages-name {
     float: left;
     color: #619F3D;
 }
 
-.stages {
+.TuanHA .stages {
     margin-bottom: 50px;
 }
 
-.cancel-form {
+.TuanHA .cancel-form {
     display: none;
     margin-top: 20px;
 }
 
-.approval-form {
+.TuanHA .approval-form {
     display: none;
     margin-top: 20px;
 }
 
-.pagination {
+.TuanHA .pagination {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 50px;
 }
 
-.pagination button {
+.TuanHA .pagination button {
     margin: 0 5px;
     padding: 10px 20px;
     cursor: pointer;
@@ -139,23 +139,23 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.pagination button:hover {
+.TuanHA .pagination button:hover {
     background-color: #2980B9;
 }
 
-.pagination button:disabled {
+.TuanHA .pagination button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
     background-color: #95A5A6;
     border: 1px solid #95A5A6;
 }
 
-.pagination span {
+.TuanHA .pagination span {
     margin: 0 5px;
     font-weight: bold;
     color: #3498DB;
 }
 
-.btn-document {
+.TuanHA .btn-document {
     border-radius: 50%;
 }

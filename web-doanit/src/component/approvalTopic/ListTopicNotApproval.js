@@ -224,7 +224,7 @@ function ListTopicNotApproval(props) {
     }
 
     return topics.length !== 0 ? (
-        <>
+        <div className="TuanHA">
             <div className="header-approval">
                 <h2 className="title-approval">KIỂM DUYỆT ĐỀ TÀI</h2>
             </div>
@@ -628,7 +628,7 @@ function ListTopicNotApproval(props) {
                 </Modal.Footer>
             </Modal>
 
-        </>
+        </div>
     ) : "Tất cả đề tài đã đươc phê duyệt!"
 }
 
