@@ -12,7 +12,9 @@ export const UserInfo = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [user, setUser] = useState({});
-    const [roleNames, setRoleNames] = useState([]);
+    // const [roleNames, setRoleNames] = useState([]);
+    const roles=localStorage.getItem("roles");
+
 
     const getAvatarFromFirebase = async (avatarName) => {
         if (!avatarName) return null;
@@ -21,19 +23,17 @@ export const UserInfo = () => {
             return downloadUrl;
         } catch (error) {
             console.error("Error fetching avatar from Firebase:", error);
-            throw error;
+
         }
     };
     const fetchData = async () => {
         try {
-            // debugger;
             const res = await UserService.detailInfo();
-            const roles = res.roles.map((item) => item.role.roleName);
-            setRoleNames(roles);
+            console.log(roles)
+
             setUser(roles.includes("ROLE_TEACHER") ? res.teacher : res.student);
             if (roles.includes("ROLE_TEACHER")){
                 if (res.teacher.avatar) {
-
                     const imageUrl = await getAvatarFromFirebase(res.teacher.avatar);
                     setAvatarUrl(imageUrl);
                 }
@@ -43,16 +43,17 @@ export const UserInfo = () => {
                     setAvatarUrl(imageUrl);
                 }
             }
+
             setIsLoading(false);
         } catch (error) {
             if (error.response && error.response.status === 403) {
                 navigate("/login");
             } else if (error.response && error.response.status === 400) {
-                toast(error.response.data);
+                toast.error(error.response.data);
             } else {
                 setIsLoading(false);
                 // throw error;
-                // toast("Có lỗi xảy ra khi xem chi tiết thông tin người dùng");
+                toast.error("Có lỗi xảy ra khi xem chi tiết thông tin người dùng");
             }
         }
     };
@@ -60,13 +61,9 @@ export const UserInfo = () => {
         fetchData();
     }, []);
 
-    const onClickLogout = () => {
-        localStorage.removeItem("token");
-        navigate("/login");
-    };
 
     return (
-        <div className="user-info" style={{marginTop:"60px"}}>
+        <div className="user-info" style={{marginTop:"90px"}}>
             <div className="container">
                 <h2 className="title">THÔNG TIN CHI TIẾT</h2>
                 {isLoading ? (
@@ -90,8 +87,7 @@ export const UserInfo = () => {
                                                value={user.gender === 1 ? "Nam" : "Nữ"}/>
                                 <UserInfoInput label="Số điện thoại" name="phone" value={user.phone}/>
                                 {
-                                    roleNames.includes("ROLE_TEACHER") ? (
-
+                                    roles.includes("ROLE_TEACHER") ? (
                                         <>
                                             <UserInfoInput label="Khoa" name="faculty" value={user.faculty.name}/>
                                             <UserInfoInput label="Học vị" name="degree" value={user.degree.name}/>

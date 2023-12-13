@@ -80,7 +80,7 @@ export function RegisterTeacher(props) {
     };
     return (
         <>
-            <div className="register-teacher" style={{marginTop:"60px"}}>
+            <div className="register-teacher" style={{marginTop:"90px"}}>
                 <div className="container">
                     <h2 className="title">ĐĂNG KÝ GIÁO VIÊN HƯỚNG DẪN</h2>
                     <div className="col-12">
@@ -176,7 +176,11 @@ export function RegisterTeacher(props) {
                     <Modal.Body>
                         <div className="row">
                             <div className="col-md-3 mr-2">
-                                <div className="avatar-container">
+                                <div className="avatar-container" style={{display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    height: "100%"}}>
                                     <img
                                         className="avatar"
                                         alt="avatar"
@@ -186,24 +190,24 @@ export function RegisterTeacher(props) {
                             </div>
                             <div className="col-md-4 mr-5">
                                 <div className="form-group">
-                                    <label htmlFor="name">Tên Giáo Viên</label>
+                                    <label htmlFor="name" style={{color: "black", fontWeight:"bold"}}>Tên Giáo Viên</label>
                                     <input type="text" className="form-control"
                                            id="name2" value={inforTeacher.name}
                                            readOnly/>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="dob">Ngày Sinh</label>
+                                    <label htmlFor="dob"style={{color: "black", fontWeight:"bold"}}>Ngày Sinh</label>
                                     <input type="date" className="form-control"
                                            id="dob2" value={inforTeacher.dateOfBirth} readOnly/>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="email">Email</label>
+                                    <label htmlFor="email" style={{color: "black", fontWeight:"bold"}}>Email</label>
                                     <input type="email" className="form-control"
                                            id="email2" value={inforTeacher.email}
                                            readOnly/>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="address">Địa Chỉ</label>
+                                    <label htmlFor="address" style={{color: "black", fontWeight:"bold"}}>Địa Chỉ</label>
                                     <input type="text" className="form-control"
                                            id="address2"
                                            value={inforTeacher.address}
@@ -212,28 +216,27 @@ export function RegisterTeacher(props) {
                             </div>
                             <div className="col-md-4">
                                 <div className="form-group">
-                                    <label htmlFor="gender">Giới Tính</label>
+                                    <label htmlFor="gender" style={{color: "black", fontWeight:"bold"}}>Giới Tính</label>
                                     <input type="text" className="form-control"
                                            id="gender2" value={inforTeacher.gender === 1 ? "Nam" : "Nữ"} readOnly/>
                                 </div>
-                                <div className="form-group">
-                                    <label htmlFor="phone">Số Điện Thoại</label>
+                                <div className="form-group" >
+                                    <label htmlFor="phone" style={{color: "black", fontWeight:"bold"}}>Số Điện Thoại</label>
                                     <input type="tel" className="form-control"
                                            id="phone2" value={inforTeacher.phone} readOnly/>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="department">Khoa</label>
+                                    <label htmlFor="department"style={{color: "black", fontWeight:"bold"}}>Khoa</label>
                                     <input type="tel" className="form-control"
                                            id="department2" value={inforTeacher.facultyName} readOnly/>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="degree">Học Vị</label>
+                                    <label htmlFor="degree"style={{color: "black", fontWeight:"bold"}}>Học Vị</label>
                                     <input type="text" className="form-control"
                                            id="degree2" value={inforTeacher.degreeName} readOnly/>
                                 </div>
                             </div>
                         </div>
-
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="outline-secondary" onClick={handleClose}>

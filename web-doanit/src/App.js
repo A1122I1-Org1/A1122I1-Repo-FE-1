@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Route, Routes, useNavigate} from "react-router-dom";
 import {CreateTeacher} from "./component/teacher/createTeacher";
 import {ListStudentAd} from "./component/student/ListStudentAd";
@@ -28,20 +28,27 @@ import Footer from "./parts/Footer";
 function App() {
     const navigate = useNavigate();
     const roles = localStorage.getItem("roles");
+    const token=localStorage.getItem("token");
+    const [showHeaderFooter, setShowHeaderFooter] = useState(true);
+
+    const checkTokenExpiration = () => {
+        if (!token) return false;
+        const { exp } = JSON.parse(atob(token.split(".")[1]));
+        return Date.now() < exp * 1000;
+    };
 
     useEffect(() => {
-        if (roles && window.location.pathname === "/login") {
-            toast.info("Bạn đã đăng nhập", { autoClose: 3000 });
-            // Redirect người dùng đến trang chính sau 3 giây
+        if (checkTokenExpiration() && window.location.pathname === "/login") {
+            toast.warning("Bạn đã đăng nhập ", {autoClose: 1000});
             setTimeout(() => {
                 navigate('/');
-            }, 2000);
+            },1500)
         }
     }, [roles]);
 
     return (
         <>
-            {!window.location.pathname.includes("/login") && <Header />}
+            {showHeaderFooter && !window.location.pathname.includes("/login") && <Header />}
             <Routes>
                 <Route path="/login" element={<Login/>}></Route>
                 <Route path="/" element={<HomePage/>}></Route>
@@ -108,10 +115,11 @@ function App() {
                         </>
                     )
                 }
-                <Route path="*" element={<NotFoundPage/>}/>
+                <Route path="*" element={ <NotFoundPage
+                    hideHeaderFooter={() => setShowHeaderFooter(!showHeaderFooter)}
+                />}/>
             </Routes>
-            {!window.location.pathname.includes("/login") && <Footer />}
-
+            {showHeaderFooter && !window.location.pathname.includes("/login") && <Footer />}
             <ToastContainer/>
         </>
     );
