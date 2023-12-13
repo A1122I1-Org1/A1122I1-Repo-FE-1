@@ -4,7 +4,6 @@ import * as ListRegisterTeacherService from "../../service/RegisterTeacherServic
 import {toast} from "react-toastify";
 import {Modal, Button} from 'react-bootstrap';
 import {storage} from "../../config/firebaseConfig";
-import {ro} from "date-fns/locale";
 
 export function RegisterTeacher(props) {
     const [pageNumber, setPageNumber] = useState(0);
@@ -23,11 +22,12 @@ export function RegisterTeacher(props) {
             return downloadUrl;
         } catch (error) {
             console.error("Error fetching avatar from Firebase:", error);
-            throw error;
+            // throw error;
         }
     };
 
     const handleShow = (id) => {
+        console.log(id)
         setShowModal(true);
         getInforTeacher(id)
     }
@@ -35,7 +35,7 @@ export function RegisterTeacher(props) {
 
     useEffect(() => {
         fetchApi();
-    }, [pageNumber])
+    }, [pageNumber,inforTeacher])
 
     const fetchApi = async () => {
         try {
@@ -60,6 +60,7 @@ export function RegisterTeacher(props) {
             setInforTeacher(result || []);
         } catch (error) {
             if (error.response && error.response.status === 400) {
+                setInforTeacher("");
                 toast(error.response.data);
             } else {
                 toast("Có lỗi xảy ra ");
@@ -67,6 +68,7 @@ export function RegisterTeacher(props) {
         }
     }
     const register = async (teacherId) => {
+        debugger;
         try {
             await ListRegisterTeacherService.registerTeacher(teacherId);
             toast("Đăng ký thành công");
@@ -80,7 +82,7 @@ export function RegisterTeacher(props) {
     };
     return (
         <>
-            <div className="register-teacher" style={{marginTop:"90px"}}>
+            <div className="register-teacher" style={{marginTop: "90px"}}>
                 <div className="container">
                     <h2 className="title">ĐĂNG KÝ GIÁO VIÊN HƯỚNG DẪN</h2>
                     <div className="col-12">
@@ -102,6 +104,8 @@ export function RegisterTeacher(props) {
                                         <td>{item.countTeacher}/10</td>
                                         <td>
                                             <button type="button" className="btn btn-outline-success"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal"
                                                     onClick={() => handleShow(item.teacherId)}>
                                                 Chi tiết
                                             </button>
@@ -165,92 +169,107 @@ export function RegisterTeacher(props) {
                         </nav>
                     </div>
                 </div>
-                <Modal show={showModal} onHide={handleClose}
-                       {...props}
-                       size="lg"
-                       aria-labelledby="contained-modal-title-vcenter"
-                       centered>
-                    <Modal.Header closeButton>
-                        <Modal.Title>THÔNG TIN CHI TIẾT GIÁO VIÊN</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <div className="row">
-                            <div className="col-md-3 mr-2">
-                                <div className="avatar-container" style={{display: "flex",
-                                    flexDirection: "column",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    height: "100%"}}>
-                                    <img
-                                        className="avatar"
-                                        alt="avatar"
-                                        src={avatarUrl}
-                                    />
+                <div className="mt-3 save-exit-buttons">
+                    <div className="modal fade" id="exampleModal" tabIndex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog modal-lg">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="exampleModalLabel">THÔNG TIN GIÁO VIÊN</h5>
+                                    <button type="reset" className="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
                                 </div>
-                            </div>
-                            <div className="col-md-4 mr-5">
-                                <div className="form-group">
-                                    <label htmlFor="name" style={{color: "black", fontWeight:"bold"}}>Tên Giáo Viên</label>
-                                    <input type="text" className="form-control"
-                                           id="name2" value={inforTeacher.name}
-                                           readOnly/>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="dob"style={{color: "black", fontWeight:"bold"}}>Ngày Sinh</label>
-                                    <input type="date" className="form-control"
-                                           id="dob2" value={inforTeacher.dateOfBirth} readOnly/>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="email" style={{color: "black", fontWeight:"bold"}}>Email</label>
-                                    <input type="email" className="form-control"
-                                           id="email2" value={inforTeacher.email}
-                                           readOnly/>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="address" style={{color: "black", fontWeight:"bold"}}>Địa Chỉ</label>
-                                    <input type="text" className="form-control"
-                                           id="address2"
-                                           value={inforTeacher.address}
-                                           readOnly/>
-                                </div>
-                            </div>
-                            <div className="col-md-4">
-                                <div className="form-group">
-                                    <label htmlFor="gender" style={{color: "black", fontWeight:"bold"}}>Giới Tính</label>
-                                    <input type="text" className="form-control"
-                                           id="gender2" value={inforTeacher.gender === 1 ? "Nam" : "Nữ"} readOnly/>
-                                </div>
-                                <div className="form-group" >
-                                    <label htmlFor="phone" style={{color: "black", fontWeight:"bold"}}>Số Điện Thoại</label>
-                                    <input type="tel" className="form-control"
-                                           id="phone2" value={inforTeacher.phone} readOnly/>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="department"style={{color: "black", fontWeight:"bold"}}>Khoa</label>
-                                    <input type="tel" className="form-control"
-                                           id="department2" value={inforTeacher.facultyName} readOnly/>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="degree"style={{color: "black", fontWeight:"bold"}}>Học Vị</label>
-                                    <input type="text" className="form-control"
-                                           id="degree2" value={inforTeacher.degreeName} readOnly/>
+                                <div className="modal-body">
+                                    <div className="row">
+                                        <div className="col-md-3 mr-2">
+                                            <div className="avatar-container" style={{
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                height: "100%"
+                                            }}>
+                                                <img
+                                                    className="avatar"
+                                                    alt="avatar"
+                                                    src={avatarUrl ||"default-avatar.png" }
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="col-md-4 mr-5">
+                                            <div className="form-group">
+                                                <label htmlFor="name" style={{color: "black", fontWeight: "bold"}}>Tên
+                                                    Giáo Viên</label>
+                                                <input type="text" className="form-control"
+                                                       id="name2" value={inforTeacher.name}
+                                                       readOnly/>
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="dob" style={{color: "black", fontWeight: "bold"}}>Ngày
+                                                    Sinh</label>
+                                                <input type="date" className="form-control"
+                                                       id="dob2" value={inforTeacher.dateOfBirth} readOnly/>
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="email"
+                                                       style={{color: "black", fontWeight: "bold"}}>Email</label>
+                                                <input type="email" className="form-control"
+                                                       id="email2" value={inforTeacher.email}
+                                                       readOnly/>
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="address" style={{color: "black", fontWeight: "bold"}}>Địa
+                                                    Chỉ</label>
+                                                <input type="text" className="form-control"
+                                                       id="address2"
+                                                       value={inforTeacher.address}
+                                                       readOnly/>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <div className="form-group">
+                                                <label htmlFor="gender" style={{color: "black", fontWeight: "bold"}}>Giới
+                                                    Tính</label>
+                                                <input type="text" className="form-control"
+                                                       id="gender2" value={inforTeacher.gender === 1 ? "Nam" : "Nữ"}
+                                                       readOnly/>
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="phone" style={{color: "black", fontWeight: "bold"}}>Số
+                                                    Điện Thoại</label>
+                                                <input type="tel" className="form-control"
+                                                       id="phone2" value={inforTeacher.phone} readOnly/>
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="department"
+                                                       style={{color: "black", fontWeight: "bold"}}>Khoa</label>
+                                                <input type="tel" className="form-control"
+                                                       id="department2" value={inforTeacher.facultyName} readOnly/>
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="degree" style={{color: "black", fontWeight: "bold"}}>Học
+                                                    Vị</label>
+                                                <input type="text" className="form-control"
+                                                       id="degree2" value={inforTeacher.degreeName} readOnly/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="reset" className="btn btn-outline-secondary" style={{marginRight:"7px", marginTop:"5px"}}
+                                            data-bs-dismiss="modal" onClick={() => setShowModal(false)}>Thoát
+                                    </button>
+                                    {
+                                        roles.includes("ROLE_GROUP_LEADER") &&
+                                        <Button variant="outline-success" style={{marginRight:"7px", marginTop:"5px"}}
+                                                onClick={() => register(inforTeacher.teacherId)}>
+                                            Đăng kí
+                                        </Button>
+                                    }
                                 </div>
                             </div>
                         </div>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="outline-secondary" onClick={handleClose}>
-                            Đóng
-                        </Button>
-                        {
-                            roles.includes("ROLE_GROUP_LEADER") &&
-                            <Button variant="outline-success" onClick={() => register(inforTeacher.teacherId)}>
-                                Đăng kí
-                            </Button>
-                        }
-
-                    </Modal.Footer>
-                </Modal>
+                    </div>
+                </div>
+                {/*MODAL*/}
             </div>
         </>
     )
