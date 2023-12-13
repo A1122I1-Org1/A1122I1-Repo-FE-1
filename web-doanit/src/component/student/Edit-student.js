@@ -18,6 +18,8 @@ export function Edit() {
     const [avatar, setAvatar] = useState(null)
     const [avatarUrl, setAvatarUrl] = useState('')
     const [isUploadImage, setIsUploadImage] = useState(true);
+    const [errorData, setErrorData] = useState({})
+
 
     const navigate=useNavigate()
 
@@ -147,24 +149,20 @@ export function Edit() {
                             await handleAvatarUpload();
                             values.avatar = avatar.name;
                         }
-                        const update = async () => {
-                            try {
-                                await studentService.update(values);
 
-                            } catch (e) {
-                                console.log(e)
-                            }
+                        const response=await studentService.update(values);
+                        if (response !== null){
+                            setErrorData(response);
+                            toast("Sửa thông tin sinh viên thất bại");
+                        }else {
+                            setErrorData({});
+                            toast('🦄 Chỉnh sửa sinh viên thành công!!!!');
+                            setTimeout(() => {
+                                navigate("/list-student")
+                            }, 1000)
                         }
-
-                        await update()
-
-                        toast('🦄 Edit book successfully!!!!');
-                        setTimeout(() => {
-                            navigate("/list-student")
-                        }, 1000)
-
                     } catch (error) {
-                        console.error('Error uploading file or saving student:', error);
+                        toast('Lỗi! chỉnh sửa sinh viên thất bại');
                     }
                 }}
 
@@ -234,12 +232,14 @@ export function Edit() {
                                             Chọn ảnh đại diện
                                         </label>
                                         <ErrorMessage name="avatar" className="text-danger" component="p" />
+                                        {errorData['errorFileFormat'] && <div
+                                            className="text-danger">{errorData['errorFileFormat']}</div>}
                                     </div>
                                 </div>
                             </div>
                             <div className="group1">
                                 <div className="khoahnd-form-group">
-                                    <label htmlFor="name" className="create_label">Tên sinh viên (<span
+                                    <label htmlFor="name" className="create_label">Tên Sinh Viên (<span
                                         className="text-danger">*</span>):</label>
                                     <Field type="text" className="form-control" id="name" name="name"/>
                                     <ErrorMessage name="name" className="text-danger" component="p"/>
@@ -255,6 +255,8 @@ export function Edit() {
                                     <label htmlFor="email" className="create_label">Email (<span className="text-danger">*</span>):</label>
                                     <Field type="text" className="form-control" id="email" name="email"/>
                                     <ErrorMessage name="email" className="text-danger" component="p"/>
+                                    {errorData['errorEmailDuplicate'] && <div
+                                        className="text-danger">{errorData['errorEmailDuplicate']}</div>}
                                 </div>
                                 <div className="khoahnd-form-group">
                                     <label htmlFor="grade" className="create_label">Lớp (<span className="text-danger">*</span>):</label>
@@ -276,6 +278,8 @@ export function Edit() {
                                         className="text-danger">*</span>):</label>
                                     <Field type="text" className="form-control" id="phone" name="phone"/>
                                     <ErrorMessage name="phone" className="text-danger" component="p"/>
+                                    {errorData['errorPhoneDuplicate'] && <div
+                                        className="text-danger">{errorData['errorPhoneDuplicate']}</div>}
                                 </div>
                                 <div className="khoahnd-form-group">
                                     <label htmlFor="address" className="create_label">Địa Chỉ (<span
