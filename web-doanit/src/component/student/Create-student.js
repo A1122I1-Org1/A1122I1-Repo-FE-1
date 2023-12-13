@@ -60,6 +60,7 @@ export function Create() {
                 const uploadTask = storage.ref(`${avatar.name}`).put(avatar);
                 await uploadTask;
                 const downloadUrl = await storage.ref(avatar.name).getDownloadURL();
+                console.log('URL Tải Xuống:', downloadUrl);
                 setAvatarUrl(downloadUrl);
             }
         } catch (error) {
@@ -95,9 +96,11 @@ export function Create() {
                     try {
                         await handleAvatarUpload();
                         values.avatar = avatar.name;
-                        save(values);
+                        await save(values);
                         toast('🦄 Thêm mới sinh viên thành công!!!!');
-                        navigate("/list-student")
+                        setTimeout(() => {
+                            navigate("/list-student")
+                        }, 1000)
                     } catch (error) {
                         console.error('Lỗi up ảnh hoặc thêm sinh viên:', error);
                     }
@@ -152,7 +155,7 @@ export function Create() {
                             <h2 className="khoahnd-title">THÊM MỚI SINH VIÊN</h2>
                         </div>
 
-                        <div className="create_form" style={{ display: "flex", gap: "100px" }}>
+                        <div className="khoahnd_form" style={{ display: "flex", gap: "100px" }}>
 
                             <div className="group">
                                 <div className="khoahnd-avatar-container">
