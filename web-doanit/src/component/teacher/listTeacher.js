@@ -81,29 +81,25 @@ export const ListTeacher = () => {
 
     return (
 
-
-        <div className='container' style={{width: '100%', paddingRight: 'var(--bs-gutter-x,.75rem)', paddingLeft: 'var(--bs-gutter-x,.75rem)', marginRight: 'auto', marginLeft: 'auto', marginTop:"80px"
-        }}>
-
-
-            <div className='row'>
-                <div className="huy d-flex justify-content-around" style={{marginTop: '25px', marginBottom: '12px'}}>
-                    <NavLink to={"/create-teacher"} type="button" className="huy get-started-btn" style={{border: '0',marginLeft: '-45px'}}>
-                        Thêm mới giáo viên
-                    </NavLink>
-                    <div className="d-flex">
-                        <input
-                            className="form-control"
-                            type="text"
-                            value={searchValue}
-                            onChange={(e) => setSearchValue(e.target.value)}
-                            placeholder="Tìm kiếm giáo viên"
-                            style={{borderRadius: '30px', border: '1px solid #d6c9bb', height: '37px', width: '350px'}}
-                        />
-                        <button type="button" className="huy get-started-btn" style={{border: '0', marginLeft: '15px', marginRight: '-5px'}} onClick={handleSearch}>
-                            Tìm kiếm
-                        </button>
-                    </div>
+            <div className="huy title" style={{marginTop:"80px"}}>
+                <h2>DANH SÁCH GIÁO VIÊN</h2>
+            </div>
+            <div className="huy d-flex justify-content-around" style={{marginTop: '25px', marginBottom: '12px'}}>
+                <NavLink to={"/create-teacher"} type="button" className="huy get-started-btn" style={{border: '0'}}>
+                    Thêm mới giáo viên
+                </NavLink>
+                <div className="d-flex">
+                    <input
+                        className="form-control"
+                        type="text"
+                        value={searchValue}
+                        onChange={(e) => setSearchValue(e.target.value)}
+                        placeholder="Tìm kiếm giáo viên"
+                        style={{borderRadius: '30px', border: '1px solid #d6c9bb', height: '37px', width: '300px'}}
+                    />
+                    <button type="button" className="huy get-started-btn" style={{border: '0'}} onClick={handleSearch}>
+                        Tìm kiếm
+                    </button>
                 </div>
             </div>
 

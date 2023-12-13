@@ -23,7 +23,6 @@ const NotificationList = () => {
 
     return (
         <>
-
             <section className="container projects section" id="projects">
                 <h2 className="section__title section__title-gradient projects__line">
                     THÔNG TIN HƯỚNG DẪN

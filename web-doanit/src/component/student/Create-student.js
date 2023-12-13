@@ -155,7 +155,9 @@ export function Create() {
                             <h2 className="khoahnd-title">THÊM MỚI SINH VIÊN</h2>
                         </div>
 
+
                         <div className="khoahnd_form" style={{ display: "flex", gap: "100px" }}>
+
 
                             <div className="group">
                                 <div className="khoahnd-avatar-container">

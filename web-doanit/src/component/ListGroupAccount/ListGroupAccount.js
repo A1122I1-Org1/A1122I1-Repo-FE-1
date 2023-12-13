@@ -196,7 +196,7 @@ const ListGroupAccount = () => {
             </div>
             <div className="container containerNghia">
                 <div className="col-12">
-                    <div className="title1 title1Nghia"><h2>Quản lý nhóm sinh viên</h2></div>
+                    <div className="title1 title1Nghia"><h2>QUẢN LÝ NHÓM SINH VIÊN</h2></div>
                     <div className="d-flex justify-content-end justify-content-endNghia">
                         <div className="col-4">
                             <div className="input-group mb-3 rounded-pill border p-2">

@@ -51,6 +51,7 @@ export const UserInfo = () => {
             } else if (error.response && error.response.status === 400) {
                 toast.error(error.response.data);
             } else {
+                setUser("");
                 setIsLoading(false);
                 // throw error;
                 toast.error("Có lỗi xảy ra khi xem chi tiết thông tin người dùng");

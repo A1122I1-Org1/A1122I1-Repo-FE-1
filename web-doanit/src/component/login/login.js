@@ -102,7 +102,7 @@ export const Login = () => {
                                                     .max(20, 'Tên người dùng không lớn hơn 19 kí tự')
                                                     .matches(/^[a-zA-Z0-9_\-]+$/u, "Tên người dùng không chứa kí tự đặt biệt"),
                                                 password: Yup.string().required("Vui lòng nhập mật khẩu")
-                                                    .min(1, 'Mật khẩu không bé hơn 8 kí tự')
+                                                    .min(8, 'Mật khẩu không bé hơn 8 kí tự')
                                                 ,
                                             })}
                                             onSubmit={async (values) => {
