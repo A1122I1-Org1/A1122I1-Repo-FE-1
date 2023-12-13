@@ -1,7 +1,7 @@
 import axios from "axios"
-export const getAllTopicNotApproval = async (page, size) => {
+export const getAllTopicNotApproval = async (page) => {
     try {
-        const result = await axios.get('/get-topic-not-approval?page=' + page + '&size=1');
+        const result = await axios.get('/get-topic-not-approval?page=' + page + '&size=3');
         return result.data;
     } catch (error) {
         console.error("Error while fetching data:", error);
