@@ -71,15 +71,15 @@ export const ListTeacher = () => {
     const submitDelete = async (delId) => {
         await TeacherService.deleteTeacher(delId);
         toast.success(`Xóa giảng viên '${teachers.find((x) => x.teacherId === delId).teacherName}' thành công.`)
-        await fetchApi();
         setDisplayConfirmationModal(false);
+        window.location.reload();
     };
     const handleSearch = () => {
         setFind(searchValue);
     };
 
 
-    return (<>
+    return (
 
             <div className="huy title" style={{marginTop:"80px"}}>
                 <h2>DANH SÁCH GIÁO VIÊN</h2>
@@ -102,58 +102,57 @@ export const ListTeacher = () => {
                     </button>
                 </div>
             </div>
-            <div className='container'>
-                <div className="row" style={{marginTop: '20px'}}>
-                    {teachers.length === 0 ? <h1 className='huy text-center'>Không có dữ liệu</h1> : <>
-                        {teachers.map((t, index) => (
-                            <div className="huy card col-m-3" key={t}>
+
+            <div className="row" style={{marginTop: '20px'}}>
+                {teachers.length === 0 ? <h1 className='huy text-center'>Không có dữ liệu</h1> : <>
+                    {teachers.map((t, index) => (
+                        <div className="col-3" key={t}>
+                            <div className="huy card card-huy">
                                 <LazyLoadImage
                                     effect="blur" src={avatarUrls[index]} className="huy img"
                                     alt={`Giảng viên ${t.avatar}`}
                                 />
                                 <hr/>
-                                <div className='huy card-body'>
+                                <div className='huy card-body-huy' >
                                     <h5 className="huy card-title">{t.teacherName}</h5>
-                                    <p className="huy card-text"><i className="bi bi-code-square"></i> Mã giảng viên
-                                        : {"MGV-".concat(t.teacherId.toString())}</p>
-                                    <p className="huy card-text"><i className="bi bi-envelope-at"></i> Email
-                                        : {t.email.length > 22 ? `${t.email.substring(0, 22)}...` : t.email}</p>
-                                    <p className="huy card-text"><i className="bi bi-telephone"></i> Sdt : {t.phone}</p>
-                                    <p className="huy card-text"><i className="bi bi-signpost-2"></i> Khoa: {t.facultyName}
+                                    <p className="huy card-text"><b><i className="bi bi-code-square" style={{ marginLeft: '10px', color: 'black'}}></i> Mã giảng viên
+                                    </b>: {"MGV-".concat(t.teacherId.toString())}</p>
+                                    <p className="huy card-text"><b><i className="bi bi-envelope-at" style={{ marginLeft: '10px', color: 'black'}}></i> Email
+                                    </b>: {t?.email ?? ''}</p>
+                                    <p className="huy card-text"><b><i className="bi bi-telephone" style={{ marginLeft: '10px', color: 'black'}}></i> Sdt </b>: {t.phone}</p>
+                                    <p className="huy card-text"><b><i className="bi bi-signpost-2" style={{ marginLeft: '10px', color: 'black'}}></i> Khoa </b>: {t.facultyName}
                                     </p>
                                 </div>
                                 <hr/>
                                 <div className="huy action" style={{float: 'right'}}>
                                     <NavLink to={`/update-teacher/${t.teacherId}`}>
-                                        <button className="huy btn btn-success rounded-circle">
-                                            <i className="bi bi-pencil-square"></i>
-                                        </button>
+                                        <button  className="huy btn btn-lh btn-success bi bi-pencil-square" ></button>
                                     </NavLink>
-                                    {/*<button className="huy btn btn-success rounded-circle"><i className="bi bi-pencil-square"></i></button>*/}
-                                    <button className="huy btn btn-danger rounded-circle"
-                                            onClick={() => showDeleteModal(t.teacherId)}><i className="bi bi-trash"></i>
-                                    </button>
+
+                                    <button className="huy btn btn-lh btn-danger bi bi-trash" onClick={() => showDeleteModal(t.teacherId)}></button>
                                 </div>
                             </div>
-                        ))
-                        }
-
-                    </>
+                        </div>
+                    ))
                     }
-                </div>
 
-                <div className="row" style={{marginTop: '20px'}}>
-                    <div>
-                        <PaginationNav pageNumber={pageNumber}
-                                       totalPages={totalPages}
-                                       setPageNumber={setPageNumber}/>
-                    </div>
+                </>
+                }
+            </div>
+
+            <div className="row" style={{marginTop: '20px'}}>
+                <div>
+                    <PaginationNav pageNumber={pageNumber}
+                                   totalPages={totalPages}
+                                   setPageNumber={setPageNumber}/>
                 </div>
             </div>
 
+
             <DeleteConfirmation showModal={displayConfirmationModal} confirmModal={submitDelete}
                                 hideModal={hideConfirmationModal} id={delId} message={deleteMessage}/>
-        </>
+        </div>
+
     )
 }
 

@@ -1,12 +1,6 @@
 body {
     font-family: 'Helvetica', sans-serif;
 }
-.avatar {
-    margin-top: 8px;
-    width: 100%;
-    height: auto;
-    border: 1px solid #ccc;
-}
 
 .avatar-container {
     display: flex;
