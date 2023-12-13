@@ -77,7 +77,7 @@ function ListTopicNotApproval(props) {
     // Call API
     useEffect(() => {
         const fetchApi = async () => {
-            const result = await approvalTopicService.getAllTopicNotApproval(currentPage, pageSize, id);
+            const result = await approvalTopicService.getAllTopicNotApproval(currentPage);
             console.log(result);
             if (result) {
                 setTopics(result.content);
@@ -88,7 +88,7 @@ function ListTopicNotApproval(props) {
             }
         };
         fetchApi();
-    }, [currentPage, pageSize, id, topics]);
+    }, [currentPage]);
 
     //Get document form firebase
     const fetchDocuments = async () => {
@@ -332,10 +332,11 @@ function ListTopicNotApproval(props) {
                         console.log(values);
                         const cancel = async () => {
                             await approvalTopicService.cancelTopic(values);
+                            setTopics(prevTopics => prevTopics.filter(topic => topic.infoTopicRegisterId !== values.infoTopicRegisterId));
+                            document.getElementById("cancelForm").style.display = "none";
+                            toast('🦄 Hủy thành công!!!!');
                         };
                         cancel();
-                        document.getElementById("cancelForm").style.display = "none";
-                        toast('🦄 Hủy thành công!!!!');
                     }}
                 >
                     <div style={{marginTop: '20px'}}>
@@ -441,6 +442,7 @@ function ListTopicNotApproval(props) {
                                 setErrorData(response)
                             } else {
                                 setErrorData({})
+                                setTopics(prevTopics => prevTopics.filter(topic => topic.infoTopicRegisterId !== values.infoTopicRegisterId));
                                 document.getElementById("approvalForm").style.display = "none";
                                 toast('🦄 Duyệt thành công!!!!');
                             }
