@@ -44,7 +44,7 @@ export function RegisterTeacher(props) {
             setRegisterTeacher(result.content || []);
         } catch (error) {
             if (error.response && error.response.status === 400) {
-                toast(error.response.data);
+                toast.warning(error.response.data);
             } else {
                 toast.error("Có lỗi xảy ra ");
             }
@@ -68,7 +68,7 @@ export function RegisterTeacher(props) {
         }
     }
     const register = async (teacherId) => {
-        debugger;
+        // debugger;
         try {
             await ListRegisterTeacherService.registerTeacher(teacherId);
             toast.success("Đăng ký thành công");

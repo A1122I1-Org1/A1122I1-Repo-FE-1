@@ -191,7 +191,7 @@ export const UpdateTeacher = () => {
         <div className="container mx-auto" style={{marginTop:"60px"}}>
             <div className="row">
                 <div className="col">
-                    <h2 className="mt-3 mb-3" style={{textAlign:"center"}}>Chỉnh Sửa Giáo Viên</h2>
+                    <h2 className="mt-3 mb-3" style={{textAlign:"center"}}>CHỈNH SỬA GIÁO VIÊN</h2>
                 </div>
 
             </div>
