@@ -82,7 +82,7 @@ export const ListStudentAd = () => {
                         <button className="btn btn-outline-secondary border-0  btn-hover-none rounded-circle"
                                 type="button" id="button-addon2"
                                 onClick={handleSearch}
-                        ><i className="bi bi-search"></i></button>
+                        ><i className="bi bi-search" style={{color:'black'}}></i></button>
                     </div>
                 </div>
             </div>
