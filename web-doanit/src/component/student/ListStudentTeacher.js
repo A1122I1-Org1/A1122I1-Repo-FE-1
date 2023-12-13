@@ -99,7 +99,7 @@ export const ListStudentTeacher = () => {
                         <button className="btn btn-outline-secondary border-0  btn-hover-none rounded-circle"
                                 type="button" id="button-addon2"
                                 onClick={handleSearch}
-                        ><i className="bi bi-search"></i></button>
+                        ><i className="bi bi-search" style={{color:'black'}} ></i></button>
                     </div>
                 </div>
             </div>
@@ -129,7 +129,7 @@ export const ListStudentTeacher = () => {
                             </p>
                             <p className="card-text">
                                 <b>
-                                    <img src={avatarTeacherUrl}
+                                    <img src={avatarTeacherUrl || (avatar ? URL.createObjectURL(avatar) : anh)}
                                          className="bi bi-facebook rounded-circle p-1 img-teacher"
                                          alt="Facebook"
                                     />
