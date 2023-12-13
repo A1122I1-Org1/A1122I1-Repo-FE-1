@@ -46,7 +46,7 @@ export function RegisterTeacher(props) {
             if (error.response && error.response.status === 400) {
                 toast(error.response.data);
             } else {
-                toast("Có lỗi xảy ra ");
+                toast.error("Có lỗi xảy ra ");
             }
         }
     }
@@ -63,7 +63,7 @@ export function RegisterTeacher(props) {
                 setInforTeacher("");
                 toast(error.response.data);
             } else {
-                toast("Có lỗi xảy ra ");
+                toast.error("Có lỗi xảy ra ");
             }
         }
     }
@@ -71,12 +71,12 @@ export function RegisterTeacher(props) {
         debugger;
         try {
             await ListRegisterTeacherService.registerTeacher(teacherId);
-            toast("Đăng ký thành công");
+            toast.success("Đăng ký thành công");
         } catch (error) {
             if (error.response && error.response.status === 400) {
-                toast(error.response.data);
+                toast.warning(error.response.data);
             } else {
-                toast("Có lỗi xảy ra ");
+                toast.error("Có lỗi xảy ra ");
             }
         }
     };
@@ -84,7 +84,7 @@ export function RegisterTeacher(props) {
         <>
             <div className="register-teacher" style={{marginTop: "90px"}}>
                 <div className="container">
-                    <h2 className="title">ĐĂNG KÝ GIÁO VIÊN HƯỚNG DẪN</h2>
+                    <h2 className="title">DANH SÁCH GIÁO VIÊN HƯỚNG DẪN</h2>
                     <div className="col-12">
                         <table className="table table-bordered">
                             <thead>

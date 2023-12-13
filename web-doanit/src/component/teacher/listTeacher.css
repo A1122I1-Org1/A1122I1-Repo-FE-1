@@ -39,8 +39,9 @@ huy{}
     justify-content: center;
     align-items: center;
     align-content: center;
-    background: #87AA74;
-    color: white;
+    /*background: #87AA74;*/
+    /*color: white;*/
+    color: #87AA74;
 }
 
 .huy.action{

@@ -151,10 +151,10 @@ export const CreateTeacher = () => {
 
 
     return (
-        <div className="container mx-auto" style={{marginTop:"60px"}}>
+        <div className="container mx-auto" style={{marginTop:"70px"}}>
             <div className="row">
                 <div className="col">
-                    <h2 className="mt-3 mb-3 the-h2" style={{textAlign:"center"}}>Thêm Mới Giáo Viên</h2>
+                    <h2 className="mt-3 mb-3 the-h2" style={{textAlign:"center"}}>THÊM MỚI GIÁO VIÊN</h2>
                 </div>
 
             </div>

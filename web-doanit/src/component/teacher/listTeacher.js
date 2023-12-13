@@ -81,8 +81,8 @@ export const ListTeacher = () => {
 
     return (<>
 
-            <div className="huy title">
-                <h1>Quản lý giáo viên</h1>
+            <div className="huy title" style={{marginTop:"80px"}}>
+                <h2>DANH SÁCH GIÁO VIÊN</h2>
             </div>
             <div className="huy d-flex justify-content-around" style={{marginTop: '25px', marginBottom: '12px'}}>
                 <NavLink to={"/create-teacher"} type="button" className="huy get-started-btn" style={{border: '0'}}>

@@ -9,11 +9,12 @@
 
 .protect h2 {
     text-align: center;
-    background-color: #87AA74;
+    /*background-color: #87AA74;*/
     border-radius: 4px;
     height: 50px;
     align-items: center;
-    color: white;
+    /*color: white;*/
+    color: #87AA74;
     padding-top: 6px;
 }
 
