@@ -249,8 +249,6 @@ export function ResgiterTopic() {
                                 crossOrigin="anonymous"></script>
                     </div>
                 </div>
-
-
             </>
         </Formik>
 

@@ -17,7 +17,7 @@ const Projects = () => {
     }, []); // Chỉ gọi useEffect một lần khi component được render
     return (
         <>
-            <section className="container projects section" id="projects">
+            <section className="khang-container projects section" id="projects">
                 <h2 className="section__title section__title-gradient projects__line">
                     ĐỀ TÀI NỔI BẬT
                 </h2>

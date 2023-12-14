@@ -25,7 +25,8 @@ const TopicTable = () => {
                 console.error('Error fetching data:', error);
             }
         };
-        fetchData();  // Chạy fetchData ngay sau khi setTargetPage để có dữ liệu ngay từ trang đầu tiên
+
+        fetchData();
         setTargetPage(currentPage);
     }, [currentPage, searchKeyword]);
 
@@ -62,10 +63,15 @@ const TopicTable = () => {
         try {
             console.log('Searching for:', searchKeyword);
             const data = await TopicManagerService.searchTopics(searchKeyword, 0, topicsPerPage);
-            console.log('Search results:', data);
-            setTopics(data.content);
-            setTotalPages(data.totalPages);
-            setCurrentPage(0);  // Đặt lại trang về 0 sau khi tìm kiếm
+
+            if (data.content.length === 0) {
+                setTopics([]);
+                setTotalPages(0);
+            } else {
+                setTopics(data.content);
+                setTotalPages(data.totalPages);
+                setCurrentPage(0);
+            }
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -88,7 +94,12 @@ const TopicTable = () => {
                         </div>
                         <p className="card-text">
                             {topic.introduce}...
-                            <a href="#" className="btn btn-link">
+                            <a
+                                href={`https://firebasestorage.googleapis.com/v0/b/doanit-ee94d.appspot.com/o/${encodeURIComponent(topic.content)}?alt=media`}
+                                className="btn btn-link"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 Xem thêm
                             </a>
                         </p>
@@ -111,8 +122,9 @@ const TopicTable = () => {
     };
 
     return (
-        <div >
-            <section className="container projects section" id="projects">
+
+        <>
+            <section className="khang-container projects section" id="projects">
                 <h2 className="section__title section__title-gradient projects__line">
                     DANH SÁCH ĐỀ TÀI
                 </h2>
@@ -146,8 +158,7 @@ const TopicTable = () => {
                     </div>
                 </div>
                 {topics.length === 0 ? (
-                    // Display this message when there are no topics
-                    <h3 className="text-center">Dữ liệu không tồn tại</h3>
+                    <h3 className="text-center">Không tìm thấy dữ liệu phù hợp</h3>
                 ) : (
                     <div>
                         <div className="row">{displayTopics}</div>

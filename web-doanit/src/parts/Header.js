@@ -48,8 +48,8 @@ const Header = () => {
     return (
         <>
             <header className="header" id="header">
-                <nav className="nav container">
-                    <Link to="home" className="nav__logo">
+                <nav className="nav khang-container">
+                    <Link to="/" className="nav__logo">
                         <img src={`${process.env.PUBLIC_URL}/assets/img/logo.jpg`} alt=""/>
                         <h1>DoanIT</h1>
                     </Link>
@@ -116,8 +116,11 @@ const Header = () => {
                                 roles ?
                                     <li className="nav__item">
                                         <img className="user-avatar" alt="avatar" src={avatarUrl ||"default-avatar.png" }/>
-                                        <Link to="/" className="nav__link">{localStorage.getItem("username")} <i
-                                            className="fas fa-caret-down"></i></Link>
+                                        <div style={{ display: "inline-block" }}>
+                                            <Link to="/" className="nav__link">
+                                                {localStorage.getItem("username")} <i className="fas fa-caret-down"></i>
+                                            </Link>
+                                        </div>
                                         <div className="dropdown-menu">
                                             <ul>
                                                 {
