@@ -54,11 +54,7 @@ export function ResgiterTopic() {
     };
     // const nagivate = useNavigate();
     return (<>
-        <div>
-            <Header/>
-        </div>
         <Formik
-
             initialValues=
                 {{
                     inforTopicRegisterId: 1, topic: {
@@ -107,7 +103,7 @@ export function ResgiterTopic() {
             })}>
             <>
                 {/*Giao dien*/}
-                <div className="RegisterTopic">
+                <div className="RegisterTopic" style={{marginTop:"90px"}}>
                     <div className="container ">
                         <h2 className="h2Tan">ĐĂNG KÝ ĐỀ TÀI</h2>
                         <div className="container-fluid">
@@ -253,11 +249,8 @@ export function ResgiterTopic() {
                                 crossOrigin="anonymous"></script>
                     </div>
                 </div>
-
-
             </>
         </Formik>
-        <br/>
-        <Footer/>
+
     </>)
 }

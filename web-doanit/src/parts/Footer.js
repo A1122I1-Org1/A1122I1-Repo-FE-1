@@ -3,23 +3,12 @@ import ScrollReveal from "scrollreveal";
 import '../pages/homepage.css'
 
 const Footer = () => {
-    useEffect(() => {
-        const sr = ScrollReveal({
-            distance: '60px',
-            duration: 2500,
-            delay: 400,
-        });
 
-        sr.reveal(`.footer .row`, {
-            origin: 'left',
-            interval: 100,
-        });
-    }, []);
     return (
         <>
             <footer className="footer section">
                 <div className="footer">
-                    <div className="container">
+                    <div className="khang-container">
                         <div className="row">
                             <div className="col-md-4">
                                 <h4>Liên hệ</h4>
