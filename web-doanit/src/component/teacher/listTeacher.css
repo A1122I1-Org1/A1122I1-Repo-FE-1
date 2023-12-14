@@ -2,7 +2,7 @@ body{
     font-family: Helvetica, serif ;
 }
 huy{}
-.huy.card {
+.huy.card-huy {
     display: inline-block;
     margin: 10px 1%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -11,7 +11,7 @@ huy{}
     border-radius: 5px;
 }
 
-.huy.card:hover {
+.huy.card-huy:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -33,14 +33,15 @@ huy{}
     height: auto;
     border-radius: 5px;
 }
-.huy.title {
+.huy.title{
     text-align: center;
     margin-bottom: 15px;
     justify-content: center;
     align-items: center;
     align-content: center;
-    background: #87AA74;
-    color: white;
+    /*background: #87AA74;*/
+    /*color: white;*/
+    color: #87AA74;
 }
 
 .huy.action{
@@ -48,120 +49,119 @@ huy{}
     margin-top: 5px;
     margin-bottom: 5px;
 }
-.huy [class*="col-"] {
-    width: 100%;
-    justify-content: center !important;
-    text-align: center;
+/*.huy [class*="col-"] {*/
+/*    width: 100%;*/
+/*    justify-content: center !important;*/
+/*    text-align: center;*/
+/*}*/
+/*@media only screen and (min-width: 600px) {*/
+/*    !* For tablets: *!*/
+/*    .col-m-1 {*/
+/*        width: 8.33%;*/
+/*    }*/
+
+/*    .col-m-2 {*/
+/*        width: 16.66%;*/
+/*    }*/
+
+/*    .huy.col-m-3 {*/
+/*        width: 23%;*/
+/*    }*/
+
+/*    .col-m-4 {*/
+/*        width: 33.33%;*/
+/*    }*/
+
+/*    .col-m-5 {*/
+/*        width: 41.66%;*/
+/*    }*/
+
+/*    .col-m-6 {*/
+/*        width: 50%;*/
+/*    }*/
+
+/*    .col-m-7 {*/
+/*        width: 58.33%;*/
+/*    }*/
+
+/*    .col-m-8 {*/
+/*        width: 66.66%;*/
+/*    }*/
+
+/*    .col-m-9 {*/
+/*        width: 75%;*/
+/*    }*/
+
+/*    .col-m-10 {*/
+/*        width: 83.33%;*/
+/*    }*/
+
+/*    .col-m-11 {*/
+/*        width: 91.66%;*/
+/*    }*/
+
+/*    .col-m-12 {*/
+/*        width: 100%;*/
+/*    }*/
+/*}*/
+
+/*@media only screen and (min-width: 768px) {*/
+/*    !* For desktop: *!*/
+/*    .col-1 {*/
+/*        width: 8.33%;*/
+/*    }*/
+
+/*    .col-2 {*/
+/*        width: 16.66%;*/
+/*    }*/
+
+/*    .col-3 {*/
+/*        width: 25%;*/
+/*    }*/
+
+/*    .col-4 {*/
+/*        width: 33.33%;*/
+/*    }*/
+
+/*    .col-5 {*/
+/*        width: 41.66%;*/
+/*    }*/
+
+/*    .col-6 {*/
+/*        width: 50%;*/
+/*    }*/
+
+/*    .col-7 {*/
+/*        width: 58.33%;*/
+/*    }*/
+
+/*    .col-8 {*/
+/*        width: 66.66%;*/
+/*    }*/
+
+/*    .col-9 {*/
+/*        width: 75%;*/
+/*    }*/
+
+/*    .col-10 {*/
+/*        width: 83.33%;*/
+/*    }*/
+
+/*    .col-11 {*/
+/*        width: 91.66%;*/
+/*    }*/
+
+/*    .col-12 {*/
+/*        width: 100%;*/
+/*    }*/
+/*}*/
+
+.btn-lh{
+    border-radius: 50%;
+
 }
-@media only screen and (min-width: 600px) {
-    /* For tablets: */
-    .col-m-1 {
-        width: 8.33%;
-    }
 
-    .col-m-2 {
-        width: 16.66%;
-    }
-
-    .huy.col-m-3 {
-        width: 23%;
-    }
-
-    .col-m-4 {
-        width: 33.33%;
-    }
-
-    .col-m-5 {
-        width: 41.66%;
-    }
-
-    .col-m-6 {
-        width: 50%;
-    }
-
-    .col-m-7 {
-        width: 58.33%;
-    }
-
-    .col-m-8 {
-        width: 66.66%;
-    }
-
-    .col-m-9 {
-        width: 75%;
-    }
-
-    .col-m-10 {
-        width: 83.33%;
-    }
-
-    .col-m-11 {
-        width: 91.66%;
-    }
-
-    .col-m-12 {
-        width: 100%;
-    }
-}
-
-@media only screen and (min-width: 768px) {
-    /* For desktop: */
-    .col-1 {
-        width: 8.33%;
-    }
-
-    .col-2 {
-        width: 16.66%;
-    }
-
-    .col-3 {
-        width: 25%;
-    }
-
-    .col-4 {
-        width: 33.33%;
-    }
-
-    .col-5 {
-        width: 41.66%;
-    }
-
-    .col-6 {
-        width: 50%;
-    }
-
-    .col-7 {
-        width: 58.33%;
-    }
-
-    .col-8 {
-        width: 66.66%;
-    }
-
-    .col-9 {
-        width: 75%;
-    }
-
-    .col-10 {
-        width: 83.33%;
-    }
-
-    .col-11 {
-        width: 91.66%;
-    }
-
-    .col-12 {
-        width: 100%;
-    }
-}
-
-.huy.btns-primary {
-    color: #fff;
-    background-color: #87AA74;
-    border: 1px solid rgba(135, 170, 116, 0.5);
-}
-
-.huy.btns-primary:hover {
+.huy.btn-primary:hover {
     color: #fff;
     background-color: #87AA74;
     border: 1px solid rgba(135, 170, 116, 0.5);
@@ -207,7 +207,7 @@ button.responsive-icon-search{
 }
 
 .huy.get-started-btn {
-    margin-left: 22px;
+
     background: #87AA74;
     color: #fff;
     border-radius: 50px;
@@ -232,4 +232,11 @@ button.responsive-icon-search{
 .huy.img{
     width: 350px;
     height: 350px;
+}
+.huy i{
+    /*margin-right: 10px;*/
+}
+.row {
+    margin-left: 10px;
+    margin-right: 10px;
 }

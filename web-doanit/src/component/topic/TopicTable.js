@@ -126,6 +126,7 @@ const TopicTable = () => {
     };
 
     return (
+
         <>
             <section className="khang-container projects section" id="projects">
                 <h2 className="section__title section__title-gradient projects__line">
@@ -219,7 +220,7 @@ const TopicTable = () => {
                     </div>
                 )}
             </section>
-        </>
+        </div>
     );
 };
 export default TopicTable;
