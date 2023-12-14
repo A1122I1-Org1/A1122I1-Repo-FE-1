@@ -25,25 +25,36 @@ const ListGroupAccount = () => {
     const [isValidDeadline, setIsValidDeadline] = useState(false);
     const [deadlineError, setDeadlineError] = useState("");
     const [nameGroup,setNameGroup]=useState("");
-
+    const [renderList,setRenderList]=useState(false);
+    const [loadingDelete, setLoadingDelete] = useState(false);
+    const [deletingGroupId, setDeletingGroupId] = useState(null);
+    const [loadingAccept, setLoadingAccept] = useState(false);
+    const [acceptingGroupId, setAcceptingGroupId] = useState(null);
     const handleCloseAccept = () => setShowAccept(false);
     const handleShowAccept = (id,name) => {
         setGroupAcceptId(id)
         setNameGroup(name);
+        setAcceptingGroupId(id);
         setShowAccept(true)};
     const handleCloseDelete=()=>setShowDelete(false);
+
     const handleShowDelete=(id,students,name)=>{
         setGroupDeleteId(id)
         setListStudentDeleteGroup(students)
         setNameGroup(name)
+        setDeletingGroupId(id);
         setShowDelete(true);};
+
     const handleShowCreateDeadline=(id,name)=>{
         setGroupCreateDayId(id)
         setNameGroup(name)
         setShowCreateDeadline(true)
     };
+
+
     const handleCloseCreateDeadline=()=>
     {setShowCreateDeadline(false);}
+
     const handleDeadlineChange = (e) => {
         setIsValidDeadline(false)
         const selectedDate = new Date(e.target.value);
@@ -65,6 +76,9 @@ const ListGroupAccount = () => {
                 const data = await GroupService.findAll(pageNumber, searchKey)
                 setGroup(data.content);
                 setTotalPages(data.totalPages);
+                console.log("Data after fetch:", data.content);
+                console.log("render")
+                console.log(renderList)
 
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -73,44 +87,59 @@ const ListGroupAccount = () => {
             }
         };
         fetchApi()
-    }, [pageNumber,searchKey,groups]) // Thực hiện một lần sau khi component được render
+    }, [pageNumber,searchKey,renderList]) // Thực hiện một lần sau khi component được render
 
 
     const handleSearch = () => {
         setSearchKey(searchKeyTmp);
     };
-    const handleAcceptGroup=(id)=>{
+
+    const handleAcceptGroup=async (id)=>{
+        setAcceptingGroupId(id)
+        setLoadingAccept(true);
+        toast('🦄 Đang duyệt...');
+        handleCloseAccept()
         try {
-            GroupService.acceptGroup(id)
-            handleCloseAccept()
+            await GroupService.acceptGroup(id)
+            setRenderList((prevRenderList) => !prevRenderList);
+        } catch (e){
+            console.log(e);
+        } finally {
+            setLoadingAccept(false);
             toast('🦄 Duyệt nhóm thành công!!!!');
+            setAcceptingGroupId(null);
+        }
+    }
+    const handleDeleteGroup=async (id,listStudent)=>{
+        setDeletingGroupId(id);
+        setLoadingDelete(true);
+        toast('🦄 Đang xóa...');
+        handleCloseDelete()
+        try {
+            await GroupService.deleteGroup(id,listStudent)
+            setRenderList((prevRenderList) => !prevRenderList);
+        } catch (e){
+            console.log(e);
+        }  finally {
+            setLoadingDelete(false);
+            toast('🦄 Xóa nhom thành công!!!!');
+            setDeletingGroupId(null);
+        }
+    }
 
-        } catch (e){
-            console.log(e);
-        }
-    }
-    const handleDeleteGroup=(id,listStudent)=>{
+    const handleCreateDeadLine=async (id,deadline)=>{
         try {
-            GroupService.deleteGroup(id,listStudent)
-            handleCloseDelete()
-            toast('🦄 Xóa nhóm thành công!!!!');
-        } catch (e){
-            console.log(e);
-        }
-    }
-    const handleCreateDeadLine=(id,deadline)=>{
-        try {
-            GroupService.createDeadLine(id,deadline)
+            await GroupService.createDeadLine(id,deadline)
             console.log(deadline)
-            toast('🦄 Tạo deadline thành công!!!!');
-            handleCloseCreateDeadline()
             setIsValidDeadline(false);
-
         } catch (e){
             console.log(e);
-
         }
+        toast('🦄 Tạo hạn nộp thành công!!!!');
+        handleCloseCreateDeadline()
+        setRenderList((prevRenderList) => !prevRenderList);
     }
+
     return (
         <>
             <div className="modal fade" id="mymodal">
@@ -210,7 +239,8 @@ const ListGroupAccount = () => {
                                 <button className="btn btn-outline-secondary border-0  btn-hover-none rounded-circle"
                                         type="button" id="button-addon2"
                                         onClick={handleSearch}
-                                ><i className="bi bi-search-heart"></i></button>
+                                ><div>
+                                    <i className="bi bi-search-heart"></i></div></button>
                             </div>
                         </div>
                     </div>
@@ -242,11 +272,11 @@ const ListGroupAccount = () => {
                                             <td className='tdNghia'>{s.studentList.length}</td>
                                             <td className='tdNghia'>{s.date}</td>
                                             <td className='tdNghia'>
-                                                <button type="button" className="btn btn-outline-success"  disabled={s.status===true} onClick={event =>  handleShowAccept(s.groupAccountId,s.name)} >Duyệt
+                                                <button type="button" className="btn btn-outline-success"  disabled={(s.status===true)||(loadingAccept&&acceptingGroupId===s.groupAccountId)} onClick={event =>  handleShowAccept(s.groupAccountId,s.name)} >Duyệt
                                                 </button>
                                             </td>
                                             <td className="btndelete no-border btndeleteNghia">
-                                                <button type="button" className="btn btn-outline-danger"  onClick={event =>  handleShowDelete(s.groupAccountId,s.studentList.map(student => student.studentId),s.name)}>Xóa
+                                                <button type="button" className="btn btn-outline-danger" disabled={loadingDelete && deletingGroupId === s.groupAccountId} onClick={event =>  handleShowDelete(s.groupAccountId,s.studentList.map(student => student.studentId),s.name)}> Xóa
                                                 </button>
                                             </td>
                                             <td className="btnmember no-border btnmemberNghia">
