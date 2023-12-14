@@ -1,5 +1,5 @@
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import "../topic/InforTopicRegister.css";
 import * as Yup from "yup"
 import {toast} from "react-toastify";
@@ -14,8 +14,12 @@ export function ResgiterTopic() {
     const [avatar, setAvatar] = useState(null);
     const [avatarUrl, setAvatarUrl] = useState('')
     const [moTa, setMoTa] = useState(null);
-    const [moTaUrl, setMoTaUrl] = useState('')
-
+    const [moTaUrl, setMoTaUrl] = useState('');
+    const [errs,setErrs]=useState({});
+    const [isNameTouched, setIsNameTouched] = useState(true);
+    const handleNameTouched = () => {
+        setIsNameTouched(false);
+    };
     const onMotaChange = (event) => {
         if (event.target.files && event.target.files[0]) {
             setMoTa(event.target.files[0]);
@@ -77,9 +81,15 @@ export function ResgiterTopic() {
                     await handleAvatarUpload();
                     values.topic.image = avatar.name;
                     values.topic.content = moTa.name;
-                    save(values);
-                    navigate("/");
-                    toast.success('🦄 Resgiter topic successfully!!!!');
+                    setIsNameTouched(true);
+                    const res= await save(values);
+                    if(res!== null){
+                        setErrs(res)
+                    }else{
+                        navigate("/register-teacher");
+                        toast.success('🦄 Resgiter topic successfully!!!!');
+                    }
+
 
                 } catch (error) {
                     console.log(error);
@@ -141,7 +151,20 @@ export function ResgiterTopic() {
                                             <label className="form-label ">Tên đề tài(<span
                                                 className="text-danger">*</span>)</label>
                                             <Field name="topic.name" className="form-control" type="text"
-                                                   placeholder="Tên đề tài"/>
+                                                   placeholder="Tên đề tài">
+                                                {({field, form, meta}) => (
+                                                    <div>
+                                                        <input className="form-control" onFocus={handleNameTouched}
+                                                               type="text" {...field} />
+
+                                                    </div>
+                                                )}
+                                            </Field>
+                                            {errs.errorNameDuplicate && isNameTouched && (
+                                                <div>
+                                                    <span className="span-custom" style={{color: "#dc3545"}}>{errs.errorNameDuplicate}</span>
+                                                </div>
+                                            )}
                                             <ErrorMessage name="topic.name" className="text-danger" component="p"/>
                                         </div>
                                         <div className="mb-3">
