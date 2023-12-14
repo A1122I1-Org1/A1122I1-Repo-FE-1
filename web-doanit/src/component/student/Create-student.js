@@ -12,12 +12,13 @@ import {useNavigate} from "react-router-dom";
 
 const URL1 = "http://localhost:8080/api/get-all-grade";
 
-
 export function Create() {
     const [grades, setGrades] = useState([])
-    const [avatar, setAvatar] = useState(null)
+    const [avatar, setAvatar] = useState(null);
     const [avatarUrl, setAvatarUrl] = useState('')
     const [errorData, setErrorData] = useState({})
+    const [errorAvatar, setErrorAvatar] = useState('Ảnh không được để trống')
+
 
     const navigate = useNavigate()
 
@@ -39,6 +40,7 @@ export function Create() {
 
     const onAvatarChange = (event) => {
         if (event.target.files && event.target.files[0]) {
+            setErrorAvatar('')
             setAvatar(event.target.files[0]);
             setAvatarUrl(URL.createObjectURL(event.target.files[0]));
         }
@@ -87,10 +89,12 @@ export function Create() {
 
 
                 onSubmit={async (values) => {
+
                     try {
                         await handleAvatarUpload();
-                        values.avatar = avatar.name;
+                        values.avatar = avatar?.name;
                         const response = await save(values);
+
                         if (response != null) {
                             setErrorData(response)
                             toast('Lỗi! thêm mới sinh viên thất bại');
@@ -104,8 +108,8 @@ export function Create() {
                         console.log(errorData)
                     } catch (error) {
                         toast('Lỗi! thêm mới sinh viên thất bại');
+                        console.log(error)
                     }
-
                 }}
 
 
@@ -177,13 +181,8 @@ export function Create() {
                                                style={{display: 'inline'}}>
                                             Chọn ảnh đại diện
                                         </label>
-                                        <ErrorMessage name="avatar" className="text-danger" component="p"/>
-
-                                            <div>
-                                                <span className="span-custom" style={{color: "#dc3545"}}>{errorData.avatar}</span>
-                                            </div>
-                                        {errorData['errorFileEmpty'] && <div
-                                            className="text-danger">{errorData['errorFileEmpty']}</div>}
+                                        <ErrorMessage name="avatar" className="text-danger" component="p" />
+                                        {errorAvatar && <p style={{color: "#dc3545"}}>{errorAvatar}</p>}
                                         {errorData['errorFileFormat'] && <div
                                             className="text-danger">{errorData['errorFileFormat']}</div>}
                                     </div>
