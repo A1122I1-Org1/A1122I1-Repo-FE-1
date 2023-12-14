@@ -40,14 +40,18 @@ const TopicTable = () => {
                     return null;
                 }
             }));
-            setImageUrls(imageUrls);
+
+            // Ensure that imageUrls has the correct length and no undefined values
+            if (imageUrls.length === topics.length && !imageUrls.includes(undefined)) {
+                setImageUrls(imageUrls);
+            } else {
+                console.error("Error fetching avatars from Firebase: Incomplete or undefined image URLs");
+            }
         } catch (error) {
             console.error("Error fetching avatars from Firebase:", error);
         }
     };
-    useEffect(() => {
-        fetchImages();
-    }, [topics]);
+
 
     useEffect(() => {
         fetchImages();
