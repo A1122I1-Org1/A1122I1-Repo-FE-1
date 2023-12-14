@@ -312,10 +312,10 @@ img {
     overflow: hidden;
 }
 
-.container {
+.khang-container {
     max-width: 968px;
-    margin-left: var(--mb-1-5);
-    margin-right: var(--mb-1-5);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .grid {
@@ -395,6 +395,7 @@ img {
 }
 
 .nav__menu ul li:hover .dropdown-menu ul {
+
     display: block;
     margin: 10px;
 }
@@ -469,7 +470,7 @@ img {
     }
 
     .nav__menu ul li:hover .dropdown-menu ul li {
-        width: 100%; /* Đảm bảo rằng mỗi mục chiếm toàn bộ chiều rộng của dropdown */
+        width: 100%;
         padding: 10px;
         white-space: nowrap; /* Ngăn chặn các từ bị ngắt dòng */
     }
@@ -619,6 +620,22 @@ img {
     justify-content: space-between;
 }
 
+.card-title {
+    font-family: var(--body-font);
+}
+
+.card-text {
+    font-family: var(--body-font);
+    font-size : 14px;
+    flex-grow: 1;
+    text-overflow: ellipsis;
+}
+
+.card-img-top {
+    height: 200px;
+    max-width: 100%;
+    object-fit: cover;
+}
 .fas {
     float: right;
     margin-left: 10px;
@@ -628,6 +645,7 @@ img {
 .user-avatar {
     width: 40px; /* Điều chỉnh kích thước hình ảnh avatar theo mong muốn */
     height: 40px;
+    margin-right: 5px;
     border-radius: 50%; /* Làm cho hình ảnh trở thành hình tròn */
     object-fit: cover; /* Đảm bảo hình ảnh vừa với khu vực giới hạn */
     cursor: pointer; /* Hiển thị con trỏ khi di chuột qua hình ảnh */
@@ -688,7 +706,6 @@ label {
     font-weight: bold;
     display: block;
     margin-bottom: 5px;
-    color: #FFF;
 }
 .alert{
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
@@ -700,7 +717,6 @@ textarea {
     border: 1px solid #FFF;
     border-radius: 5px;
     background-color: rgba(255, 255, 255, 0.1);
-    color: #FFF;
 }
 
 .button-send-email {
@@ -731,8 +747,7 @@ button:hover {
 
 
 .card-title {
-    font-weight: bold;
-    color: #87AA74;
+    color: black;
     font-family: var(--body-font);
     font-size: 18px; /* Tăng kích thước font cho tiêu đề */
     margin-bottom: 10px; /* Tăng khoảng cách giữa tiêu đề và nội dung */
@@ -788,19 +803,18 @@ h4 {
     font-family: var(--body-font);
 }
 .footer a {
-    color: #ffffff;
     text-decoration: none;
 }
 .footer a:hover{
     color: #87AA74;
 }
-.faculty-badge{
-    margin-bottom: 10px;
-}
 i{
+    color: #FFF;
     margin-right: 10px;
 }
-
+i:hover{
+    color: #87AA74;
+}
 /*=============== SCROLL UP ===============*/
 .scrollup {
     position: fixed;
@@ -912,7 +926,9 @@ i{
     border: 2px solid #ddd; /* Màu và độ dày của border */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng box-shadow */
 }
-
+.faculty-badge{
+    margin-bottom: 10px;
+}
 .banner-image {
     width: 100%;
     height: auto;
@@ -927,5 +943,4 @@ i{
     .footer__container {
         padding-top: 3rem;
     }
-
 }

@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import '../pages/homepage.css'
 
 const News = () => {
     const [counter, setCounter] = useState(1);
@@ -74,64 +75,66 @@ const News = () => {
 
 
     return (
-        <section className="news section grid" id="news">
-            <h2 className="section__title section__title-gradient">TIN TỨC</h2>
-            <div className="slider">
-                <div className="myslide fade">
-                    <div className="txt">
-                        <p>Web Devoloper<br/>Codegym lọt top 50 đơn vị Edtech Đông Nam Á</p>
-                        <a href="https://codegym.vn/blog/2023/11/09/codegym-lot-top-50-don-vi-edtech-dong-nam-a-nam-2023/"
-                           target="_blank">Xem chi tiết</a>
+        <>
+            <section className="news section grid" id="news">
+                <h2 className="section__title section__title-gradient">TIN TỨC</h2>
+                <div className="slider">
+                    <div className="myslide fade">
+                        <div className="txt">
+                            <p>Web Devoloper<br/>Codegym lọt top 50 đơn vị Edtech Đông Nam Á</p>
+                            <a href="https://codegym.vn/blog/2023/11/09/codegym-lot-top-50-don-vi-edtech-dong-nam-a-nam-2023/"
+                               target="_blank">Xem chi tiết</a>
+                        </div>
+                        <img src={`${process.env.PUBLIC_URL}/assets/img/img1.jpg`} className="slideimg"/>
                     </div>
-                    <img src={`${process.env.PUBLIC_URL}/assets/img/img1.jpg`} className="slideimg"/>
-                </div>
 
-                <div className="myslide fade">
-                    <div className="txt">
-                        <p>Web Devoloper<br/>USAID WISE - CodeGym | Ký kết hợp tác chuyển đổi VIỆC LÀM SỐ CHO NGƯỜI LAO
-                            ĐỘNG</p>
-                        <a href="https://codegym.vn/blog/2023/11/07/usaid-wise-codegym-ky-ket-hop-tac/"
-                           target="_blank">Xem chi tiết</a>
+                    <div className="myslide fade">
+                        <div className="txt">
+                            <p>Web Devoloper<br/>USAID WISE - CodeGym | Ký kết hợp tác chuyển đổi VIỆC LÀM SỐ CHO NGƯỜI LAO
+                                ĐỘNG</p>
+                            <a href="https://codegym.vn/blog/2023/11/07/usaid-wise-codegym-ky-ket-hop-tac/"
+                               target="_blank">Xem chi tiết</a>
+                        </div>
+                        <img src={`${process.env.PUBLIC_URL}/assets/img/img2.jpg`} className="slideimg"/>
                     </div>
-                    <img src={`${process.env.PUBLIC_URL}/assets/img/img2.jpg`} className="slideimg"/>
-                </div>
 
-                <div className="myslide fade">
-                    <div className="txt">
-                        <p>Web Devoloper<br/>[CodeGym Huế] Khai giảng lớp Python Miễn Phí ngày 20/09</p>
-                        <a href="https://codegym.vn/blog/2023/09/25/codegym-hue-khai-giang-lop-python-mien-phi-ngay-20-09/"
-                           target="_blank">Xem chi tiết</a>
+                    <div className="myslide fade">
+                        <div className="txt">
+                            <p>Web Devoloper<br/>[CodeGym Huế] Khai giảng lớp Python Miễn Phí ngày 20/09</p>
+                            <a href="https://codegym.vn/blog/2023/09/25/codegym-hue-khai-giang-lop-python-mien-phi-ngay-20-09/"
+                               target="_blank">Xem chi tiết</a>
+                        </div>
+                        <img src={`${process.env.PUBLIC_URL}/assets/img/img3.jpg`} className="slideimg"/>
                     </div>
-                    <img src={`${process.env.PUBLIC_URL}/assets/img/img3.jpg`} className="slideimg"/>
-                </div>
 
-                <div className="myslide fade">
-                    <div className="txt">
-                        <p>Web Devoloper<br/>Lộ trình đào tạo Kỹ sư cầu nối nhật bản (BRSE) tại CodeGym Hà Nội</p>
-                        <a href="https://codegym.vn/blog/2023/09/20/lo-trinh-dao-tao-ky-su-cau-noi-nhat-ban-brse-tai-codegym-ha-noi/"
-                           target="_blank">Xem chi tiết</a>
+                    <div className="myslide fade">
+                        <div className="txt">
+                            <p>Web Devoloper<br/>Lộ trình đào tạo Kỹ sư cầu nối nhật bản (BRSE) tại CodeGym Hà Nội</p>
+                            <a href="https://codegym.vn/blog/2023/09/20/lo-trinh-dao-tao-ky-su-cau-noi-nhat-ban-brse-tai-codegym-ha-noi/"
+                               target="_blank">Xem chi tiết</a>
+                        </div>
+                        <img src={`${process.env.PUBLIC_URL}/assets/img/img4.jpg`} className="slideimg"/>
                     </div>
-                    <img src={`${process.env.PUBLIC_URL}/assets/img/img4.jpg`} className="slideimg"/>
-                </div>
 
-                <div className="myslide fade">
-                    <div className="txt">
-                        <p>Web Devoloper<br/>[RECAP] Techtalk “Nguyện vọng nào cho 2K5 đam mê CNTT?”</p>
-                        <a href="https://codegym.vn/blog/2023/09/19/recap-techtalk-nguyen-vong-nao-cho-2k5-dam-me-cntt/"
-                           target="_blank">Xem chi tiết</a>
+                    <div className="myslide fade">
+                        <div className="txt">
+                            <p>Web Devoloper<br/>[RECAP] Techtalk “Nguyện vọng nào cho 2K5 đam mê CNTT?”</p>
+                            <a href="https://codegym.vn/blog/2023/09/19/recap-techtalk-nguyen-vong-nao-cho-2k5-dam-me-cntt/"
+                               target="_blank">Xem chi tiết</a>
+                        </div>
+                        <img src={`${process.env.PUBLIC_URL}/assets/img/img5.jpg`} className="slideimg"/>
                     </div>
-                    <img src={`${process.env.PUBLIC_URL}/assets/img/img5.jpg`} className="slideimg"/>
-                </div>
 
-                <a className="prev" onClick={() => plusSlides(-1)}>&#10094;</a>
-                <a className="next" onClick={() => plusSlides(1)}>&#10095;</a>
-                <div className="dotsbox" style={{ textAlign: 'center' }}>
-                    {[1, 2, 3, 4, 5].map((index) => (
-                        <span key={index} className={`dot ${counter === index ? 'active' : ''}`} onClick={() => currentSlide(index)}></span>
-                    ))}
+                    <a className="prev" onClick={() => plusSlides(-1)}>&#10094;</a>
+                    <a className="next" onClick={() => plusSlides(1)}>&#10095;</a>
+                    <div className="dotsbox" style={{ textAlign: 'center' }}>
+                        {[1, 2, 3, 4, 5].map((index) => (
+                            <span key={index} className={`dot ${counter === index ? 'active' : ''}`} onClick={() => currentSlide(index)}></span>
+                        ))}
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </>
     );
 };
 

@@ -332,6 +332,7 @@ export function ResgiterGroupStudent() {
                             <div style={{textAlign: "center"}}>
                                 <button type="submit" className="btn btn-outline-success">Đăng ký nhóm</button>
                             </div>
+
                         </Form>
                     </Formik>
 
@@ -346,7 +347,6 @@ export function ResgiterGroupStudent() {
             <br/>
         </>
     )
-
 
 }
 

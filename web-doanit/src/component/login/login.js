@@ -9,12 +9,21 @@ import {toast} from "react-toastify";
 export const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const previousPath = location.state?.from?.pathname;
+
+    const redirectToPrevious = () => {
+        if (previousPath && previousPath !== "/") {
+            navigate(previousPath);
+        } else {
+            navigate("/");
+        }
+    };
     return (
         <div className="login">
             <div className="body" style={{backgroundColor: "#cbecb7", fontFamily: "Helvetica"}}>
                 <div className="container"
                      style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100vh"}}>
-                    <div className="card shadow" style={{ width: "85%", height:"auto"}}>
+                    <div className="card shadow" style={{width: "85%", height: "auto"}}>
                         <div className="row" style={{margin: "0 auto"}}>
                             <div className="col-6">
                                 <div className="item" style={{paddingTop: '30px', paddingRight: 0}}>
@@ -26,43 +35,54 @@ export const Login = () => {
                                     <div className="text-item" style={{paddingLeft: '20px'}}>
                                         <h3 style={{textAlign: "left"}}>ĐỒ ÁN<br/>
                                             <span>CÔNG NGHỆ THÔNG TIN</span></h3>
-                                        <p style={{textAlign:"left"}}>Chào mừng bạn tới với trang web của chúng tôi !</p>
+                                        <p style={{textAlign: "left"}}>Chào mừng bạn tới với trang web của chúng tôi
+                                            !</p>
                                         <div className="social-icon">
                                             <a href="#"><i className='bx bxl-facebook'
-                                                           style={{ color: "#100f0f",
+                                                           style={{
+                                                               color: "#100f0f",
                                                                fontSize: "24px",
                                                                marginLeft: "10px",
                                                                cursor: "pointer",
                                                                transition: ".5s ease",
-                                                               marginBottom: "45px"}}></i></a>
+                                                               marginBottom: "45px"
+                                                           }}></i></a>
                                             <a href="#"><i className='bx bxl-twitter'
-                                                           style={{ color: "#100f0f",
+                                                           style={{
+                                                               color: "#100f0f",
                                                                fontSize: "24px",
                                                                marginLeft: "10px",
                                                                cursor: "pointer",
                                                                transition: ".5s ease",
-                                                               marginBottom: "45px"}}></i></a>
+                                                               marginBottom: "45px"
+                                                           }}></i></a>
                                             <a href="#"><i className='bx bxl-youtube'
-                                                           style={{ color: "#100f0f",
+                                                           style={{
+                                                               color: "#100f0f",
                                                                fontSize: "24px",
                                                                marginLeft: "10px",
                                                                cursor: "pointer",
                                                                transition: ".5s ease",
-                                                               marginBottom: "45px"}}></i></a>
+                                                               marginBottom: "45px"
+                                                           }}></i></a>
                                             <a href="#"><i className='bx bxl-instagram'
-                                                           style={{ color: "#100f0f",
+                                                           style={{
+                                                               color: "#100f0f",
                                                                fontSize: "24px",
                                                                marginLeft: "10px",
                                                                cursor: "pointer",
                                                                transition: ".5s ease",
-                                                               marginBottom: "45px"}}></i></a>
+                                                               marginBottom: "45px"
+                                                           }}></i></a>
                                             <a href="#"><i className='bx bxl-linkedin'
-                                                           style={{ color: "#100f0f",
+                                                           style={{
+                                                               color: "#100f0f",
                                                                fontSize: "24px",
                                                                marginLeft: "10px",
                                                                cursor: "pointer",
                                                                transition: ".5s ease",
-                                                               marginBottom: "45px"}}></i></a>
+                                                               marginBottom: "45px"
+                                                           }}></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -77,19 +97,24 @@ export const Login = () => {
                                                 // rememberPassword:''
                                             }}
                                             validationSchema={Yup.object({
-                                                userName: Yup.string().required("Vui lòng nhập tên nguời dùng"),
-                                                password: Yup.string().required("Vui lòng nhập mật khẩu"),
+                                                userName: Yup.string().required("Vui lòng nhập tên nguời dùng")
+                                                    .min(5, 'Tên người dùng không bé hơn 5 kí tự')
+                                                    .max(20, 'Tên người dùng không lớn hơn 19 kí tự')
+                                                    .matches(/^[a-zA-Z0-9_\-]+$/u, "Tên người dùng không chứa kí tự đặt biệt"),
+                                                password: Yup.string().required("Vui lòng nhập mật khẩu")
+                                                    .min(8, 'Mật khẩu không bé hơn 8 kí tự')
+                                                ,
                                             })}
                                             onSubmit={async (values) => {
                                                 try {
-                                                    // debugger;
                                                     await LoginService.login(values);
-                                                    toast("Đăng nhập thành công");
-                                                    navigate("/");
+                                                    toast.success("Đăng nhập thành công", {autoClose: 1500});
+                                                    redirectToPrevious();
                                                 } catch (error) {
                                                     const errorMessage = error.response && error.response.status === 401
                                                         ? error.response.data : "Có lỗi xảy ra khi đăng nhập";
-                                                    toast(errorMessage);
+                                                    toast.error(errorMessage, {autoClose: 1500});
+
                                                 }
                                             }}>
                                             <div>
@@ -106,10 +131,12 @@ export const Login = () => {
                                                         position: "relative"
                                                     }}>
                                                         <span className="icon"
-                                                              style={{ position: "absolute",
+                                                              style={{
+                                                                  position: "absolute",
                                                                   top: "13px",
                                                                   right: "0",
-                                                                  fontSize: "19px"}}><i className='bx bxs-paint'></i></span>
+                                                                  fontSize: "19px"
+                                                              }}><i className='bx bxs-paint'></i></span>
                                                         <Field style={{
                                                             width: "100%",
                                                             height: "45px",
@@ -133,9 +160,11 @@ export const Login = () => {
                                                             <br/>
                                                             <ErrorMessage name="userName" component="span"
                                                                           className="text-danger error-message"
-                                                                          style={{  color: "red",
+                                                                          style={{
+                                                                              color: "red",
                                                                               fontSize: "13px",
-                                                                              float: "left"}}/>
+                                                                              float: "left"
+                                                                          }}/>
                                                         </span>
 
                                                     </div>
@@ -146,10 +175,12 @@ export const Login = () => {
                                                         margin: "40px 0",
                                                         position: "relative"
                                                     }}>
-                                                        <span className="icon" style={{ position: "absolute",
+                                                        <span className="icon" style={{
+                                                            position: "absolute",
                                                             top: "13px",
                                                             right: "0",
-                                                            fontSize: "19px"}}><i
+                                                            fontSize: "19px"
+                                                        }}><i
                                                             className='bx bxs-lock-alt'></i></span>
                                                         <Field style={{
                                                             width: "100%",
@@ -173,9 +204,11 @@ export const Login = () => {
                                                             <br/>
                                                             <ErrorMessage name="password" component="span"
                                                                           className="text-danger error-message"
-                                                                          style={{  color: "red",
+                                                                          style={{
+                                                                              color: "red",
                                                                               fontSize: "13px",
-                                                                              float: "left"}}/>
+                                                                              float: "left"
+                                                                          }}/>
                                                         </span>
 
                                                     </div>
@@ -188,7 +221,7 @@ export const Login = () => {
                                                                 fontSize: "16px",
                                                                 color: "#100f0f",
                                                                 boxShadow: "rgba(0, 0, 0, 0.4)",
-                                                                marginLeft:"0px"
+                                                                marginLeft: "0px"
                                                             }}
                                                     >Đăng nhập
                                                     </button>

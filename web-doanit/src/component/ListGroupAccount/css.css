@@ -1,25 +1,25 @@
-.title1{
+.title1Nghia{
     color: #87aa74;
     text-align: center;
     margin-top: 20px;
 }
-th{
+.thNghia{
     text-align: center;
 }
-td{
+.tdNghia{
     text-align: center;
 }
-.btndelete{
+.btndeleteNghia{
     text-align: right;
     padding: 10px;
 }
-.btnmember{
+.btnmemberNghia{
     text-align: left;
 }
 #inputsearch{
     align-content: center;
 }
-table {
+.tableNghia {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     width: 100%;
     border-collapse: collapse;
@@ -32,14 +32,14 @@ table, th, td {
 table thead th{
     height: 50px;
 }
-thead{
+.theadNghia{
     background-color: #87aa74;
 }
-.justify-content-end{
+.justify-content-endNghia{
     margin-top: 20px;
     margin-bottom: 20px;
 }
-.container{
+.containerNghia{
     width: auto;
     height: 100%;
     text-align: center;
@@ -48,11 +48,9 @@ thead{
     border-left: none;
     border-right: none;
 }
-.container{
+.containerNghia{
     align-content: center;
 }
 #pagination{
     margin-top: 20px;
-
-
 }
