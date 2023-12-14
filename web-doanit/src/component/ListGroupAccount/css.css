@@ -54,3 +54,6 @@ table thead th{
 #pagination{
     margin-top: 20px;
 }
+.containerNghia i{
+    margin-right: 0 !important;
+}
