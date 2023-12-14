@@ -36,7 +36,7 @@ huy{}
 .huy.title{
     text-align: center;
     color: #87AA74;
-    margin: 35px;
+    font-size: 45px;
 }
 
 .huy.action{
@@ -235,3 +235,5 @@ button.responsive-icon-search{
     margin-left: 10px;
     margin-right: 10px;
 }
+
+

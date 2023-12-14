@@ -17,11 +17,12 @@ export const ListTeacher = () => {
     const [avatarUrls, setAvatarUrls] = useState([]);
     const [delId, setDelId] = useState(null);
     const [deleteMessage, setDeleteMessage] = useState(null);
-    const [displayConfirmationModal, setDisplayConfirmationModal] = useState(false);
+    const [displayModal, setDisplayModal] = useState(false);
 
     const fetchApi = async () => {
         try {
-            const result = await TeacherService.getAllTeacher(find, pageNumber)
+            const result = await TeacherService.getAllTeacher(find, pageNumber);
+            result.avatar =fetchAvatar();
             setTeachers(result.content);
             setTotalPages(result.totalPages);
         } catch (error) {
@@ -32,6 +33,7 @@ export const ListTeacher = () => {
     };
     useEffect(() => {
         fetchApi()
+        fetchAvatar()
     }, [find, pageNumber])
 
     const fetchAvatar = async () => {
@@ -61,18 +63,17 @@ export const ListTeacher = () => {
                 teachers.find((x) => x.teacherId === delId).teacherName
             }' không?`
         );
-        setDisplayConfirmationModal(true);
-        fetchApi();
+        setDisplayModal(true);
     }
     const hideConfirmationModal = () => {
-        setDisplayConfirmationModal(false);
+        setDisplayModal(false);
     };
 
     const submitDelete = async (delId) => {
         await TeacherService.deleteTeacher(delId);
         toast.success(`Xóa giảng viên '${teachers.find((x) => x.teacherId === delId).teacherName}' thành công.`)
-        setDisplayConfirmationModal(false);
-        window.location.reload();
+        setDisplayModal(false);
+        await fetchApi(0, '');
     };
     const handleSearch = () => {
         setFind(searchValue);
@@ -82,13 +83,26 @@ export const ListTeacher = () => {
     return (
 
 
-        <div className='container' style={{width: '100%', paddingRight: 'var(--bs-gutter-x,.75rem)', paddingLeft: 'var(--bs-gutter-x,.75rem)', marginRight: 'auto', marginLeft: 'auto', marginTop:"80px"
+        <div className='container' style={{
+            width: '100%',
+            maxWidth: '1200px',
+            paddingRight: 'var(--bs-gutter-x,.75rem)',
+            paddingLeft: 'var(--bs-gutter-x,.75rem)',
+            marginRight: 'auto',
+            marginLeft: 'auto',
+            marginTop: "80px"
         }}>
 
-
+            <div
+            className='row'>
+                <div className='huy title'>
+                    <p>Quản lý giáo viên</p>
+                </div>
+            </div>
             <div className='row'>
                 <div className="huy d-flex justify-content-around" style={{marginTop: '25px', marginBottom: '12px'}}>
-                    <NavLink to={"/create-teacher"} type="button" className="huy get-started-btn" style={{border: '0',marginLeft: '-45px'}}>
+                    <NavLink to={"/create-teacher"} type="button" className="huy get-started-btn"
+                             style={{border: '0', marginLeft: '-45px'}}>
                         Thêm mới giáo viên
                     </NavLink>
                     <div className="d-flex">
@@ -100,7 +114,8 @@ export const ListTeacher = () => {
                             placeholder="Tìm kiếm giáo viên"
                             style={{borderRadius: '30px', border: '1px solid #d6c9bb', height: '37px', width: '350px'}}
                         />
-                        <button type="button" className="huy get-started-btn" style={{border: '0', marginLeft: '15px', marginRight: '-5px'}} onClick={handleSearch}>
+                        <button type="button" className="huy get-started-btn"
+                                style={{border: '0', marginLeft: '15px', marginRight: '-5px'}} onClick={handleSearch}>
                             Tìm kiếm
                         </button>
                     </div>
@@ -110,30 +125,43 @@ export const ListTeacher = () => {
             <div className="row" style={{marginTop: '20px'}}>
                 {teachers.length === 0 ? <h1 className='huy text-center'>Không có dữ liệu</h1> : <>
                     {teachers.map((t, index) => (
-                        <div className="col-3" key={t}>
+                        <div className="col-3" key={t.teacherId} teacher ={t}>
                             <div className="huy card card-huy">
                                 <LazyLoadImage
                                     effect="blur" src={avatarUrls[index]} className="huy img"
-                                    alt={`Giảng viên ${t.avatar}`}
+                                    alt={`Giảng viên ${t.teacherId}`}
                                 />
                                 <hr/>
-                                <div className='huy card-body-huy' >
+                                <div className='huy card-body-huy'>
                                     <h5 className="huy card-title">{t.teacherName}</h5>
-                                    <p className="huy card-text"><b><i className="bi bi-code-square" style={{ marginLeft: '10px', color: 'black'}}></i> Mã giảng viên
+                                    <p className="huy card-text"><b><i className="bi bi-code-square" style={{
+                                        marginLeft: '10px',
+                                        color: 'black'
+                                    }}></i> Mã giảng viên
                                     </b>: {"MGV-".concat(t.teacherId.toString())}</p>
-                                    <p className="huy card-text"><b><i className="bi bi-envelope-at" style={{ marginLeft: '10px', color: 'black'}}></i> Email
-                                    </b>: {t?.email ?? ''}</p>
-                                    <p className="huy card-text"><b><i className="bi bi-telephone" style={{ marginLeft: '10px', color: 'black'}}></i> Sdt </b>: {t.phone}</p>
-                                    <p className="huy card-text"><b><i className="bi bi-signpost-2" style={{ marginLeft: '10px', color: 'black'}}></i> Khoa </b>: {t.facultyName}
+                                    <p className="huy card-text"><b><i className="bi bi-envelope-at" style={{
+                                        marginLeft: '10px',
+                                        color: 'black'
+                                    }}></i> Email
+                                    </b>: {t?.email.length > 20 ? `${t.email.slice(0, 18)} ...` : t.email}</p>
+                                    <p className="huy card-text"><b><i className="bi bi-telephone" style={{
+                                        marginLeft: '10px',
+                                        color: 'black'
+                                    }}></i> Sdt </b>: {t.phone}</p>
+                                    <p className="huy card-text"><b><i className="bi bi-signpost-2" style={{
+                                        marginLeft: '10px',
+                                        color: 'black'
+                                    }}></i> Khoa </b>: {t.facultyName}
                                     </p>
                                 </div>
                                 <hr/>
                                 <div className="huy action" style={{float: 'right'}}>
                                     <NavLink to={`/update-teacher/${t.teacherId}`}>
-                                        <button  className="huy btn btn-lh btn-success bi bi-pencil-square" ></button>
+                                        <button className="huy btn btn-lh btn-success bi bi-pencil-square" style={{marginRight: ' 8px'}}></button>
                                     </NavLink>
 
-                                    <button className="huy btn btn-lh btn-danger bi bi-trash" onClick={() => showDeleteModal(t.teacherId)}></button>
+                                    <button className="huy btn btn-lh btn-danger bi bi-trash"
+                                            onClick={() => showDeleteModal(t.teacherId)}></button>
                                 </div>
                             </div>
                         </div>
@@ -153,12 +181,11 @@ export const ListTeacher = () => {
             </div>
 
 
-            <DeleteConfirmation showModal={displayConfirmationModal} confirmModal={submitDelete}
+            <DeleteConfirmation showModal={displayModal} confirmModal={submitDelete}
                                 hideModal={hideConfirmationModal} id={delId} message={deleteMessage}/>
         </div>
 
     )
 }
-
 
 
