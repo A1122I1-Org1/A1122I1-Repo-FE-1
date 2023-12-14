@@ -58,5 +58,11 @@
 .protect.card-text i{
     color: black;
 }
+.center-icon {
+margin-left: auto;
+margin-right: auto;
+}
 
-
+.protect i {
+    margin-right: 0 !important;
+}
