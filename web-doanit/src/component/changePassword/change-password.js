@@ -5,17 +5,6 @@ import {toast} from "react-toastify";
 
 export const ChangePasswordModal = ({showModal, setShowModal}) => {
 
-    // useEffect(() => {
-    //     if (!showModal) {
-    //         // Reset form values when the modal is closed
-    //         setValues({
-    //             oldPassword: '',
-    //             newPassword: '',
-    //             confirmPassword: ''
-    //         });
-    //     }
-    // }, [showModal]);
-
     return (
         <div className="mt-3 save-exit-buttons">
             <button type="button" className="btn btn-outline-success" data-bs-toggle="modal"
@@ -38,35 +27,39 @@ export const ChangePasswordModal = ({showModal, setShowModal}) => {
                                     confirmPassword: ''
                                 }}
                                 validationSchema={Yup.object({
-                                    oldPassword: Yup.string().required("Vui lòng nhập mật khẩu cũ"),
-                                    newPassword: Yup.string().required("Vui lòng nhập mật khẩu mới"),
-                                    confirmPassword: Yup.string().required("Vui lòng nhập xác nhận mật khẩu ")
+                                    oldPassword: Yup.string()
+                                        .required("Vui lòng nhập mật khẩu cũ")
+                                        .min(8, 'Mật khẩu không được bé hơn 8 kí tự')
+                                        .max(20, 'Mật khẩu không được lớn hơn 20 kí tự'),
+                                    newPassword: Yup.string()
+                                        .required("Vui lòng nhập mật khẩu mới")
+                                        .min(8, 'Mật khẩu mới không được bé hơn 8 kí tự')
+                                        .max(20, 'Mật khẩu mới không được lớn hơn 20 kí tự'),
+                                    confirmPassword: Yup.string()
+                                        .required("Vui lòng nhập xác nhận mật khẩu ")
+                                        .min(8, 'Xác nhận mật khẩu không được bé hơn 8 kí tự')
+                                        .max(20, 'Xác nhận mật khẩu không được lớn hơn 20 kí tự')
+                                        .oneOf([Yup.ref('newPassword'), null], 'Mật khẩu mới và xác nhận mật khẩu phải giống nhau')
                                 })}
                                 onSubmit={async (values,{resetForm}) => {
                                     try {
                                         const res = await LoginService.changePassword(values);
-                                        toast(res);
+                                        toast.success(res);
                                         resetForm({values:''});
+                                        setShowModal(false)
                                     } catch (error) {
                                         const errorMessage = error.response && error.response.status === 400
                                             ? error.response.data
                                             : "Có lỗi xảy ra khi đổi mật khẩu";
-                                        toast(errorMessage);
+                                        toast.error(errorMessage, { autoClose: 1500 });
                                     }
                                 }}
-                                // onReset={(values, formikBag) => {
-                                //     // if (window.confirm("Bạn có chắc chắn muốn hủy đổi mật khẩu?")) {
-                                //         formikBag.resetForm();
-                                //         setShowModal(false);
-                                //     // }
-                                // }}
-
                             >
                                 <div>
                                     <Form>
                                         <div className="form-group row">
                                             <label htmlFor="inputOldPassword"
-                                                   className="col-sm-3 col-form-label">Mật khẩu cũ
+                                                   className="col-sm-3 col-form-label" style={{color:"black", fontWeight:"bold"}}>Mật khẩu cũ
                                                 <span className="required">*</span></label>
                                             <div className="col-sm-12">
                                                 <Field name="oldPassword" type="password"
@@ -79,7 +72,7 @@ export const ChangePasswordModal = ({showModal, setShowModal}) => {
                                         </div>
                                         <div className="form-group row">
                                             <label htmlFor="inputNewPassword"
-                                                   className="col-sm-3 col-form-label">Mật khẩu mới
+                                                   className="col-sm-3 col-form-label" style={{color:"black", fontWeight:"bold"}}>Mật khẩu mới
                                                 <span className="required">*</span>
                                             </label>
                                             <div className="col-sm-12">
@@ -92,7 +85,7 @@ export const ChangePasswordModal = ({showModal, setShowModal}) => {
                                         </div>
                                         <div className="form-group row">
                                             <label htmlFor="inputConfirmPassword"
-                                                   className="col-sm-3 col-form-label">Xác nhận mật khẩu
+                                                   className="col-sm-3 col-form-label" style={{color:"black", fontWeight:"bold"}}>Xác nhận mật khẩu
                                                 <span className="required">*</span>
                                             </label>
                                             <div className="col-sm-12">

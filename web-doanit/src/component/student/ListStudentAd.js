@@ -7,7 +7,7 @@ import {NavLink} from "react-router-dom";
 import {LazyLoadImage} from 'react-lazy-load-image-component';
 import {storage} from "../../config/firebaseConfig";
 import {PaginationNav} from "./PaginationNav";
-import anh from "../image/default-avatar.png";
+import anh from "../image/default-avatar1.png";
 
 export const ListStudentAd = () => {
     const [students, setStudents] = useState([]);
@@ -60,9 +60,9 @@ export const ListStudentAd = () => {
         setSearchKey(searchKeyTmp);
     };
     return (
-        <div className="protect" style={{marginTop:"60px"}}>
+        <div className="protect" style={{marginTop:"80px"}}>
         <div className="container">
-        <h2 className="mt-4 mb-4">Danh sách sinh viên</h2>
+        <h2 className="mt-4 mb-4">DANH SÁCH SINH VIÊN</h2>
         <div className="container-fluid">
             <div className="row">
                 <div className="col-8 text-left">
@@ -82,7 +82,7 @@ export const ListStudentAd = () => {
                         <button className="btn btn-outline-secondary border-0  btn-hover-none rounded-circle"
                                 type="button" id="button-addon2"
                                 onClick={handleSearch}
-                        ><i className="bi bi-search"></i></button>
+                        ><i className="bi bi-search" style={{color:'black'}}></i></button>
                     </div>
                 </div>
             </div>

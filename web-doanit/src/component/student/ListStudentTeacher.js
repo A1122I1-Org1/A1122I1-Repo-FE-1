@@ -7,7 +7,7 @@ import {NavLink} from "react-router-dom";
 import {storage} from "../../config/firebaseConfig";
 import {PaginationNav} from "./PaginationNav";
 import {LazyLoadImage} from "react-lazy-load-image-component";
-import anh from "../image/default-avatar.png";
+import anh from "../image/default-avatar1.png";
 
 export const ListStudentTeacher = () => {
     const [students, setStudents] = useState([]);
@@ -77,9 +77,9 @@ export const ListStudentTeacher = () => {
         setSearchKey(searchKeyTmp);
     };
     return (
-        <div className="protect" style={{marginTop:"60px"}}>
+        <div className="protect" style={{marginTop:"80px"}}>
         <div className="container">
-        <h2 className="mt-4 mb-4">Danh sách sinh viên</h2>
+        <h2 className="mt-4 mb-4">DANH SÁCH SINH VIÊN</h2>
         <div className="container-fluid">
             <div className="row">
                 <div className="col-8 text-left">
@@ -99,13 +99,16 @@ export const ListStudentTeacher = () => {
                         <button className="btn btn-outline-secondary border-0  btn-hover-none rounded-circle"
                                 type="button" id="button-addon2"
                                 onClick={handleSearch}
-                        ><i className="bi bi-search"></i></button>
+                        ><i className="bi bi-search" style={{color:'black'}} ></i></button>
                     </div>
                 </div>
             </div>
         </div>
         <div className="row">
-            {students.length === 0 ? <h1 className="text-center">Dữ liệu không tồn tại</h1> : <>
+            {students.length === 0 ?
+                <div className="text-center" style={{ minHeight: "400px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <h1>Dữ liệu không tồn tại</h1>
+            </div> : <>
                 {students.map((s, index) => (<div className="col-md-3 mb-4" key={index}>
                     <div className="card">
                         <LazyLoadImage
@@ -126,7 +129,7 @@ export const ListStudentTeacher = () => {
                             </p>
                             <p className="card-text">
                                 <b>
-                                    <img src={avatarTeacherUrl}
+                                    <img src={avatarTeacherUrl || (avatar ? URL.createObjectURL(avatar) : anh)}
                                          className="bi bi-facebook rounded-circle p-1 img-teacher"
                                          alt="Facebook"
                                     />
