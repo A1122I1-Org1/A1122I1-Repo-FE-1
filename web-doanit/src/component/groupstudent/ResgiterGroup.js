@@ -23,6 +23,11 @@ export function ResgiterGroupStudent() {
     const [searchKey, setSearchKey] = useState("");
     const [searchKeyTmp, setSearchKeyTmp] = useState("");
     const [avatarUrls, setAvatarUrls] = useState([]);
+    const [errs, setErrs] = useState({});
+    const [isNameTouched, setIsNameTouched] = useState(true);
+    const handleNameTouched = () => {
+        setIsNameTouched(false);
+    };
     // ===========avatar======
     const fetchAvatars = async () => {
         try {
@@ -75,7 +80,9 @@ export function ResgiterGroupStudent() {
     ////////////////////////////////////////////////////
     function addProduct(student) {
         // console.log(product)
-        setListAdd(prevState => [...prevState, student])
+        // const index=listAdd.indexOf(student);
+        if (!listAdd.includes(student))
+            setListAdd(prevState => [...prevState, student])
     }
 
     //====================Search=============================
@@ -86,10 +93,10 @@ export function ResgiterGroupStudent() {
 
     return (
         <>
-            <div className="resgiterGroup" style={{marginTop:"90px"}}>
+            <div className="resgiterGroup">
                 {/*===================Danh Sach Sinh Vien=============*/}
                 <div className="container containerTan">
-                    <h2 className="mt-4 mb-4">ĐĂNG KÝ NHÓM SINH VIÊN</h2>
+                    <h2 className="mt-4 mb-4" style={{marginTop: "80px"}}>Đăng ký nhóm sinh viên</h2>
                     {/*====================search==============*/}
                     <div className="container-fluid">
                         <div className="row">
@@ -127,8 +134,7 @@ export function ResgiterGroupStudent() {
                                             <div className="card-body white">
                                                 <h5 className="card-title card-titleTan student-name">{s.name}</h5>
                                                 <p className="card-text card-textTan "><b> <i
-                                                    className="bi bi-code-square"></i> Mã sinh
-                                                    viên:</b> {"MSV".concat(s.studentId.toString().padStart(4, "0"))}
+                                                    className="bi bi-code-square"></i> MSV:</b> {"MSV".concat(s.studentId.toString().padStart(4, "0"))}
                                                 </p>
                                                 <p className="card-text card-textTan"><b><i
                                                     className="bi bi-window-sidebar"></i> Ngày
@@ -225,7 +231,7 @@ export function ResgiterGroupStudent() {
                                 <tbody className="row-tbody row-tbodyTan">
                                 {listAdd.map(student => (
                                     <tr key={student.studentId}>
-                                        <td>{student.studentId}</td>
+                                        <td> {"MSV".concat(student.studentId.toString().padStart(4, "0"))}</td>
                                         <td>{student.name}</td>
                                         <td>{student.dateOfBirth}</td>
                                         <td>
@@ -246,16 +252,33 @@ export function ResgiterGroupStudent() {
                         groupAccount: {
                             id: 1,
                             name: "",
-                            students: [],
+                            students: listAdd,
                         },
 
-                    }} onSubmit={values => {
+                    }} onSubmit={async (values) => {
                         try {
+                            values.groupAccount.students = listAdd;
+                            console.log(values.groupAccount.students.length);
+                            if (values.groupAccount.students.length !== 3) {
+                                // Display toast message for not having enough students
+                                toast.error('❌ Please select at 4 students for the group.');
+                                return;
+                            }
+                            if (errs.errorDuplicateGroup) {
+                                toast.error(errs.errorDuplicateGroup)
+                                navigate("/")
+                            }
                             values.groupAccount.students = students;
                             console.log(values);
-                            save(values.groupAccount)
-                            navigate("/")
-                            toast.success('🦄 Resgiter Group successfully!!!!');
+                            setIsNameTouched(true);
+                            const res = await save(values.groupAccount)
+                            if (res !== null) {
+                                setErrs(res)
+                            } else {
+                                navigate("/")
+                                toast.success('🦄 Resgiter Group successfully!!!!');
+                            }
+
                         } catch (error) {
                             console.error('Error submitting form:', error);
                             toast.error('❌ Failed to register group. Please try again later.');
@@ -267,7 +290,9 @@ export function ResgiterGroupStudent() {
                                 .required("Tên nhóm không được để trống")
                                 .min(5, "Tên phải nhiều hơn 5 ký tự")
                                 .max(255, "Tên không vượt quá 255 ký tự")
-                                .matches(/^[a-zA-Z\s]+$/, "Tên nhóm không được chứa ký tự đặc biệt")
+                                .matches(/^[a-zA-Z\s]+$/, "Tên nhóm không được chứa ký tự đặc biệt"),
+                            // students:Yup.array()
+                            //     .min(3,"nhóm phải có 4 người")
 
                         })
                     })}
@@ -280,17 +305,34 @@ export function ResgiterGroupStudent() {
 
                                 </div>
 
-                                <ErrorMessage name="groupAccount.name" className="text-danger" component="p"/>
 
+                                <ErrorMessage name="groupAccount.students" className="text-danger" component="p"/>
                                 <Field type="text" className="form-control" placeholder="Nhập vào tên nhóm"
                                        name="groupAccount.name"
                                        aria-label="Username"
-                                       aria-describedby="basic-addon1"/>
+                                       aria-describedby="basic-addon1">
+                                    {({field, form, meta}) => (
+                                        <div>
+                                            <input className="form-control" onFocus={handleNameTouched}
+                                                   type="text" {...field} />
 
+                                        </div>
+                                    )}
+                                </Field>
+                                <ErrorMessage name="groupAccount.name" className="text-danger" component="p"/>
+                                {errs.errorNameGroupDuplicate && isNameTouched && (
+                                    <div>
+                                        <span className="span-custom"
+                                              style={{color: "#dc3545"}}>{errs.errorNameGroupDuplicate}</span>
+                                    </div>
+                                )}
 
                             </div>
                             <br/>
-                            <button type="submit" className="btn btn-outline-success" style={{marginBottom:"10px"}}>Đăng ký nhóm</button>
+                            <div style={{textAlign: "center"}}>
+                                <button type="submit" className="btn btn-outline-success">Đăng ký nhóm</button>
+                            </div>
+
                         </Form>
                     </Formik>
 
@@ -302,6 +344,7 @@ export function ResgiterGroupStudent() {
                 <script
                     src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
             </div>
+            <br/>
         </>
     )
 
