@@ -38,6 +38,10 @@ function ListTopicNotApproval(props) {
 
     const [documentUrls, setDocumentUrls] = useState([]);
 
+    useEffect(() => {
+        document.title = "Kiểm duyệt đề tài";
+    }, []);
+
     //Validation approval form
     const validationSchema = Yup.object().shape({
         topicProcessList: Yup.array().of(
@@ -224,7 +228,7 @@ function ListTopicNotApproval(props) {
     }
 
     return topics.length !== 0 ? (
-        <>
+        <div className="TuanHA">
             <div className="header-approval">
                 <h2 className="title-approval">KIỂM DUYỆT ĐỀ TÀI</h2>
             </div>
@@ -241,7 +245,7 @@ function ListTopicNotApproval(props) {
                                     <th>Tên nhóm</th>
                                     <th>Tên đề tài</th>
                                     <th>Mô tả</th>
-                                    <th>Chi tiết</th>
+                                    <th style={{width: "100px"}}>Chi tiết</th>
                                     <th>Duyệt đề tài</th>
                                     <th>Hủy đề tài</th>
                                 </tr>
@@ -293,14 +297,14 @@ function ListTopicNotApproval(props) {
                                     disabled={currentPage === 1}
                                     onClick={() => handlePageChange(currentPage - 1)}
                                 >
-                                    Previous
+                                    Trước
                                 </button>
                                 <span>{currentPage}</span>
                                 <button
                                     disabled={currentPage === totalPages}
                                     onClick={() => handlePageChange(currentPage + 1)}
                                 >
-                                    Next
+                                    Sau
                                 </button>
                             </div>
 
@@ -329,14 +333,20 @@ function ListTopicNotApproval(props) {
                     })}
 
                     onSubmit={(values) => {
-                        console.log(values);
                         const cancel = async () => {
-                            await approvalTopicService.cancelTopic(values);
+                            approvalTopicService.cancelTopic(values);
                             setTopics(prevTopics => prevTopics.filter(topic => topic.infoTopicRegisterId !== values.infoTopicRegisterId));
                             document.getElementById("cancelForm").style.display = "none";
                             toast('🦄 Hủy thành công!!!!');
                         };
-                        cancel();
+                        console.log(values);
+                        try {
+                            cancel();
+                        } catch (e) {
+                            toast('Có lỗi xảy ra!');
+                        }
+
+
                     }}
                 >
                     <div style={{marginTop: '20px'}}>
@@ -345,7 +355,7 @@ function ListTopicNotApproval(props) {
                                 <div className="col-sm">
                                     <h2 style={{color: '#dc3545', fontWeight: 'bold', marginBottom: '20px'}}>Hủy đề
                                         tài</h2>
-                                    <label style={{fontWeight: 'bold', fontSize: '16px'}}>Đề
+                                    <label style={{fontWeight: 'bold', fontSize: '16px', color: "black"}}>Đề
                                         tài: {infoTopicsCancel[0]}</label>
                                     <br/>
                                     <label style={{fontWeight: 'bold', fontSize: '14px', color: '#555'}}>Mô
@@ -356,7 +366,7 @@ function ListTopicNotApproval(props) {
                                         <div className="form-group">
                                             <div className="col-sm">
                                                 <label htmlFor="contentTopic"
-                                                       style={{fontWeight: 'bold', fontSize: '14px'}}>Nội dung nguyên
+                                                       style={{fontWeight: 'bold', fontSize: '14px', color: "red"}}>Nội dung nguyên
                                                     nhân hủy.</label>
                                                 <Field
                                                     className="form-control"
@@ -435,7 +445,6 @@ function ListTopicNotApproval(props) {
                     validationSchema={validationSchema}
 
                     onSubmit={(values) => {
-                        console.log(values);
                         const approval = async () => {
                             const response = await approvalTopicService.createProcess(values);
                             if (response != null) {
@@ -447,7 +456,12 @@ function ListTopicNotApproval(props) {
                                 toast('🦄 Duyệt thành công!!!!');
                             }
                         }
-                        approval()
+                        try {
+                            approval()
+                        } catch (e) {
+                            toast('Có lỗi xảy ra!');
+                        }
+                        console.log(values);
                     }}
                 >
                     <div>
@@ -466,7 +480,7 @@ function ListTopicNotApproval(props) {
                                                         marginBottom: '20px',
                                                         borderBottom: '2px solid #007bff',
                                                         paddingBottom: '10px'
-                                                    }}>Giai đoạn 1</h5>
+                                                    }}>Giai đoạn 1: PLAN</h5>
 
                                                     <div className="col-sm">
                                                         <label htmlFor="start" style={{fontWeight: 'bold'}}>Ngày bắt
@@ -496,7 +510,7 @@ function ListTopicNotApproval(props) {
                                                         marginBottom: '20px',
                                                         borderBottom: '2px solid #007bff',
                                                         paddingBottom: '10px'
-                                                    }}>Giai đoạn 2</h5>
+                                                    }}>Giai đoạn 2: CODING</h5>
 
                                                     <div className="col-sm">
                                                         <label htmlFor="start" style={{fontWeight: 'bold'}}>Ngày bắt
@@ -528,7 +542,7 @@ function ListTopicNotApproval(props) {
                                                         marginBottom: '20px',
                                                         borderBottom: '2px solid #007bff',
                                                         paddingBottom: '10px'
-                                                    }}>Giai đoạn 3</h5>
+                                                    }}>Giai đoạn 3: TESTING</h5>
 
                                                     <div className="col-sm">
                                                         <label htmlFor="start" style={{fontWeight: 'bold'}}>Ngày bắt
@@ -538,8 +552,8 @@ function ListTopicNotApproval(props) {
                                                                type="date"/>
                                                         <ErrorMessage name='topicProcessList[2].dateStart'
                                                                       component="div" className="text-danger"/>
-                                                        {errorData['topicProcessList[1].dateStart'] && <div
-                                                            className="text-danger">{errorData['topicProcessList[1].dateStart']}</div>}
+                                                        {errorData['topicProcessList[2].dateStart'] && <div
+                                                            className="text-danger">{errorData['topicProcessList[2].dateStart']}</div>}
                                                     </div>
                                                     <div className="col-sm">
                                                         <label htmlFor="end" style={{fontWeight: 'bold'}}>Ngày kết
@@ -565,7 +579,8 @@ function ListTopicNotApproval(props) {
                                 <div className="col-sm"
                                      style={{backgroundColor: '#c7f1ae', color: 'black', padding: '20px'}}>
                                     <div>
-                                        <h4 style={{fontWeight: 'bold', marginBottom: '20px'}}>Thông tin đề tài</h4>
+                                        <h4 style={{fontWeight: 'bold', marginBottom: '20px', color: "black"}}>Thông tin
+                                            đề tài</h4>
                                         <p style={{fontWeight: 'bold', marginBottom: '5px'}}>Đề tài:</p>
                                         <p>{infoTopicsApproval[0]}</p>
                                         <p style={{fontWeight: 'bold', marginBottom: '5px'}}>Mô tả:</p>
@@ -583,7 +598,7 @@ function ListTopicNotApproval(props) {
                    aria-labelledby="contained-modal-title-vcenter"
                    centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>THÔNG TIN CHI TIẾT ĐỀ TÀI</Modal.Title>
+                    <Modal.Title style={{color: "Green"}}>THÔNG TIN CHI TIẾT ĐỀ TÀI</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className="row">
@@ -599,22 +614,22 @@ function ListTopicNotApproval(props) {
                         <div className="col-md-4 mr-5">
                             <div className="form-group">
                                 <label htmlFor="groupName" style={{color: "black", fontWeight: "bold"}}>Tên nhóm</label>
-                                <p>{infoTopicById.groupName}</p>
+                                <p style={{color: "black"}}>{infoTopicById.groupName}</p>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="studentNames" style={{color: "black", fontWeight: "bold"}}>Tên sinh
                                     viên</label>
-                                <p>{infoTopicById.studentNames}</p>
+                                <p style={{color: "black"}}>{infoTopicById.studentNames}</p>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="topicName" style={{color: "black", fontWeight: "bold"}}>Tên đề
                                     tài</label>
-                                <p>{infoTopicById.topicName}</p>
+                                <p style={{color: "black"}}>{infoTopicById.topicName}</p>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="topicContent" style={{color: "black", fontWeight: "bold"}}>Nội dung đề
                                     tài</label>
-                                <p>{infoTopicById.topicContent}</p>
+                                <p style={{color: "black"}}>{infoTopicById.topicContent}</p>
                             </div>
 
                         </div>
@@ -628,7 +643,7 @@ function ListTopicNotApproval(props) {
                 </Modal.Footer>
             </Modal>
 
-        </>
+        </div>
     ) : "Tất cả đề tài đã đươc phê duyệt!"
 }
 
