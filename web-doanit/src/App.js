@@ -56,7 +56,7 @@ function App() {
                             <Route path="/create-teacher" element={
                                 <PrivateRouter><CreateTeacher/></PrivateRouter>
                             }/>
-                            <Route path="/update-teacher/:teacherId" element={
+                            <Route path="/update-teacher/:id" element={
                                 <PrivateRouter> <UpdateTeacher/></PrivateRouter>
                             }/>
                             <Route path="/list-student" element={

@@ -125,7 +125,7 @@ export const ListTeacher = () => {
             <div className="row" style={{marginTop: '20px'}}>
                 {teachers.length === 0 ? <h1 className='huy text-center'>Không có dữ liệu</h1> : <>
                     {teachers.map((t, index) => (
-                        <div className="col-3" key={t.teacherId} teacher ={t}>
+                        <div className="col-3" key={t.teacherId} >
                             <div className="huy card card-huy">
                                 <LazyLoadImage
                                     effect="blur" src={avatarUrls[index]} className="huy img"
