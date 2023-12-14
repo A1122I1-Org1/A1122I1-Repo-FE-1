@@ -458,8 +458,8 @@ img {
     .nav__menu ul li:hover .dropdown-menu {
         display: block;
         position: absolute;
-        left: 55%;
-        top: 0%;
+        left: 10%;
+        top: 30%;
         background-color: #343a40;
     }
 

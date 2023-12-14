@@ -32,7 +32,7 @@ const Projects = () => {
                                     Thực tế ảo là một thuật ngữ mới xuất hiện khoảng đầu thập kỷ 90, nhưng ở Mỹ và Châu Âu,
                                     thực tế ảo (Virtual Reallity) đã và đang trở thành một công nghệ mũi nhọn nhờ khả năng
                                     ứng dụng rộng rãi trong mọi lĩnh vực...
-                                    <a href="#" className="btn btn-link">Xem thêm</a>
+
                                 </p>
                             </div>
                         </div>
@@ -45,7 +45,7 @@ const Projects = () => {
                                 <p className="card-text">
                                     Cống là một công trình nhân tạo khá phổ biến trên một tuyến đường. Tác dụng chủ yếu của
                                     cống là dùng để thoát nước của các dòng chảy thường xuyên hay định kỳ...
-                                    <a href="#" className="btn btn-link">Xem thêm</a>
+
                                 </p>
                             </div>
                         </div>
@@ -59,7 +59,7 @@ const Projects = () => {
                                     Việc hạch toán đầy đủ chính xác chi phí sản phẩm và giá thành của sản phẩm là việc làm
                                     cấp thiết khách quan và có ý nghĩa rất quan trọng nhất là trong điều kiện nền kinh tế
                                     thị trường...
-                                    <a href="#" className="btn btn-link">Xem thêm</a>
+
                                 </p>
                             </div>
                         </div>
@@ -72,7 +72,7 @@ const Projects = () => {
                                 <p className="card-text">
                                     Phương thức mới để quản lý doanh nghiệp thông qua thương mại điện tử đang ngày càng trở
                                     nên phổ biến và quan trọng...
-                                    <a href="#" className="btn btn-link">Xem thêm</a>
+
                                 </p>
                             </div>
                         </div>
