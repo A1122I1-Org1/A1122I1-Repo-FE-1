@@ -15,7 +15,7 @@ export function ResgiterTopic() {
     const [avatarUrl, setAvatarUrl] = useState('')
     const [moTa, setMoTa] = useState(null);
     const [moTaUrl, setMoTaUrl] = useState('');
-    const [errs,setErrs]=useState({});
+    const [errs, setErrs] = useState({});
     const [isNameTouched, setIsNameTouched] = useState(true);
     const handleNameTouched = () => {
         setIsNameTouched(false);
@@ -78,10 +78,10 @@ export function ResgiterTopic() {
                     values.topic.image = avatar.name;
                     values.topic.content = moTa.name;
                     setIsNameTouched(true);
-                    const res= await save(values);
-                    if(res!== null){
+                    const res = await save(values);
+                    if (res !== null) {
                         setErrs(res)
-                    }else{
+                    } else {
                         navigate("/register-teacher");
                         toast.success('🦄 Resgiter topic successfully!!!!');
                     }
@@ -113,9 +113,9 @@ export function ResgiterTopic() {
             })}>
             <>
                 {/*Giao dien*/}
-                <div className="RegisterTopic" style={{marginTop:"90px"}}>
+                <div className="RegisterTopic" style={{marginTop: "90px"}}>
                     <div className="container ">
-                        <h2 className="h2Tan" style={{marginTop:"80px"}}>ĐĂNG KÝ ĐỀ TÀI</h2>
+                        <h2 className="h2Tan" style={{marginTop: "80px"}}>ĐĂNG KÝ ĐỀ TÀI</h2>
                         <div className="container-fluid">
                             <div className="row">
                                 <div className="col-8">
@@ -158,7 +158,8 @@ export function ResgiterTopic() {
                                             </Field>
                                             {errs.errorNameDuplicate && isNameTouched && (
                                                 <div>
-                                                    <span className="span-custom" style={{color: "#dc3545"}}>{errs.errorNameDuplicate}</span>
+                                                    <span className="span-custom"
+                                                          style={{color: "#dc3545"}}>{errs.errorNameDuplicate}</span>
                                                 </div>
                                             )}
                                             <ErrorMessage name="topic.name" className="text-danger" component="p"/>
