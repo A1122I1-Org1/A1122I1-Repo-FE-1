@@ -312,10 +312,10 @@ img {
     overflow: hidden;
 }
 
-.container {
+.khang-container {
     max-width: 968px;
-    margin-left: var(--mb-1-5);
-    margin-right: var(--mb-1-5);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .grid {
@@ -458,8 +458,8 @@ img {
     .nav__menu ul li:hover .dropdown-menu {
         display: block;
         position: absolute;
-        left: 55%;
-        top: 0%;
+        left: 10%;
+        top: 30%;
         background-color: #343a40;
     }
 
@@ -644,6 +644,7 @@ img {
 .user-avatar {
     width: 40px; /* Điều chỉnh kích thước hình ảnh avatar theo mong muốn */
     height: 40px;
+    margin-right: 5px;
     border-radius: 50%; /* Làm cho hình ảnh trở thành hình tròn */
     object-fit: cover; /* Đảm bảo hình ảnh vừa với khu vực giới hạn */
     cursor: pointer; /* Hiển thị con trỏ khi di chuột qua hình ảnh */
@@ -665,6 +666,7 @@ img {
 
 /*=============== CONTACT ===============*/
 .contact__container {
+    max-width: 968px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
@@ -681,7 +683,7 @@ img {
 .contact__info,
 .contact__form {
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 10px ;
     background-color: transparent;
     color: #FFF;
 }

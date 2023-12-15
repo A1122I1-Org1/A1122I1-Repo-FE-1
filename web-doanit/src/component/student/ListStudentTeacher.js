@@ -7,7 +7,7 @@ import {NavLink} from "react-router-dom";
 import {storage} from "../../config/firebaseConfig";
 import {PaginationNav} from "./PaginationNav";
 import {LazyLoadImage} from "react-lazy-load-image-component";
-import anh from "../image/default-avatar.png";
+import anh from "../image/default-avatar1.png";
 
 export const ListStudentTeacher = () => {
     const [students, setStudents] = useState([]);
@@ -75,15 +75,19 @@ export const ListStudentTeacher = () => {
     }, [teacher]);
     const handleSearch = () => {
         setSearchKey(searchKeyTmp);
+        setPageNumber(0)
+    };
+    const handleLinkClick = (e) => {
+        e.preventDefault();
     };
     return (
-        <div className="protect" style={{marginTop:"60px"}}>
+        <div className="protect" style={{marginTop:"80px"}}>
         <div className="container">
-        <h2 className="mt-4 mb-4">Danh sách sinh viên</h2>
+        <h2 className="mt-4 mb-4">DANH SÁCH SINH VIÊN</h2>
         <div className="container-fluid">
             <div className="row">
                 <div className="col-8 text-left">
-                    <NavLink to={"/create-student"} className="btn btn-outline-success rounded-pill ">
+                    <NavLink to={"/create-student"} className="btn btn-outline-success rounded-pill " onClick={handleLinkClick}>
                         Thêm sinh viên
                     </NavLink>
                 </div>
@@ -99,7 +103,7 @@ export const ListStudentTeacher = () => {
                         <button className="btn btn-outline-secondary border-0  btn-hover-none rounded-circle"
                                 type="button" id="button-addon2"
                                 onClick={handleSearch}
-                        ><i className="bi bi-search"></i></button>
+                        ><i className="bi bi-search" style={{color:'black'}} ></i></button>
                     </div>
                 </div>
             </div>
@@ -107,7 +111,7 @@ export const ListStudentTeacher = () => {
         <div className="row">
             {students.length === 0 ?
                 <div className="text-center" style={{ minHeight: "400px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <h1>Dữ liệu không tồn tại</h1>
+                <h1>DỮ LIỆU KHÔNG TỒN TẠI</h1>
             </div> : <>
                 {students.map((s, index) => (<div className="col-md-3 mb-4" key={index}>
                     <div className="card">
@@ -116,20 +120,20 @@ export const ListStudentTeacher = () => {
                             alt={`Sinh viên ${s.index}`} width="100%"
                         />
                         <div className="card-body">
-                            <h5 className="card-title student-name">{s.name}</h5>
-                            <p className="card-text"><b> <i className="bi bi-code-square"></i> Mã sinh
+                            <b><h5 className="card-title student-name">{s.name}</h5></b>
+                            <p className="card-text"><b> <i className="bi bi-code-square" style={{color:'black'}}></i> Mã sinh
                                 viên:</b> {"MSV".concat(s.studentId.toString().padStart(4, "0"))}</p>
-                            <p className="card-text"><b><i className="bi bi-window-sidebar"></i> Lớp:
-                            </b>{grades.find((g) => String(g.gradeId) === String(s.grade.gradeId))?.name}
+                            <p className="card-text"><b><i className="bi bi-window-sidebar" style={{color:'black'}}></i> Lớp:
+                            </b> {grades.find((g) => String(g.gradeId) === String(s.grade.gradeId))?.name}
                             </p>
                             <p className="card-text"><b><i
-                                className="bi bi-envelope"></i> Email:</b> {s.email}</p>
-                            <p className="card-text"><b><i className="bi bi-phone"></i> Điện thoại:
+                                className="bi bi-envelope" style={{color:'black'}}></i> Email:</b> {s.email}</p>
+                            <p className="card-text"><b><i className="bi bi-phone" style={{color:'black'}}></i> Điện thoại:
                             </b> {s.phone}
                             </p>
                             <p className="card-text">
                                 <b>
-                                    <img src={avatarTeacherUrl}
+                                    <img src={avatarTeacherUrl || (avatar ? URL.createObjectURL(avatar) : anh)}
                                          className="bi bi-facebook rounded-circle p-1 img-teacher"
                                          alt="Facebook"
                                     />
@@ -140,8 +144,10 @@ export const ListStudentTeacher = () => {
                         <div className="card-footer">
                             <div style={{float: 'right'}}>
                                 <NavLink to={`/edit-student/${s.studentId}`}
-                                         className="btn btn-success rounded-circle"><i
-                                    className="bi bi-pencil"></i>
+                                         className="btn btn-success rounded-circle" onClick={handleLinkClick}>
+                                    <div><i
+                                    className="bi bi-pencil " ></i>
+                                    </div>
                                 </NavLink>
                             </div>
                         </div>
@@ -150,6 +156,8 @@ export const ListStudentTeacher = () => {
                 <PaginationNav pageNumber={pageNumber}
                                totalPages={totalPages}
                                setPageNumber={setPageNumber}
+                               searchKeyTmp={searchKeyTmp}
+                               setSearchKeyTmp={setSearchKeyTmp}
                 />
             </>}
         </div>

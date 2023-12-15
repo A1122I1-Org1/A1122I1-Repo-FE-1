@@ -23,7 +23,6 @@
 
 .resgiterGroup .card-textTan {
     white-space: nowrap;
-    overflow: hidden;
     text-overflow: ellipsis;
 }
 

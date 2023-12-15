@@ -23,7 +23,9 @@ const HomePage = () => {
     };
 
     return (
+
         <>
+
             <main className="main">
                 <Home/>
                 <News/>

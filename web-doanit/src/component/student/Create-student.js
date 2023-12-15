@@ -7,31 +7,25 @@ import {save} from "../../service/StudentService";
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as gradeService from '../../service/GradeService';
-import { storage } from "../../config/firebaseConfig";
+import {storage} from "../../config/firebaseConfig";
 import {useNavigate} from "react-router-dom";
 
 const URL1 = "http://localhost:8080/api/get-all-grade";
 
-
-
-
-
-
 export function Create() {
     const [grades, setGrades] = useState([])
-    const [avatar,setAvatar]=useState(null)
+    const [avatar, setAvatar] = useState(null);
     const [avatarUrl, setAvatarUrl] = useState('')
+    const [errorData, setErrorData] = useState({})
+    const [errorAvatar, setErrorAvatar] = useState('Ảnh không được để trống')
 
 
-    const navigate=useNavigate()
-
-
+    const navigate = useNavigate()
 
 
     useEffect(() => {
         findGrade();
     }, []);
-
 
 
     const findGrade = async () => {
@@ -44,22 +38,28 @@ export function Create() {
     }
 
 
-
     const onAvatarChange = (event) => {
         if (event.target.files && event.target.files[0]) {
+            setErrorAvatar('')
             setAvatar(event.target.files[0]);
             setAvatarUrl(URL.createObjectURL(event.target.files[0]));
         }
     };
 
 
-
     const handleAvatarUpload = async () => {
         try {
+            // if (avatar) {
+            //     const uploadTask = storage.ref(`${avatar.name}`).put(avatar);
+            //     await uploadTask;
+            //     const downloadUrl = await storage.ref(avatar.name).getDownloadURL();
+            //     setAvatarUrl(downloadUrl);
+            // }
             if (avatar) {
                 const uploadTask = storage.ref(`${avatar.name}`).put(avatar);
-                await uploadTask;
-                const downloadUrl = await storage.ref(avatar.name).getDownloadURL();
+                const snapshot = await uploadTask;
+                const downloadUrl = await snapshot.ref.getDownloadURL();
+
                 setAvatarUrl(downloadUrl);
             }
         } catch (error) {
@@ -67,8 +67,6 @@ export function Create() {
             throw error;
         }
     };
-
-
 
 
     return (
@@ -82,7 +80,7 @@ export function Create() {
                         address: '',
                         phone: '',
                         email: '',
-                        avatar: null,
+                        avatar:'',
                         gender: false,
                         deleteFlag: '',
                         grade: 3,
@@ -90,21 +88,29 @@ export function Create() {
                     }}
 
 
-
                 onSubmit={async (values) => {
+
                     try {
                         await handleAvatarUpload();
-                        values.avatar = avatar.name;
-                        save(values);
-                        toast('🦄 Thêm mới sinh viên thành công!!!!');
-                        navigate("/list-student")
+                        values.avatar = avatar?.name;
+                        const response = await save(values);
+
+                        if (response != null) {
+                            setErrorData(response)
+                            toast('Lỗi! thêm mới sinh viên thất bại');
+                        } else {
+                            setErrorData({})
+                            toast('🦄 Thêm mới sinh viên thành công!!!!');
+                            setTimeout(() => {
+                                navigate("/list-student")
+                            }, 1000)
+                        }
+                        console.log(errorData)
                     } catch (error) {
-                        console.error('Lỗi up ảnh hoặc thêm sinh viên:', error);
+                        toast('Lỗi! thêm mới sinh viên thất bại');
+                        console.log(error)
                     }
-
                 }}
-
-
 
 
                 validationSchema={Yup.object({
@@ -146,18 +152,22 @@ export function Create() {
                 })}
             >
                 <Form>
-                    <div className="khoahnd-container" style={{marginTop:"80px"}}>
+                    <div className="khoahnd-container" style={{marginTop: "80px"}}>
 
                         <div className="khoahnd-header">
                             <h2 className="khoahnd-title">THÊM MỚI SINH VIÊN</h2>
                         </div>
 
-                        <div className="create_form" style={{ display: "flex", gap: "100px" }}>
+
+                        <div className="khoahnd_form" style={{display: "flex", gap: "100px"}}>
+
+
 
                             <div className="group">
                                 <div className="khoahnd-avatar-container">
-                                    <img src={avatarUrl || (avatar ? URL.createObjectURL(avatar) : anh)} alt="avatar" className="khoahnd-avatar" id="avatar-image" />
-                                    <div className="khoahnd-form-group mt-2" style={{ textAlign: "center" }}>
+                                    <img src={avatarUrl || (avatar ? URL.createObjectURL(avatar) : anh)} alt="avatar"
+                                         className="khoahnd-avatar" id="avatar-image"/>
+                                    <div className="khoahnd-form-group mt-2" style={{textAlign: "center"}}>
                                         <input
                                             type="file"
                                             id="avatar"
@@ -167,33 +177,42 @@ export function Create() {
                                                 display: 'none', // Hide the input
                                             }}
                                         />
-                                        <label htmlFor="avatar" className={`btn btn-outline-primary label-custom `} style={{display:'inline'}}>
+                                        <label htmlFor="avatar" className={`btn btn-outline-primary label-custom `}
+                                               style={{display: 'inline'}}>
                                             Chọn ảnh đại diện
                                         </label>
-                                        <ErrorMessage name="avatar" className="text-danger" component="p"/>
+                                        <ErrorMessage name="avatar" className="text-danger" component="p" />
+                                        {errorAvatar && <p style={{color: "#dc3545"}}>{errorAvatar}</p>}
+                                        {errorData['errorFileFormat'] && <div
+                                            className="text-danger">{errorData['errorFileFormat']}</div>}
                                     </div>
                                 </div>
                             </div>
                             <div className="group1">
                                 <div className="khoahnd-form-group">
-                                    <label htmlFor="name" className="create_label">Tên sinh viên (<span
+                                    <label htmlFor="name" className="create_label">Tên Sinh Viên (<span
                                         className="text-danger">*</span>):</label>
                                     <Field type="text" className="form-control" id="name" name="name"/>
                                     <ErrorMessage name="name" className="text-danger" component="p"/>
                                 </div>
                                 <div className="khoahnd-form-group">
-                                    <label htmlFor="dateOfBirth" className="create_label">Ngày Sinh (<span className="text-danger">*</span>):</label>
+                                    <label htmlFor="dateOfBirth" className="create_label">Ngày Sinh (<span
+                                        className="text-danger">*</span>):</label>
                                     <Field type="date" className="form-control" id="dateOfBirth"
                                            name="dateOfBirth"/>
                                     <ErrorMessage name="dateOfBirth" className="text-danger" component="p"/>
                                 </div>
                                 <div className="khoahnd-form-group">
-                                    <label htmlFor="email" className="create_label">Email (<span className="text-danger">*</span>):</label>
+                                    <label htmlFor="email" className="create_label">Email (<span
+                                        className="text-danger">*</span>):</label>
                                     <Field type="text" className="form-control" id="email" name="email"/>
                                     <ErrorMessage name="email" className="text-danger" component="p"/>
+                                    {errorData['errorEmailDuplicate'] && <div
+                                        className="text-danger">{errorData['errorEmailDuplicate']}</div>}
                                 </div>
                                 <div className="khoahnd-form-group">
-                                    <label htmlFor="grade" className="create_label">Lớp (<span className="text-danger">*</span>):</label>
+                                    <label htmlFor="grade" className="create_label">Lớp (<span
+                                        className="text-danger">*</span>):</label>
                                     <Field as="select" className="form-control" id="grade" name="grade">
                                         {grades && grades.length > 0 ? (
                                             grades.map((grade) => (
@@ -212,6 +231,8 @@ export function Create() {
                                         className="text-danger">*</span>):</label>
                                     <Field type="text" className="form-control" id="phone" name="phone"/>
                                     <ErrorMessage name="phone" className="text-danger" component="p"/>
+                                    {errorData['errorPhoneDuplicate'] && <div
+                                        className="text-danger">{errorData['errorPhoneDuplicate']}</div>}
                                 </div>
                                 <div className="khoahnd-form-group">
                                     <label htmlFor="address" className="create_label">Địa Chỉ (<span

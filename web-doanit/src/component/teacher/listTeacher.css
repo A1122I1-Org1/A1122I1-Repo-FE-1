@@ -35,6 +35,12 @@ huy{}
 }
 .huy.title{
     text-align: center;
+    margin-bottom: 15px;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    /*background: #87AA74;*/
+    /*color: white;*/
     color: #87AA74;
     font-size: 45px;
 }

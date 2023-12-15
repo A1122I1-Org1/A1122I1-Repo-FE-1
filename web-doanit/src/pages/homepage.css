@@ -312,10 +312,10 @@ img {
     overflow: hidden;
 }
 
-.container {
+.khang-container {
     max-width: 968px;
-    margin-left: var(--mb-1-5);
-    margin-right: var(--mb-1-5);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .grid {
@@ -395,6 +395,7 @@ img {
 }
 
 .nav__menu ul li:hover .dropdown-menu ul {
+
     display: block;
     margin: 10px;
 }
@@ -458,8 +459,8 @@ img {
     .nav__menu ul li:hover .dropdown-menu {
         display: block;
         position: absolute;
-        left: 55%;
-        top: 0%;
+        left: 10%;
+        top: 30%;
         background-color: #343a40;
     }
 
@@ -469,7 +470,7 @@ img {
     }
 
     .nav__menu ul li:hover .dropdown-menu ul li {
-        width: 100%; /* Đảm bảo rằng mỗi mục chiếm toàn bộ chiều rộng của dropdown */
+        width: 100%;
         padding: 10px;
         white-space: nowrap; /* Ngăn chặn các từ bị ngắt dòng */
     }
@@ -644,6 +645,7 @@ img {
 .user-avatar {
     width: 40px; /* Điều chỉnh kích thước hình ảnh avatar theo mong muốn */
     height: 40px;
+    margin-right: 5px;
     border-radius: 50%; /* Làm cho hình ảnh trở thành hình tròn */
     object-fit: cover; /* Đảm bảo hình ảnh vừa với khu vực giới hạn */
     cursor: pointer; /* Hiển thị con trỏ khi di chuột qua hình ảnh */

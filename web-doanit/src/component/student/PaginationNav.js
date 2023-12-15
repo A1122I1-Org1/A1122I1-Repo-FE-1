@@ -1,8 +1,23 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import {toast} from "react-toastify";
 
-export const PaginationNav = ({pageNumber, totalPages, setPageNumber}) => {
+export const PaginationNav = ({pageNumber, totalPages, setPageNumber, searchKeyTmp, setSearchKeyTmp}) => {
     const [targetPage, setTargetPage] = useState(0);
     const pageCount = totalPages;
+    useEffect(() => {
+        setTargetPage(0);
+        
+    }, [searchKeyTmp]);
+    const handleGoButtonClick = () => {
+        if (targetPage < 0 || targetPage >= pageCount) {
+            toast.error("Số trang không hợp lệ.")
+            setTargetPage(0)
+            setPageNumber(0);
+        } else {
+            setPageNumber(targetPage);
+            console.log(targetPage)
+        }
+    };
     return (<div className="row justify-content-center" style={{marginTop:"60px"}}>
         <div className="col-7 justify-content-center">
             <nav aria-label="Page navigation example">
@@ -35,7 +50,7 @@ export const PaginationNav = ({pageNumber, totalPages, setPageNumber}) => {
                   <span className="input-group-text">/{pageCount}</span>
                   <button
                       className="btn btn-success btn-sm"
-                      onClick={() => setPageNumber(Math.max(Math.min(targetPage, pageCount - 1), 0))}
+                      onClick={handleGoButtonClick}
                   >
                     Go
                   </button>
