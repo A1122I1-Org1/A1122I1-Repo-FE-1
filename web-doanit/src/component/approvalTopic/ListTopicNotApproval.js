@@ -8,6 +8,7 @@ import {storage} from "../../config/firebaseConfig";
 import * as Yup from 'yup'
 import {useEffect, useState} from "react";
 import {Modal, Button} from 'react-bootstrap';
+import {TailSpin as Loader} from 'react-loader-spinner';
 
 function ListTopicNotApproval(props) {
     const [topics, setTopics] = useState([])
@@ -366,7 +367,8 @@ function ListTopicNotApproval(props) {
                                         <div className="form-group">
                                             <div className="col-sm">
                                                 <label htmlFor="contentTopic"
-                                                       style={{fontWeight: 'bold', fontSize: '14px', color: "red"}}>Nội dung nguyên
+                                                       style={{fontWeight: 'bold', fontSize: '14px', color: "red"}}>Nội
+                                                    dung nguyên
                                                     nhân hủy.</label>
                                                 <Field
                                                     className="form-control"
@@ -444,152 +446,177 @@ function ListTopicNotApproval(props) {
 
                     validationSchema={validationSchema}
 
-                    onSubmit={(values) => {
-                        const approval = async () => {
+                    onSubmit={async (values, {setSubmitting}) => {
+                        try {
+                            setSubmitting(true);
+
                             const response = await approvalTopicService.createProcess(values);
+
                             if (response != null) {
-                                setErrorData(response)
+                                setErrorData(response);
                             } else {
-                                setErrorData({})
-                                setTopics(prevTopics => prevTopics.filter(topic => topic.infoTopicRegisterId !== values.infoTopicRegisterId));
-                                document.getElementById("approvalForm").style.display = "none";
+                                setErrorData({});
+                                setTopics((prevTopics) => prevTopics.filter((topic) => topic.infoTopicRegisterId !== values.infoTopicRegisterId));
+                                document.getElementById('approvalForm').style.display = 'none';
                                 toast('🦄 Duyệt thành công!!!!');
                             }
-                        }
-                        try {
-                            approval()
                         } catch (e) {
                             toast('Có lỗi xảy ra!');
+                        } finally {
+                            setSubmitting(false);
                         }
-                        console.log(values);
                     }}
                 >
-                    <div>
-                        <div className="card"
-                             style={{maxWidth: '800px', margin: 'auto', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'}}>
-                            <div className="row">
-                                <div className="col-sm" style={{padding: '20px'}}>
+                    {({isSubmitting}) => (
+                        <div>
+                            <div className="card"
+                                 style={{maxWidth: '800px', margin: 'auto', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'}}>
+                                <div className="row">
+                                    <div className="col-sm" style={{padding: '20px'}}>
 
-                                    <Form>
-                                        <div>
+                                        <Form>
                                             <div>
+                                                <div>
 
-                                                <div className="row g-2" data-date-format="dd-mm-yyyy">
-                                                    <h5 style={{
-                                                        fontWeight: 'bold',
-                                                        marginBottom: '20px',
-                                                        borderBottom: '2px solid #007bff',
-                                                        paddingBottom: '10px'
-                                                    }}>Giai đoạn 1: PLAN</h5>
+                                                    <div className="row g-2" data-date-format="dd-mm-yyyy">
+                                                        <h5 style={{
+                                                            fontWeight: 'bold',
+                                                            marginBottom: '20px',
+                                                            borderBottom: '2px solid #007bff',
+                                                            paddingBottom: '10px'
+                                                        }}>Giai đoạn 1: PLAN</h5>
 
-                                                    <div className="col-sm">
-                                                        <label htmlFor="start" style={{fontWeight: 'bold'}}>Ngày bắt
-                                                            đầu</label>
-                                                        <Field className="form-control"
-                                                               name="topicProcessList[0].dateStart" id="start"
-                                                               type="date"/>
-                                                        <ErrorMessage name='topicProcessList[0].dateStart'
-                                                                      component="div" className="text-danger"/>
-                                                        {errorData['topicProcessList[0].dateStart'] && <div
-                                                            className="text-danger">{errorData['topicProcessList[0].dateStart']}</div>}
+                                                        <div className="col-sm">
+                                                            <label htmlFor="start" style={{fontWeight: 'bold'}}>Ngày bắt
+                                                                đầu</label>
+                                                            <Field className="form-control"
+                                                                   name="topicProcessList[0].dateStart" id="start"
+                                                                   type="date"/>
+                                                            <ErrorMessage name='topicProcessList[0].dateStart'
+                                                                          component="div" className="text-danger"/>
+                                                            {errorData['topicProcessList[0].dateStart'] && <div
+                                                                className="text-danger">{errorData['topicProcessList[0].dateStart']}</div>}
+                                                        </div>
+                                                        <div className="col-sm">
+                                                            <label htmlFor="end" style={{fontWeight: 'bold'}}>Ngày kết
+                                                                thúc</label>
+                                                            <Field className="form-control"
+                                                                   name="topicProcessList[0].dateEnd" id="end"
+                                                                   type="date"/>
+                                                            <ErrorMessage name='topicProcessList[0].dateEnd'
+                                                                          component="div"
+                                                                          className="text-danger"/>
+                                                        </div>
+                                                        <hr style={{margin: '20px 0'}}/>
                                                     </div>
-                                                    <div className="col-sm">
-                                                        <label htmlFor="end" style={{fontWeight: 'bold'}}>Ngày kết
-                                                            thúc</label>
-                                                        <Field className="form-control"
-                                                               name="topicProcessList[0].dateEnd" id="end" type="date"/>
-                                                        <ErrorMessage name='topicProcessList[0].dateEnd' component="div"
-                                                                      className="text-danger"/>
-                                                    </div>
-                                                    <hr style={{margin: '20px 0'}}/>
-                                                </div>
 
-                                                <div className="row g-2" data-date-format="dd-mm-yyyy">
-                                                    <h5 style={{
-                                                        fontWeight: 'bold',
-                                                        marginBottom: '20px',
-                                                        borderBottom: '2px solid #007bff',
-                                                        paddingBottom: '10px'
-                                                    }}>Giai đoạn 2: CODING</h5>
+                                                    <div className="row g-2" data-date-format="dd-mm-yyyy">
+                                                        <h5 style={{
+                                                            fontWeight: 'bold',
+                                                            marginBottom: '20px',
+                                                            borderBottom: '2px solid #007bff',
+                                                            paddingBottom: '10px'
+                                                        }}>Giai đoạn 2: CODING</h5>
 
-                                                    <div className="col-sm">
-                                                        <label htmlFor="start" style={{fontWeight: 'bold'}}>Ngày bắt
-                                                            đầu</label>
-                                                        <Field className="form-control"
-                                                               name="topicProcessList[1].dateStart" id="start"
-                                                               type="date"/>
-                                                        <ErrorMessage name='topicProcessList[1].dateStart'
-                                                                      component="div" className="text-danger"/>
-                                                        <ErrorMessage name='isValidDateStart' component="div"
-                                                                      className="text-danger"/>
-                                                        {errorData['topicProcessList[1].dateStart'] && <div
-                                                            className="text-danger">{errorData['topicProcessList[1].dateStart']}</div>}
+                                                        <div className="col-sm">
+                                                            <label htmlFor="start" style={{fontWeight: 'bold'}}>Ngày bắt
+                                                                đầu</label>
+                                                            <Field className="form-control"
+                                                                   name="topicProcessList[1].dateStart" id="start"
+                                                                   type="date"/>
+                                                            <ErrorMessage name='topicProcessList[1].dateStart'
+                                                                          component="div" className="text-danger"/>
+                                                            <ErrorMessage name='isValidDateStart' component="div"
+                                                                          className="text-danger"/>
+                                                            {errorData['topicProcessList[1].dateStart'] && <div
+                                                                className="text-danger">{errorData['topicProcessList[1].dateStart']}</div>}
+                                                        </div>
+                                                        <div className="col-sm">
+                                                            <label htmlFor="end" style={{fontWeight: 'bold'}}>Ngày kết
+                                                                thúc</label>
+                                                            <Field className="form-control"
+                                                                   name="topicProcessList[1].dateEnd" id="end"
+                                                                   type="date"/>
+                                                            <ErrorMessage name='topicProcessList[1].dateEnd'
+                                                                          component="div"
+                                                                          className="text-danger"/>
+                                                        </div>
+                                                        <hr style={{margin: '20px 0'}}/>
                                                     </div>
-                                                    <div className="col-sm">
-                                                        <label htmlFor="end" style={{fontWeight: 'bold'}}>Ngày kết
-                                                            thúc</label>
-                                                        <Field className="form-control"
-                                                               name="topicProcessList[1].dateEnd" id="end" type="date"/>
-                                                        <ErrorMessage name='topicProcessList[1].dateEnd' component="div"
-                                                                      className="text-danger"/>
-                                                    </div>
-                                                    <hr style={{margin: '20px 0'}}/>
-                                                </div>
 
-                                                <div className="row g-2" data-date-format="dd-mm-yyyy">
-                                                    <h5 style={{
-                                                        fontWeight: 'bold',
-                                                        marginBottom: '20px',
-                                                        borderBottom: '2px solid #007bff',
-                                                        paddingBottom: '10px'
-                                                    }}>Giai đoạn 3: TESTING</h5>
+                                                    <div className="row g-2" data-date-format="dd-mm-yyyy">
+                                                        <h5 style={{
+                                                            fontWeight: 'bold',
+                                                            marginBottom: '20px',
+                                                            borderBottom: '2px solid #007bff',
+                                                            paddingBottom: '10px'
+                                                        }}>Giai đoạn 3: TESTING</h5>
 
-                                                    <div className="col-sm">
-                                                        <label htmlFor="start" style={{fontWeight: 'bold'}}>Ngày bắt
-                                                            đầu</label>
-                                                        <Field className="form-control"
-                                                               name="topicProcessList[2].dateStart" id="start"
-                                                               type="date"/>
-                                                        <ErrorMessage name='topicProcessList[2].dateStart'
-                                                                      component="div" className="text-danger"/>
-                                                        {errorData['topicProcessList[2].dateStart'] && <div
-                                                            className="text-danger">{errorData['topicProcessList[2].dateStart']}</div>}
+                                                        <div className="col-sm">
+                                                            <label htmlFor="start" style={{fontWeight: 'bold'}}>Ngày bắt
+                                                                đầu</label>
+                                                            <Field className="form-control"
+                                                                   name="topicProcessList[2].dateStart" id="start"
+                                                                   type="date"/>
+                                                            <ErrorMessage name='topicProcessList[2].dateStart'
+                                                                          component="div" className="text-danger"/>
+                                                            {errorData['topicProcessList[2].dateStart'] && <div
+                                                                className="text-danger">{errorData['topicProcessList[2].dateStart']}</div>}
+                                                        </div>
+                                                        <div className="col-sm">
+                                                            <label htmlFor="end" style={{fontWeight: 'bold'}}>Ngày kết
+                                                                thúc</label>
+                                                            <Field className="form-control"
+                                                                   name="topicProcessList[2].dateEnd" id="end"
+                                                                   type="date"/>
+                                                            <ErrorMessage name='topicProcessList[2].dateEnd'
+                                                                          component="div"
+                                                                          className="text-danger"/>
+                                                        </div>
+                                                        <hr style={{margin: '20px 0'}}/>
                                                     </div>
-                                                    <div className="col-sm">
-                                                        <label htmlFor="end" style={{fontWeight: 'bold'}}>Ngày kết
-                                                            thúc</label>
-                                                        <Field className="form-control"
-                                                               name="topicProcessList[2].dateEnd" id="end" type="date"/>
-                                                        <ErrorMessage name='topicProcessList[2].dateEnd' component="div"
-                                                                      className="text-danger"/>
-                                                    </div>
-                                                    <hr style={{margin: '20px 0'}}/>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="d-grid gap-2">
-                                            <button type="submit" className="btn btn-success">Duyệt</button>
-                                            <button className="btn btn-outline-info" onClick={turnOffFormApproval}>Hủy
-                                            </button>
-                                        </div>
-                                    </Form>
+                                            {isSubmitting ? (
+                                                <div style={{
+                                                    display: 'flex',
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center',
+                                                    height: '50px'
+                                                }}>
+                                                    <Loader type='TailSpin' color='grey' height={50} width={50}/>
+                                                </div>
+                                            ) : (
+                                                <div className='d-grid gap-2'>
+                                                    <button type='submit' className='btn btn-success'>
+                                                        Duyệt
+                                                    </button>
+                                                    <button className='btn btn-outline-info'
+                                                            onClick={turnOffFormApproval}>
+                                                        Hủy
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </Form>
 
 
-                                </div>
-                                <div className="col-sm"
-                                     style={{backgroundColor: '#c7f1ae', color: 'black', padding: '20px'}}>
-                                    <div>
-                                        <h4 style={{fontWeight: 'bold', marginBottom: '20px', color: "black"}}>Thông tin
-                                            đề tài</h4>
-                                        <p style={{fontWeight: 'bold', marginBottom: '5px'}}>Đề tài:</p>
-                                        <p>{infoTopicsApproval[0]}</p>
-                                        <p style={{fontWeight: 'bold', marginBottom: '5px'}}>Mô tả:</p>
-                                        <p>{infoTopicsApproval[1]}</p>
+                                    </div>
+                                    <div className="col-sm"
+                                         style={{backgroundColor: '#c7f1ae', color: 'black', padding: '20px'}}>
+                                        <div>
+                                            <h4 style={{fontWeight: 'bold', marginBottom: '20px', color: "black"}}>Thông
+                                                tin
+                                                đề tài</h4>
+                                            <p style={{fontWeight: 'bold', marginBottom: '5px'}}>Đề tài:</p>
+                                            <p>{infoTopicsApproval[0]}</p>
+                                            <p style={{fontWeight: 'bold', marginBottom: '5px'}}>Mô tả:</p>
+                                            <p>{infoTopicsApproval[1]}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    )}
                 </Formik>
             </div>
 
