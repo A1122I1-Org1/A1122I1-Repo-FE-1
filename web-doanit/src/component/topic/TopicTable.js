@@ -220,7 +220,7 @@ const TopicTable = () => {
                     </div>
                 )}
             </section>
-        </div>
+        </>
     );
 };
 export default TopicTable;

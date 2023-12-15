@@ -85,7 +85,7 @@ export const UserInfo = () => {
                             </div>
                             <div className="col-md-4">
                                 <UserInfoInput label="Giới tính" name="gender"
-                                               value={user.gender === 1 ? "Nam" : "Nữ"}/>
+                                               value={user.gender ? "Nam" : "Nữ"}/>
                                 <UserInfoInput label="Số điện thoại" name="phone" value={user.phone}/>
                                 {
                                     roles.includes("ROLE_TEACHER") ? (
