@@ -2,10 +2,10 @@ import './RegisterTeacher.css'
 import {useEffect, useState} from "react";
 import * as ListRegisterTeacherService from "../../service/RegisterTeacherService";
 import {toast} from "react-toastify";
-import {Modal, Button} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 import {storage} from "../../config/firebaseConfig";
 
-export function RegisterTeacher(props) {
+export function RegisterTeacher() {
     const [pageNumber, setPageNumber] = useState(0);
     const [targetPage, setTargetPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
@@ -15,6 +15,7 @@ export function RegisterTeacher(props) {
     const [showModal, setShowModal] = useState(false);
     const [avatarUrl, setAvatarUrl] = useState('');
     const roles = localStorage.getItem("roles");
+    const [buttonFlag, setButtonFlag] = useState(false);
     const getAvatarFromFirebase = async (avatarName) => {
         if (!avatarName) return null;
         try {
@@ -22,20 +23,22 @@ export function RegisterTeacher(props) {
             return downloadUrl;
         } catch (error) {
             console.error("Error fetching avatar from Firebase:", error);
-            // throw error;
         }
     };
 
-    const handleShow = (id) => {
-        console.log(id)
+    const handleShow = (id, count) => {
+        if (count === 5) {
+            setButtonFlag(true);
+        } else {
+            setButtonFlag(false);
+        }
         setShowModal(true);
-        getInforTeacher(id)
+        getInforTeacher(id);
     }
-    const handleClose = () => setShowModal(false);
 
     useEffect(() => {
         fetchApi();
-    }, [pageNumber,inforTeacher])
+    }, [pageNumber, inforTeacher])
 
     const fetchApi = async () => {
         try {
@@ -68,13 +71,15 @@ export function RegisterTeacher(props) {
         }
     }
     const register = async (teacherId) => {
-        // debugger;
         try {
             await ListRegisterTeacherService.registerTeacher(teacherId);
             toast.success("Đăng ký thành công");
+
+            setShowModal(false)
         } catch (error) {
             if (error.response && error.response.status === 400) {
                 toast.warning(error.response.data);
+                setInforTeacher("");
             } else {
                 toast.error("Có lỗi xảy ra ");
             }
@@ -101,12 +106,12 @@ export function RegisterTeacher(props) {
                                     <tr key={index}>
                                         <td>{item.teacherId}</td>
                                         <td className="row-name">{item.name}</td>
-                                        <td>{item.countTeacher}/10</td>
+                                        <td>{item.countTeacher}/5</td>
                                         <td>
                                             <button type="button" className="btn btn-outline-success"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#exampleModal"
-                                                    onClick={() => handleShow(item.teacherId)}>
+                                                    onClick={() => handleShow(item.teacherId, item.countTeacher)}>
                                                 Chi tiết
                                             </button>
                                         </td>
@@ -192,7 +197,7 @@ export function RegisterTeacher(props) {
                                                 <img
                                                     className="avatar"
                                                     alt="avatar"
-                                                    src={avatarUrl ||"default-avatar.png" }
+                                                    src={avatarUrl || "default-avatar.png"}
                                                 />
                                             </div>
                                         </div>
@@ -231,7 +236,7 @@ export function RegisterTeacher(props) {
                                                 <label htmlFor="gender" style={{color: "black", fontWeight: "bold"}}>Giới
                                                     Tính</label>
                                                 <input type="text" className="form-control"
-                                                       id="gender2" value={inforTeacher.gender === 1 ? "Nam" : "Nữ"}
+                                                       id="gender2" value={inforTeacher.gender ? "Nam" : "Nữ"}
                                                        readOnly/>
                                             </div>
                                             <div className="form-group">
@@ -254,14 +259,31 @@ export function RegisterTeacher(props) {
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="reset" className="btn btn-outline-secondary" style={{marginRight:"7px", marginTop:"5px"}}
-                                            data-bs-dismiss="modal" onClick={() => setShowModal(false)}>Thoát
+                                    <button type="reset" className="btn btn-outline-secondary"
+                                            style={{marginRight: "7px", marginTop: "5px"}}
+                                            data-bs-dismiss="modal">Thoát
                                     </button>
                                     {
-                                        roles.includes("ROLE_GROUP_LEADER") &&
-                                        <Button variant="outline-success" style={{marginRight:"7px", marginTop:"5px"}}
-                                                onClick={() => register(inforTeacher.teacherId)}>
+                                        roles.includes("ROLE_GROUP_LEADER") && !inforTeacher.topicRegisterFlag && !buttonFlag &&
+                                        <Button variant="outline-success" style={{marginRight: "7px", marginTop: "5px"}}
+                                                onClick={() => register(inforTeacher.teacherId)}
+                                                data-bs-dismiss="modal">
                                             Đăng kí
+                                        </Button>
+
+                                    }
+                                    {
+                                        roles.includes("ROLE_GROUP_LEADER") && inforTeacher.topicRegisterFlag &&
+                                        <Button variant="outline-success" style={{marginRight: "7px", marginTop: "5px"}}
+                                                disabled>
+                                            Đã đăng kí
+                                        </Button>
+                                    }
+                                    {
+                                        roles.includes("ROLE_GROUP_LEADER") && buttonFlag && !inforTeacher.topicRegisterFlag &&
+                                        <Button variant="outline-success" style={{marginRight: "7px", marginTop: "5px"}}
+                                                disabled>
+                                            Hết chỗ đăng kí
                                         </Button>
                                     }
                                 </div>
@@ -269,7 +291,6 @@ export function RegisterTeacher(props) {
                         </div>
                     </div>
                 </div>
-                {/*MODAL*/}
             </div>
         </>
     )

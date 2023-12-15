@@ -221,7 +221,6 @@ const TopicTable = () => {
                 )}
             </section>
         </>
-
     );
 };
 export default TopicTable;

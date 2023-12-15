@@ -2,10 +2,7 @@ import axios from "axios";
 
 export const findAll = async (pageNumber) => {
     try {
-        // debugger;
-
         const result = await axios.get('/api/registerTeacher/list'+ "/?page=" + pageNumber)
-        console.log(result.data)
         return result.data;
     } catch (e) {
         throw e;
